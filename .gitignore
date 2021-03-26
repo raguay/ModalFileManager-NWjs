@@ -1,3 +1,7 @@
+# large files ignore
+misc/nwjs*
+misc/libffmpeg.dylib
+
 # Logs
 logs
 *.log
