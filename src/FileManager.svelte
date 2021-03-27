@@ -13,67 +13,70 @@
   }}
 />
 
-{#if showGitHub}
-  <GitHub 
-    on:closeGitHub={(e) => {
-      showGitHub = false;
-    }}
-  />
-{/if}
-
-{#if showCommandPrompt}
-  <CommandPrompt 
-    commands={commands}
-    on:closeCommandPrompt={(e) => {
-      showCommandPrompt = false;
-      if(!showMessageBox) {
-        keyProcess.set(true);
-        localKeyProcess = true;
-      }
-      if(e.detail.skip) skipKey = true;
-    }}
-  />
-{/if}
-
-{#if showMessageBox}
-  <MessageBox
-    config={msgBoxConfig}
-    spinners={msgBoxSpinners}
-    on:msgReturn={msgReturn}
-    on:closeMsgBox={(e) => { 
-      showMessageBox = false;
-      keyProcess.set(true);
-      localKeyProcess = true;
-      if(e.detail.skip) skipKey = true;
-    }}
-  />
-{/if}
-
-{#if showQuickSearch}
-  <QuickSearch
-    leftDOM={leftDOM}
-    rightDOM={rightDOM}
-    leftEntries={leftEntries}
-    rightEntries={rightEntries}
-    on:changeEntries={qsChangeEntries}
-    on:closeQuickSearch={(e) => { 
-      showQuickSearch = false;
-      keyProcess.set(true);
-      localKeyProcess = true;
-      if(e.detail.skip) skipKey = true;
-    }}
-  />
-{/if}
-
 <div id='container'
   style="background-color: {$theme.backgroundColor};
-         color: {$theme.textColor};" 
+         color: {$theme.textColor};
+         font-family: {$theme.font};
+         font-size: {$theme.fontSize};"
   on:mousemove={mouseMove}
   on:mouseup={e => {
     mdown = false;
   }}
   bind:this={containerDOM}
 >
+
+  {#if showGitHub}
+    <GitHub 
+      on:closeGitHub={(e) => {
+        showGitHub = false;
+      }}
+    />
+  {/if}
+
+  {#if showCommandPrompt}
+    <CommandPrompt 
+      commands={commands}
+      on:closeCommandPrompt={(e) => {
+        showCommandPrompt = false;
+        if(!showMessageBox) {
+          keyProcess.set(true);
+          localKeyProcess = true;
+        }
+        if(e.detail.skip) skipKey = true;
+      }}
+    />
+  {/if}
+
+  {#if showMessageBox}
+    <MessageBox
+      config={msgBoxConfig}
+      spinners={msgBoxSpinners}
+      on:msgReturn={msgReturn}
+      on:closeMsgBox={(e) => { 
+        showMessageBox = false;
+        keyProcess.set(true);
+        localKeyProcess = true;
+        if(e.detail.skip) skipKey = true;
+      }}
+    />
+  {/if}
+
+  {#if showQuickSearch}
+    <QuickSearch
+      leftDOM={leftDOM}
+      rightDOM={rightDOM}
+      leftEntries={leftEntries}
+      rightEntries={rightEntries}
+      on:changeEntries={qsChangeEntries}
+      on:closeQuickSearch={(e) => { 
+        showQuickSearch = false;
+        keyProcess.set(true);
+        localKeyProcess = true;
+        if(e.detail.skip) skipKey = true;
+      }}
+    />
+  {/if}
+
   <div id='leftSide'
        bind:this={leftDOM}>
     {#if (localCurrentCursor.pane === 'right')&&(showExtra)}
@@ -118,9 +121,9 @@
       />
     {/if}
   </div>
+  <StatusLine 
+  />
 </div>
-<StatusLine 
-/>
 
 <style>
   #leftSide {
@@ -385,6 +388,8 @@
       // Setup the Dracula Pro as default theme colors:
       //
       localTheme = {
+        font: "Fira Code, Menlo",
+        fontSize: "12pt",
         cursorColor: '#363443',
         selectedColor: '#454158',
         backgroundColor: '#22212C',
