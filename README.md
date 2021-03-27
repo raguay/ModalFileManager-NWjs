@@ -278,6 +278,8 @@ The Theme JSON file is like this one:
 
 ```json 
 {
+  "font":"Fira Code, Menlo",
+  "fontSize":"12pt",
   "cursorColor": "#363443",
   "selectedColor": "#FFCA80",
   "backgroundColor": "#22212C",
