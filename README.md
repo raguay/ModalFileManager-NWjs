@@ -6,7 +6,9 @@ Currently, it can`t transfer files to other programs with Drag and Drop due to a
 
 This file manager is designed around the same principle as Vim: a state controled keyboard actions. The number of states isn't fixed, but very programmable. Therefore, an infinite number of keyboard configurations can be created and used. This is the main difference from other file managers.
 
-# Disclamer:  Alpha software. Use at your own risk! I accept no liability for lost information from the use of this software. User beware! But, if you have a major problem, please let me know so that I can look for solutions.
+# Disclamer:  Alpha level software. Use at your own risk! I accept no liability for lost information from the use of this software. User beware! But, if you have a major problem, please let me know so that I can look for solutions. This file manager is built using command line commands (rm, cp, mv, etc) and therefore doesn't protect from accidental deletions.
+
+The low level interface is still being mapped out and changes are happening. This means that extensions made using the current API will most likely need changes as the project moves forward. I'm looking at having it final by 0.1 Alpha.
 
 ## Table of Contents
 
@@ -14,6 +16,8 @@ This file manager is designed around the same principle as Vim: a state controle
 - [Current Feature Set](#current-feature-set)
 - [Installation](#installation)
 - [Command Line Programs Used](#command-line-programs-used)
+- [Configuration Files](#configuration-files)
+- [Source File Layout](#source-file-layout)
 - [Editing Files](#editing-files)
 - [Things in the Works](#things-in-the-works)
 - [Default Key Bindings](#default-key-bindings)
@@ -37,7 +41,7 @@ With Spacemacs and Doom-emacs, I learned that the Vim style keyboard was much mo
 
 But, I've never been happy with the file managers I've used. [fman](https://fman.io/) is great, but not actively being maintained and expanded upon. I also don't really like python, it's API language. So, I decided to jump in and make one to suit me better. This is how Modal File Manager was started. I wanted something that was as configurable as TkDesk was, but with a modal keyboard model for hotkeys. To take it even further, new modes and keymaps can be added with extensions. Along with anything else you can do with a full Node.js backend.
 
-Since there are so many dual pane file managers available, I knew this would never be a marketable product (and I did not want the hassle of endless customer complaint over a feature not working the way they want it). Therefore, I'm making this an open source project to hopefully get some help in really making this thing shine.
+Since there are so many dual pane file managers available, I knew this would never be a marketable product (and I did not want the hassle of endless customer complaint over a feature not working the way they want it). Therefore, I'm making this an open source project to hopefully get some help from other to really making this thing shine.
 
 Therefore, I hope you enjoy this little program as much as I have. Feel free to sponor the project or just give me some tips along the way. Any help is appriciated.
 
@@ -104,8 +108,37 @@ other platforms, or if anyone wants to lend a hand!
 
 There are a few non-standard command line programs I use with Modal File Manager. They are:
 
+- [ffmpeg](https://ffmpeg.org/) for getting and using video information in the Extra Panel.
 - [fd](https://github.com/sharkdp/fd) for quick file finding. It's a `find` replacement written in Rust.
-- I also use the standard cp, mv, and rm commands on the command line. These still run faster than rewriting them in the scripting language.
+- I also use the standard cp, mv, and rm commands on the command line. These still run faster than rewriting them in the scripting language. The major drawback is there isn't a backup method. Once deleted, always deleted. `Trashcan` support will come later.
+
+All of the programs should be downloaded and in your shells path. Modal File Manager doesn't assume location for anything except or it's own configuration files. 
+
+## Configuration Files
+
+All extensions, themes, keyboard layouts, and anything else for configuring the Modal File Manager is found in it's main configuration directory. On Linux and macOS, it is located at: `~/.config/modalfilemanager`. It will be in the Windows User directory, but I haven't really looked at Windows functionality yet.
+
+In this configuration directory, there are the `themes`, `extensions`, and `keyMaps` directories that contain their respective subfolders and files. Please refer the specific section for each directory for more details.
+
+There is the `history.json` file and the `theme.json` file. The `history.json` file contains a list of directories that the Modal File Manager has visited. I use this to quickly pull up possible paths to go to in the file manager. 
+
+Modal File Manager doesn't use the actual theme files downloaded from GitHub. Those are stored in the `themes` directory and are just referenced. All actually used theming is in the `theme.json` file. When a user changes themes, that file is changed. Therefore, becareful if you manually change this file and want to keep it. It is best to create a theme in the theme directory and load it in the program.
+
+## Source File Layout
+
+The directory structure is:
+
+modalfilemanager
+  |
+  - src 
+    |
+    - components                  Here are all the Svelte components for the UI
+    - modules                     These are JavaScript Helper files with the data structures used.
+    - stores                      This directory contains all the Svelte Store items
+    - FileManager.svelte          This is the main program
+    - main.js                     This installs the main program into the HTML
+
+All low level functions are in the `modules/macOS.js`, `modules/linux.js`, and `modules/windows.js` for the particular operating system. This is the initial breakdown and will be added upon in the future as needed.
 
 ## Editing files
 
@@ -212,6 +245,9 @@ These commands can be ran from the command prompt. They all act upon the current
 | `Edit Directory` | Open the Edit Directory for the current panel.| editDirectory |
 | `Toggle Command Prompt` | Show/Hide the command prompt. | toggleCommandPrompt |
 | `Toggle GitHub Importer` | Show/Hide the GitHub importer panel for searching for themes and extensions on GitHub and installing them. | toggleGitHub |
+| `Refresh Panes` | This will reload files in both the left and right pane. | refreshPanes |
+| `Refresh Left Pane` | This will reload the files in the Left Pane. | refreshLeftPane  |
+| `Refresh Right Pane` | This will reload the files in the Right Pane. | refreshRightPane |
 
 ### Extension Commands
 
