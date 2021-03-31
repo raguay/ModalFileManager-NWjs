@@ -68,15 +68,24 @@ var macOS = {
     return result;
   },
   makeDir: function(dir) {
-    fs.mkdirSync(dir);
+    if(typeof dir.name !== 'undefined') dir = dir.fileSystem.appendpath(dir.dir, dir.name);
+    fs.mkdirSync(this.preserveQuotes(dir));
+  },
+  preserveQuotes: function(str) {
+    return(str.replaceAll(/(\"|\'|\`)/gi,'\\$1'));
   },
   moveEntries: function(from, to) {
-    childProcess.execSync("mv '" + from + "' '" + to + "'");
+    var fromName = this.preserveQuotes(from.fileSystem.appendPath(from.dir, from.name));
+    var toName = this.preserveQuotes(to.dir);
+    childProcess.execSync("mv '" + fromName + "' '" + toName + "'");
   },
   copyEntries: function(from, to) {
-    childProcess.execSync("cp -R '" + from + "' '" + to + "'");
+    var fromName = this.preserveQuotes(from.fileSystem.appendPath(from.dir, from.name));
+    var toName = this.preserveQuotes(to.dir);
+    childProcess.execSync("cp -R '" + fromName + "' '" + toName + "'");
   },
-  deleteEntries: function(item) {
+  deleteEntries: function(entry) {
+    var item = this.preserveQuotes(entry.fileSystem.appendPath(entry.dir, entry.name));
     childProcess.execSync("rm -R '" + item + "'");
   },
   getDirList: function(dir) {
@@ -228,13 +237,18 @@ var macOS = {
     fs.writeFileSync(file,data);
   },
   renameEntry: function(oldE, newE) {
+    var fromName = this.preserveQuotes(oldE.fileSystem.appendPath(oldE.dir, oldE.name));
+    var to = this.preserveQuotes(newE.fileSystem.appendPath(newE.dir, newE.name));
     childProcess.execSync('mv "' + oldE + '" "' + newE + '"');
   },
   createFile: function(file) {
-    childProcess.execSync('touch "' + file + '"');
+    console.log(file);
+    var fnm = this.preserveQuotes(file.fileSystem.appendPath(file.dir, file.name));
+    childProcess.execSync('touch "' + fnm + '"');
   },
   createDir: function(dir) {
-    childProcess.execSync('mkdir "' + dir + '"');
+    var dnm = this.preserveQuotes(dir.fileSystem.appendPath(dir.dir, dir.name));
+    childProcess.execSync('mkdir "' + dnm + '"');
   },
   loadJavaScript: function(file) {
     var result = '';

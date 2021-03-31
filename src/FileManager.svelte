@@ -565,6 +565,9 @@
     commands.addCommand('Toggle Extra Panel', 'toggleExtraPanel', 'Toggles the showing of the extra panel.', toggleExtraPanel);
     commands.addCommand('Toggle Command Prompt', 'toggleCommandPrompt', 'Toggles showing the command prompt.', toggleCommandPrompt);
     commands.addCommand('Toggle GitHub Importer', 'toggleGitHub', 'Toggles the showing of the GitHub importer.', toggleGitHub);
+    commands.addCommand('Refresh Panes', 'refreshPanes', 'Reloads both panes.', refreshPanes);
+    commands.addCommand('Refresh Right Pane', 'refreshRightPane', 'Refresh the Right Pane', refreshRightPane);
+    commands.addCommand('Refresh Left Pane', 'refreshLeftPane', 'Reloads the Left Pane.', refreshLeftPane);
   }
   
   function processKey(e) {
@@ -1018,72 +1021,16 @@
       sel = false;
     }
     entries.forEach( item => {
-      item.fileSystem.deleteEntries(item.fileSystem.appendPath(item.dir, item.name));
+      item.fileSystem.deleteEntries(item);
     });
 
     //
     // Refresh the file list.
     //
     if(localCurrentCursor.pane === 'left') {
-      leftEntries = localLeftDir.fileSystem.getDirList(localLeftDir.path); 
-      if(leftEntries.length > 0) {
-        currentCursor.set({
-          entry: leftEntries[0],
-          pane: 'left'
-        });
-        currentLeftFile.set({
-          entry: leftEntries[0]
-        });
-      } else {
-        currentLeftFile.set({ entry: {
-          name: '',
-          size: '',
-          type: localLeftDir.fileSystemType,
-          fileSystem: localLeftDir.fileSystem,
-          dir: localLeftDir.path,
-          datetime: '',
-          selected: false
-        }});
-        currentCursor.set({ entry: {
-          name: '',
-          size: '',
-          type: localLeftDir.fileSystemType,
-          fileSystem: localLeftDir.fileSystem,
-          dir: localLeftDir.path,
-          datetime: '',
-          selected: false
-        }, pane: 'left'});
-      }
+      refreshLeftPane();
     } else {
-      rightEntries = localRightDir.fileSystem.getDirList(localRightDir.path);
-      if(rightEntries.length > 0) {
-        currentCursor.set({
-          entry: rightEntries[0],
-          pane: 'right'
-        });
-        currentRightFile.set({
-          entry: rightEntries[0]
-        });
-      } else {
-        currentRightFile.set({ entry: {
-          name: '',
-          size: '',
-          type: localRightDir.fileSystemType,
-          fileSystem: localRightDir.fileSystem,
-          dir: localRightDir.path,
-          datetime: '',
-          selected: false
-        }});
-        currentCursor.set({ entry: {
-          name: '',
-          size: '',
-          type: localRightDir.fileSystemType,
-          fileSystem: localRightDir.fileSystem,
-          dir: localRightDir.path,
-          datetime: '',
-          selected: false
-        }, pane: 'right'});
-      }
+      refreshRightPane(); 
     }
   }
 
@@ -1097,18 +1044,17 @@
       entries.push(localCurrentCursor.entry);
       sel = false;
     }
-    var otherPane = localCurrentCursor.pane === 'left' ? localCurrentRightFile.entry.dir : localCurrentLeftFile.entry.dir;
+    var otherPane = localCurrentCursor.pane === 'left' ? { ...localCurrentRightFile.entry } : { ...localCurrentLeftFile.entry };
     entries.forEach( item => {
-      var from = item.fileSystem.appendPath(item.dir, item.name);
-      item.fileSystem.copyEntries(from, otherPane);
+      item.fileSystem.copyEntries(item, otherPane);
     });
     //
     // Refresh the side copied to.
     //
     if(localCurrentCursor.pane === 'left') {
-      rightEntries = localRightDir.fileSystem.getDirList(localRightDir.path);
+      refreshLeftPane();
     } else {
-      leftEntries = localLeftDir.fileSystem.getDirList(localLeftDir.path); 
+      refreshRightPane();
     }
 
     //
@@ -1201,34 +1147,80 @@
       entries.push(localCurrentCursor.entry);
       sel = false;
     }
-    var otherPane = localCurrentCursor.pane === 'left' ? localCurrentRightFile.entry.dir : localCurrentLeftFile.entry.dir;
+    var otherPane = localCurrentCursor.pane === 'left' ? localCurrentRightFile.entry : localCurrentLeftFile.entry;
     entries.forEach( item => {
-      var from = item.fileSystem.appendPath(item.dir, item.name);
-      item.fileSystem.moveEntries(from, otherPane);
+      item.fileSystem.moveEntries(item, otherPane);
     });
 
     //
     // Refresh both sides.
     //
+    refreshPanes();
+  }
+
+  function refreshRightPane() {
+    //
+    // Refresh right pane.
+    //
     rightEntries = localRightDir.fileSystem.getDirList(localRightDir.path);
-    leftEntries = localLeftDir.fileSystem.getDirList(localLeftDir.path);
-    if(localCurrentCursor.pane == 'left') {
+    var current = rightEntries[0];
+    if(rightEntries.length == 0) {
+      current = {
+        name: '',
+        dir: currentRightFile.entry.dir,
+        fileSystemType: currentRightFile.entry.fileSystemType,
+        fileSystem: currentRightFile.entry.fileSystem,
+        selected: false,
+        datetime: '',
+        type: 0,
+        size: 0,
+        stats: null
+      };
+    }
+    if(localCurrentCursor.pane == 'right') {
       currentCursor.set({
-        entry: leftEntries[0],
-        pane: 'left'
-      });
-      currentLeftFile.set({
-        entry: leftEntries[0]
-      });
-    } else {
-      currentCursor.set({
-        entry: rightEntries[0],
+        entry: current,
         pane: 'right'
       });
       currentRightFile.set({
-        entry: rightEntries[0]
+        entry: current
       });
     }
+  }
+
+  function refreshLeftPane() {
+    //
+    // Refresh left pane.
+    //
+    leftEntries = localLeftDir.fileSystem.getDirList(localLeftDir.path);
+    var current = leftEntries[0];
+    if(leftEntries.length === 0) {
+      current = {
+        name: '',
+        dir: currentRightFile.entry.dir,
+        fileSystemType: currentLeftFile.entry.fileSystemType,
+        fileSystem: currentLeftFile.entry.fileSystem,
+        selected: false,
+        datetime: '',
+        type: 0,
+        size: 0,
+        stats: null
+      };
+    }
+    if(localCurrentCursor.pane == 'left') {
+      currentCursor.set({
+        entry: current,
+        pane: 'left'
+      });
+      currentLeftFile.set({
+        entry: current
+      });
+    }
+  }
+
+  function refreshPanes() {
+    refreshLeftPane();
+    refreshRightPane();
   }
 
   function newFile() {
@@ -1255,29 +1247,17 @@
     //
     // Create the new file.
     //
-    localCurrentCursor.entry.fileSystem.createFile(localCurrentCursor.entry.fileSystem.appendPath(localCurrentCursor.entry.dir, nfname));
+    var nfile = { ...localCurrentCursor.entry };
+    nfile.name = nfname;
+    localCurrentCursor.entry.fileSystem.createFile(nfile);
 
     //
     // Refresh the file list.
     //
     if(localCurrentCursor.pane === 'left') {
-      leftEntries = localLeftDir.fileSystem.getDirList(localLeftDir.path); 
-      currentCursor.set({
-        entry: leftEntries[0],
-        pane: 'left'
-      });
-      currentLeftFile.set({
-        entry: leftEntries[0]
-      });
+      refreshLeftPane();
     } else {
-      rightEntries = localRightDirfileSystem.getDirList(localRightDir.path);
-      currentCursor.set({
-        entry: rightEntries[0],
-        pane: 'right'
-      });
-      currentRightFile.set({
-        entry: rightEntries[0]
-      });
+      refreshRightPane();
     }
     
     //
@@ -1310,29 +1290,17 @@
     //
     // Create the new file.
     //
-    localCurrentCursor.entry.fileSystem.createDir(localCurrentCursor.entry.fileSystem.appendPath(localCurrentCursor.entry.dir, ndname));
+    var ndir = { ...localCurrentCursor.entry };
+    ndir.name = ndname;
+    localCurrentCursor.entry.fileSystem.createDir(ndir);
 
     //
     // Refresh the file list.
     //
     if(localCurrentCursor.pane === 'left') {
-      leftEntries = localLeftDir.fileSystem.getDirList(localLeftDir.path); 
-      currentCursor.set({
-        entry: leftEntries[0],
-        pane: 'left'
-      });
-      currentLeftFile.set({
-        entry: leftEntries[0]
-      });
+      refreshLeftPane();
     } else {
-      rightEntries = localRightDir.fileSystem.getDirList(localRightDir.path);
-      currentCursor.set({
-        entry: rightEntries[0],
-        pane: 'right'
-      });
-      currentRightFile.set({
-        entry: rightEntries[0]
-      });
+      refreshRightPane();
     }
     
     //
@@ -1365,29 +1333,17 @@
     //
     // Create the new file.
     //
-    localCurrentCursor.entry.fileSystem.renameEntry(localCurrentCursor.entry.fileSystem.appendPath(localCurrentCursor.entry.dir, localCurrentCursor.entry.name), localCurrentCursor.entry.fileSystem.appendPath(localCurrentCursor.entry.dir, nname));
+    var nentry = { ...(localCurrentCursor.entry) };
+    nentry.name = nname;
+    localCurrentCursor.entry.fileSystem.renameEntry(localCurrentCursor.entry, nentry);
 
     //
     // Refresh the file list.
     //
     if(localCurrentCursor.pane === 'left') {
-      leftEntries = localLeftDir.fileSystem.getDirList(localLeftDir.path); 
-      currentCursor.set({
-        entry: leftEntries[0],
-        pane: 'left'
-      });
-      currentLeftFile.set({
-        entry: leftEntries[0]
-      });
+      refreshLeftPane();
     } else {
-      rightEntries = localRightDir.fileSystem.getDirList(localRightDir.path);
-      currentCursor.set({
-        entry: rightEntries[0],
-        pane: 'right'
-      });
-      currentRightFile.set({
-        entry: rightEntries[0]
-      });
+      refreshRightPane();
     }
     
     //

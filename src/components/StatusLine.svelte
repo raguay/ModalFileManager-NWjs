@@ -48,7 +48,7 @@
     margin: 0px 5px;
     padding: 5px 5px;
     width: 30px;
-    min-width: 30px;
+    min-width: 50px;
   }
 
   .state {
@@ -61,6 +61,7 @@
   .file {
     margin: 0px 5px;
     padding: 5px 5px;
+    min-width: 50px;
   }
 </style>
 

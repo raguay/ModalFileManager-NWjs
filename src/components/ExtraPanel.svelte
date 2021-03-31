@@ -4,12 +4,15 @@
     <img src="file:{fullPath}" 
          alt="{fullPath}"
     >
-  {:else if (extension === '.mov') || (extension === '.mp4') || (extension === '.wm') || (extension === '.3gp') || (extension === '.mpeg') || (extension === '.ogg')}
+  {:else if isMovieFlag}
     <video id='videoItem'
            controls 
     >
       <track kind="captions">
     </video>
+    <p>
+      Dimensions:  {videoDem}
+    </p>
   {/if}
   <div class='stats'>
     <p>Date: {localCurrentCursor.entry.datetime}</p>
@@ -53,6 +56,8 @@
   let fullPath = '';
   let extension = '';
   let size = '';
+  let videoDem = '';
+  let isMovieFlag = false;
 
   onMount(() => {
     var unsubscribeCurrentCursor = currentCursor.subscribe((value) => {
@@ -67,7 +72,7 @@
   });
   
   afterUpdate(async () => {
-    if((extension === '.mov') || (extension === '.mp4') || (extension === '.wm') || (extension === '.3gp') || (extension === '.mpeg') || (extension === '.ogg')) {
+    if(isMovie()) {
       await tick();
       var file = new File(fullPath, localCurrentCursor.entry.name);
       var fileURL = window.URL.createObjectURL(file);
@@ -75,6 +80,27 @@
       if(videoNode !== null) {
         videoNode.src = fileURL;
       }
+      getDimensions(fullPath);
     }
   });
+
+  function isMovie() {
+    isMovieFlag = ((extension === '.mov')  || 
+                   (extension === '.mp4')  || 
+                   (extension === '.wm')   ||
+                   (extension === '.3gp')  ||
+                   (extension === '.mpeg') ||
+                   (extension === '.ogg'));
+    return(isMovieFlag);
+  }
+
+  function getDimensions(fileName) {
+    var com = 'ffprobe -v error -of flat=s=_ -select_streams v:0 -show_entries stream=height,width "' + fileName + '"';
+    localCurrentCursor.entry.fileSystem.runCommandLine(com, (err, stdout, stderr) => {
+      var stdout = stdout.toString('utf8');
+      var width = /width=(\d+)/.exec(stdout);
+      var height = /height=(\d+)/.exec(stdout);
+      videoDem = parseInt(width[1]) + "x" + parseInt(height[1]);
+    });
+  }
 </script>
