@@ -1,5 +1,5 @@
 <div id="quickSearch" 
-     style="border-color: {localTheme.borderColor}; left: {position}px;" 
+     style="left: {position}px;" 
 >
   <input type='text' 
          bind:this={qsInputDOM}
@@ -19,15 +19,17 @@
     flex-direction: row;
     margin: 0px;
     padding: 0px;
-    border: 3px solid;
+    border: 0px solid transparent;
     height: 30px;
     max-height: 30px;
     min-height: 30px;
     width: 100px;
     max-width: 100px;
     min-width: 100px;
-    bottom: 30px;
+    bottom: 0px;
     z-index: 100;
+    user-select: none;
+    text-decoration: none;
   }
 
   #quickSearch input {
@@ -35,7 +37,8 @@
     margin: auto;
     padding: 0px;
     width: 100px;
-    border: 0px solid transparent;
+    border: 3px solid transparent;
+    border-radius: 5px;
   }
 </style>
 
@@ -76,7 +79,7 @@
     if(cursor.pane === 'left') {
       position = leftDOM.clientWidth - 100;
     } else {
-      position = rightDOM.clientWidth + leftDOM.clientWidth - 100;
+      position = rightDOM.clientWidth + leftDOM.clientWidth - 85;
     }
   });
 
