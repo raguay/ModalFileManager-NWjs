@@ -30,7 +30,14 @@ var history = {
       // load the history.
       //
       if(cfg.localFS.fileExists(hf)) {
-        this.histStore = JSON.parse(cfg.localFS.readFile(cfg.localFS.appendPath(cfg.configDir, 'history.json')));
+        try {
+          this.histStore = JSON.parse(cfg.localFS.readFile(cfg.localFS.appendPath(cfg.configDir, 'history.json')));
+        } catch(e) {
+          //
+          // Something was wrong with the history. Just forget it.
+          //
+          this.histStore = [];
+        }
       } 
     }
   }

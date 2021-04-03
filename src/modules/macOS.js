@@ -79,9 +79,13 @@ var macOS = {
     var toName = this.preserveQuotes(to.dir);
     childProcess.execSync("mv '" + fromName + "' '" + toName + "'");
   },
-  copyEntries: function(from, to) {
+  copyEntries: function(from, to, flag) {
+    if(typeof flag === 'undefined') flag = false;
     var fromName = this.preserveQuotes(from.fileSystem.appendPath(from.dir, from.name));
     var toName = this.preserveQuotes(to.dir);
+    if(flag) {
+      toName = this.preserveQuotes(to.fileSystem.appendPath(to.dir,to.name));
+    }
     childProcess.execSync("cp -R '" + fromName + "' '" + toName + "'");
   },
   deleteEntries: function(entry) {
@@ -238,11 +242,10 @@ var macOS = {
   },
   renameEntry: function(oldE, newE) {
     var fromName = this.preserveQuotes(oldE.fileSystem.appendPath(oldE.dir, oldE.name));
-    var to = this.preserveQuotes(newE.fileSystem.appendPath(newE.dir, newE.name));
-    childProcess.execSync('mv "' + oldE + '" "' + newE + '"');
+    var toName = this.preserveQuotes(newE.fileSystem.appendPath(newE.dir, newE.name));
+    childProcess.execSync('mv "' + fromName + '" "' + toName + '"');
   },
   createFile: function(file) {
-    console.log(file);
     var fnm = this.preserveQuotes(file.fileSystem.appendPath(file.dir, file.name));
     childProcess.execSync('touch "' + fnm + '"');
   },

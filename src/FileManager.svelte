@@ -1125,16 +1125,17 @@
         newName = localCurrentCursor.entry.name + "-copy";
       }
     }
-    localCurrentCursor.entry.fileSystem.copyEntries(localCurrentCursor.entry.fileSystem.appendPath(localCurrentCursor.entry.dir, localCurrentCursor.entry.name), localCurrentCursor.entry.fileSystem.appendPath(localCurrentCursor.entry.dir, newName));
+    var nEntry = { ...localCurrentCursor.entry };
+    nEntry.name = newName;
+    localCurrentCursor.entry.fileSystem.copyEntries(localCurrentCursor.entry, nEntry, true);
     //
     // Refresh the file list.
     //
     if(localCurrentCursor.pane === 'left') {
-      leftEntries = localLeftDir.fileSystem.getDirList(localLeftDir.path); 
+      refreshLeftPane();
     } else {
-      rightEntries = localRightDir.fileSystem.getDirList(localRightDir.path);
+      refreshRightPane();
     }
-
   }
 
   function moveEntries() {
@@ -1333,7 +1334,7 @@
     //
     // Create the new file.
     //
-    var nentry = { ...(localCurrentCursor.entry) };
+    var nentry = { ...localCurrentCursor.entry };
     nentry.name = nname;
     localCurrentCursor.entry.fileSystem.renameEntry(localCurrentCursor.entry, nentry);
 

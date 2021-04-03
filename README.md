@@ -54,7 +54,7 @@ I've created multiple open source resources (I have around 80 GitHub repositorie
 - Fully extendable with extensions using the extensions API
 - Fully extendable to alternate file systems
 - Fully theme-able
-- A file details side panel can be shown to overlay the panel not currently focused (`toggleExtraPanel` command). 
+- A file details side panel can be shown to overlay the panel not currently focused (`toggleExtraPanel` command). It shows video previews and stats with the ffmpeg programs installed.
 - Themes and extensions are explorable and downloadable from GitHub inside the program.
 - Hot keys are programmable
 - A number before a hot key runs it's associated command that many times (ex: `5j` will move the cursor 5 entries down the list).
@@ -62,14 +62,19 @@ I've created multiple open source resources (I have around 80 GitHub repositorie
 - Changing directories in the Directory Bar (normal mode `q`) shows a list of matching entries from history and then below the current directory.
 - File editor is configurable by the `~/.myeditorchoice` file (see `Editing Files` below)
 - Integrated with ScriptPad 
+- Quick Search - a input to type text so that any entry at that level is removed that doesn't have that text in it. Just refresh the pane to get back to normal. I think of it as a quick filter more than a quic search.
+
 
 ## Installation
 
 I have a run script made with [Mask](https://github.com/jakedeichert/mask) and [Node.js](https://nodejs.org/en/). You have to put a copy of [NW.js](https://nwjs.io/) in the 'misc' directory as `nwjs.app`. Or, you can change the script. I'm assuming you aren't changing the scirpt in the following.
 
-So, download the repository, put nwjs.app in the `misc` directory. In the command line, run this command:
+So, download the repository, create the `misc` directory, put nwjs.app in the `misc` directory. On the command line, run the following commands to accomplish these things:
 
 ```sh 
+git clone https://github.com/raguay/ModalFileManager.git 
+cd ModalFileManager
+mkdir misc
 npm install 
 ``` 
 
@@ -153,12 +158,26 @@ file in the default file editor.
 
 ## Things in the Works
 
-- Theme editor
-- Create new extension template and command.
-- Translating my fman extensions to work with Modal File Manager.
-- Proper drag and drop (NW.js doesn't support it directly, but I should be able to get it going with Node.js talking directly to the OS). 
+- Theme Creator/Editor
+- Extension Creator/Editor with templates.
+- Add and test dynamically added states for keyboard
+- Translating my fman extensions to work with Modal File Manager
+	- Project Manager
+		- Notes - Should be part of Project Manager?
+	- Favorites
+	- Dropbox File System
+	- Launch Scripts
+	- Regular Expression selection
+	- Zip Selected Entries
+- Internal drag and drop - I can't seem to get it to work right.
+- Proper drag and drop with outside programs (NW.js doesn't support it directly, but I should be able to get it going with Node.js talking directly to the OS). 
 - Reloading extensions without relaunching
 - Add more file views for the Extra Panel
+- Multiple windows
+- Create an icon for the program
+- Create a proper macOS application
+- Get Windows working
+- Get Linux tested and working
 - Documentation!
 
 ## Default Key Bindings
