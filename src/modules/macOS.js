@@ -52,13 +52,16 @@ var macOS = {
     return(path.sep);
   },
   readDir: function(dir) {
-    return fs.readdirSync(dir);
+    if(typeof dir === 'object') dir = this.appendPath(dir.dir, dir.name);
+    return fs.readdirSync(this.preserveQuotes(dir));
   },
   dirExists: function(dir) {
-    return this.fileExists(dir);
+    if(typeof dir.name !== 'undefined') dir = this.appendPath(dir.dir, dir.name);
+    return this.fileExists(this.preserveQuotes(dir));
   },
   fileExists: function(file) {
     var result = true;
+    if(typeof file === 'object') file = this.preserveQuotes(this.appendPath(file.dir, file.name));
     try {
       fs.accessSync(file);
       result = true;
@@ -68,7 +71,7 @@ var macOS = {
     return result;
   },
   makeDir: function(dir) {
-    if(typeof dir.name !== 'undefined') dir = dir.fileSystem.appendpath(dir.dir, dir.name);
+    if(typeof dir.name !== 'undefined') dir = this.appendpath(dir.dir, dir.name);
     fs.mkdirSync(this.preserveQuotes(dir));
   },
   preserveQuotes: function(str) {
@@ -105,6 +108,7 @@ var macOS = {
     //    selected Boolean true is selected, false is not selected
     //
     var entries = [];
+    if((typeof dir === 'object') && (typeof dir.name !== 'undefined')) dir = this.appendPath(dir.dir, dir.name);
     if(this.dirExists(dir)) {
       var items = fs.readdirSync(dir);
       for (var i=0; i<items.length; i++) {
@@ -221,6 +225,10 @@ var macOS = {
     }
   },
   appendPath: function(dir, name) {
+    //
+    // dir can be an entry or a path string. name is always a string.
+    //
+    if(typeof dir === 'object') dir = this.appendPath(dir.dir, dir.name);
     if(dir == path.sep) {
       return path.sep + name;
     } else {
@@ -235,9 +243,11 @@ var macOS = {
     return fs.statSync(file);
   },
   readFile: function(file) {
+    if(typeof file === 'objct') file = this.appendPath(file.dir, file.name);
     return fs.readFileSync(file);
   },
   writeFile: function(file,data) {
+    if(typeof file === 'object') file = this.appendPath(file.dir, file.name);
     fs.writeFileSync(file,data);
   },
   renameEntry: function(oldE, newE) {

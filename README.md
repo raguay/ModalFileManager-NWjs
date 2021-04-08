@@ -209,6 +209,7 @@ file in the default file editor.
 | `s` | toggleExtraPanel |
 | `<cmd>p` | toggleCommandPrompt |
 | `:` | toggleCommandPrompt |
+| `.` | reRunLastCommand |
 
 ### Visual Mode
 
@@ -267,6 +268,7 @@ These commands can be ran from the command prompt. They all act upon the current
 | `Refresh Panes` | This will reload files in both the left and right pane. | refreshPanes |
 | `Refresh Left Pane` | This will reload the files in the Left Pane. | refreshLeftPane  |
 | `Refresh Right Pane` | This will reload the files in the Right Pane. | refreshRightPane |
+| `Rerun Last Command` | This will rerun the last command along with it the number of times it was ran. | reRunLastCommand |
 
 ### Extension Commands
 

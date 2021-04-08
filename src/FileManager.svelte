@@ -1,5 +1,8 @@
 <svelte:window 
-  on:keydown={(e) => { 
+  on:keydown={(e) => {
+    lctrlKey = e.ctrlKey;
+    lshiftKey = e.shiftKey;
+    lmetaKey = e.metaKey;
     if(skipKey && (e.key === 'Enter')) {
       skipKey = false;
       keyProcess.set(true);
@@ -10,6 +13,11 @@
         processKey(e);
       }
     }
+  }}
+  on:keyup={(e) => {
+    lctrlKey = e.ctrlKey;
+    lshiftKey = e.shiftKey;
+    lmetaKey = e.metaKey;
   }}
 />
 
@@ -241,6 +249,10 @@
   let localDirListeners = null;
   let showGitHub = false;
   let numberAcc = '';
+  let lshiftKey = false;
+  let lctrlKey = false;
+  let lmetaKey = false;
+  let lastCommand = '';
 
   onMount(() => {
     // 
@@ -273,7 +285,11 @@
     configDir = localFS.getConfigDir();
     if(!localFS.dirExists(configDir)) {
       localFS.makeDir(configDir);
-      localFS.makeDir(localFS.appendPath(configDir, 'extensions'));
+      localFS.makeDir({
+        dir: configDir,
+        name: 'extensions',
+        fileSystem: localFS
+      });
     }
 
     // 
@@ -568,6 +584,7 @@
     commands.addCommand('Refresh Panes', 'refreshPanes', 'Reloads both panes.', refreshPanes);
     commands.addCommand('Refresh Right Pane', 'refreshRightPane', 'Refresh the Right Pane', refreshRightPane);
     commands.addCommand('Refresh Left Pane', 'refreshLeftPane', 'Reloads the Left Pane.', refreshLeftPane);
+    commands.addCommand('Rerun Last Command', 'reRunLastCommand', 'Runs the last command with it\'s number.', reRunLastCommand);
   }
   
   function processKey(e) {
@@ -579,13 +596,21 @@
     // 
     // Send to the processor.
     //
-    keyProcessor(e.key, e.ctrlKey, e.shiftKey, e.metaKey);
+    keyProcessor(e.key, lctrlKey, lshiftKey, lmetaKey);
   }
 
   function stringKeyProcessor(str) {
-    for(var i=0; i< str.length; i++) {
-      keyProcessor(str[i], false, false, false);
+    for(var i=0; i < str.length; i++) {
+      if((str[i] >= 'A')&&(str[i] <= 'Z')) {
+        keyProcessor(str[i], false, true, false);
+      } else {
+        keyProcessor(str[i], false, false, false);
+      }
     }
+  }
+
+  function reRunLastCommand() {
+    stringKeyProcessor(lastCommand);
   }
 
   function keyProcessor(key, ctrlKey, shiftKey, metaKey) {
@@ -606,13 +631,14 @@
       // 
       var num = parseInt(numberAcc,10);
       if((num === 0)||(isNaN(num))) num = 1;
-      
+      if(command.name !== 'reRunLastCommand') lastCommand = numberAcc + key;
+
       //
       // Run the command.
       //
       try {
         do {
-          command();
+          command.command();
         } while((num--) > 1);
       } catch(e) {
         //
@@ -626,10 +652,13 @@
   }
   
   function getCommand(map, key, ctrlKey, shiftKey, metaKey) {
-    var result = () => {};
+    var result = {
+      command: () => {},
+      name: 'empty'
+    };
     var rmap = map.find(item => item.key == key && item.meta == metaKey && item.ctrl == ctrlKey && item.shift == shiftKey);
     if(typeof rmap !== 'undefined') {
-      result = rmap.command;
+      result = rmap;
     }
     return result;
   }
@@ -1503,7 +1532,9 @@
     //
     // Load key maps from the config directory.
     //
-    var keyMapDir = localFS.appendPath(configDir, 'keyMaps');
+    var keyMapDir = { ...localCurrentCursor.entry };
+    keyMapDir.dir = configDir;
+    keyMapDir.name = 'keyMaps';
     var normalMap;
     var visualMap;
     var insertMap;
@@ -1656,6 +1687,12 @@
         meta: false,
         key: '/',
         command: "toggleQuickSearch"
+      }, {
+        ctrl: false,
+        shift: false,
+        meta: false,
+        key: '.',
+        command: "reRunLastCommand"
       }];
       let defaultVisualMap = [{
         ctrl: false,
@@ -1778,6 +1815,7 @@
         // 
         // Found the command. Set it up.
         //
+        item.name = item.command;
         item.command = cmd.command;
         return(item);
       } else {
