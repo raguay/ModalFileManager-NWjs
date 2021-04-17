@@ -1,6 +1,6 @@
 <div id="extrapanel">
   <h6>{ fullPath }</h6>
-  {#if (extension === '.png') || (extension === '.jpg') || (extension === '.svg') || (extension === '.jpeg') || (extension === '.gif') || (extension === '.apng') || (extension === '.avif') || (extension === '.webp')}
+  {#if (extension === '.png') || (extension === '.jpg') || (extension === '.svg') || (extension === '.jpeg') || (extension === '.gif') || (extension === '.apng') || (extension === '.avif') || (extension === '.webp') || (extension === '.avi')}
     <img src="file:{fullPath}" 
          alt="{fullPath}"
     >
@@ -90,6 +90,8 @@
                    (extension === '.wm')   ||
                    (extension === '.3gp')  ||
                    (extension === '.mpeg') ||
+                   (extension === '.avi')  ||
+                   (extension === '.gif')  ||
                    (extension === '.ogg'));
     return(isMovieFlag);
   }

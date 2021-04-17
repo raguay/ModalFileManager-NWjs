@@ -59,6 +59,7 @@
     <MessageBox
       config={msgBoxConfig}
       spinners={msgBoxSpinners}
+      items={msgBoxItems}
       on:msgReturn={msgReturn}
       on:closeMsgBox={(e) => { 
         showMessageBox = false;
@@ -208,6 +209,7 @@
   let showQuickSearch = false;
   let msgBoxConfig = {};
   let msgBoxSpinners = [];
+  let msgBoxItems = null;
   let msgCallBack = (e) => {};
   let configDir = "";
   let setEditDirFlagLeft = false;
@@ -253,6 +255,7 @@
   let lctrlKey = false;
   let lmetaKey = false;
   let lastCommand = '';
+  let flagFilter = 1;
 
   onMount(() => {
     // 
@@ -585,6 +588,9 @@
     commands.addCommand('Refresh Right Pane', 'refreshRightPane', 'Refresh the Right Pane', refreshRightPane);
     commands.addCommand('Refresh Left Pane', 'refreshLeftPane', 'Reloads the Left Pane.', refreshLeftPane);
     commands.addCommand('Rerun Last Command', 'reRunLastCommand', 'Runs the last command with it\'s number.', reRunLastCommand);
+    commands.addCommand('Toggle Filter', 'toggleFilter', 'Toggles the show all and default filters.', toggleFilter );
+    commands.addCommand('Show All Filter', 'setShowAllFilter', 'Sets to show all Entries.', setShowAllFilter);
+    commands.addCommand('Show Only Non-System Files/Folders', 'setDefaultFilter', 'Sets the default filter of not showing system files/folders.', setDefaultFilter);
   }
   
   function processKey(e) {
@@ -667,6 +673,7 @@
     var index = 0;
     if(localCurrentCursor.pane == 'left') {
       index = leftEntries.findIndex(item => item.name == fname);
+      if(index === -1) index = 0;
       currentCursor.set({
         pane: 'left',
         entry: leftEntries[index]
@@ -676,6 +683,7 @@
       });
     } else {
       index = rightEntries.findIndex(item => item.name == fname);
+      if(index === -1) index = 0;
       currentCursor.set({
         pane: 'right',
         entry: rightEntries[index]
@@ -724,6 +732,7 @@
     if(localCurrentCursor.pane.includes('left')) {
       if(leftEntries.length !== 0 ) {
         index = leftEntries.findIndex(item => item.name == localCurrentCursor.entry.name);
+        if(index === -1) index = 0;
         var entry = leftEntries[index];
         entry.selected = !entry.selected;
         leftEntries[index] = entry;
@@ -742,6 +751,7 @@
     } else {
       if(rightEntries.length !== 0) {
         index = rightEntries.findIndex(item => item.name == localCurrentCursor.entry.name);
+        if(index === -1) index = 0;
         var entry = rightEntries[index];
         entry.selected = !entry.selected;
         rightEntries[index] = entry;
@@ -768,6 +778,7 @@
         if(index > 0) {
           index -= 1;
         }
+        if(index === -1) index = 0;
         currentCursor.set({
           pane: 'left',
           entry: leftEntries[index]
@@ -782,6 +793,7 @@
         if(index > 0) {
           index -= 1;
         }
+        if(index === -1) index = 0;
         currentCursor.set({
           pane: 'right',
           entry: rightEntries[index]
@@ -798,6 +810,7 @@
     if(localCurrentCursor.pane.includes('left')) {
       if(leftEntries.length !== 0) {
         index = leftEntries.findIndex(item => item.name == localCurrentCursor.entry.name);
+        if(index === -1) index = 0;
         var entry = leftEntries[index];
         entry.selected = !entry.selected;
         leftEntries[index] = entry;
@@ -816,6 +829,7 @@
     } else {
       if(rightEntries.length !== 0) {
         index = rightEntries.findIndex(item => item.name == localCurrentCursor.entry.name);
+        if(index === -1) index = 0;
         var entry = rightEntries[index];
         entry.selected = !entry.selected;
         rightEntries[index] = entry;
@@ -1074,22 +1088,64 @@
       sel = false;
     }
     var otherPane = localCurrentCursor.pane === 'left' ? { ...localCurrentRightFile.entry } : { ...localCurrentLeftFile.entry };
-    entries.forEach( item => {
-      item.fileSystem.copyEntries(item, otherPane);
-    });
-    //
-    // Refresh the side copied to.
-    //
-    if(localCurrentCursor.pane === 'left') {
-      refreshLeftPane();
-    } else {
-      refreshRightPane();
+    var count = 0;
+    msgBoxConfig = {
+      title: "Copying Entries",
+      noShowButton: true
+    };
+    msgBoxItems = [];
+    msgBoxItems.push({
+        type: 'label',
+        name: 'msgboxMain',
+        for: 'progress1',
+        text: 'Copying ' + entries.length + ' Entries...'
+      });
+    msgBoxItems.push({
+        type: 'spinner',
+        name: 'progress1',
+        value: 1
+      });
+    msgBoxItems = msgBoxItems;
+    msgReturn = (e) => { showMessageBox = false; };
+    addSpinner('progress1', 1);
+    var cnt = 0;
+    var finish = () => {
     }
+ 
+    entries.forEach((item, key, arr) => {
+      item.fileSystem.copyEntries(item, otherPane, false, (err, stdout)=>{
+        if(key >= (arr.length-1)) {
+          showMessageBox = false;
+          keyProcess.set(true);
+          localKeyProcess = true;
 
+          //
+          // Refresh the side copied to.
+          //
+          if(localCurrentCursor.pane === 'left') {
+            refreshLeftPane();
+          } else {
+            refreshRightPane();
+          }
+
+          //
+          // clear out the selections.
+          //
+          if(sel) clearSelectedFiles();
+
+          //
+          // Remove the spinner from being checked.
+          //
+          removeSpinner('progress1');
+        }
+      });
+      updateSpinner('progress1',((key+1)/entries.length)*100);
+    });
+   
     //
-    // clear out the selections.
+    // It is all set up. Show the message box.
     //
-    if(sel) clearSelectedFiles();
+    showMessageBox = true;
   }
 
   async function swapPanels() {
@@ -1256,13 +1312,14 @@
   function newFile() {
     msgBoxConfig = {
       title: "New File Name",
-      items: [{
-        type: 'input',
-        msg: 'What name do you want to give the new file?',
-        value: '',
-        id: 'msgboxMain'
-      }]
+      noShowButton: false
     };
+    msgBoxItems = [{
+      type: 'input',
+      msg: 'What name do you want to give the new file?',
+      value: '',
+      id: 'msgboxMain'
+    }];
     showMessageBox = true;
     msgCallBack = newFileReturn;
   }
@@ -1299,13 +1356,15 @@
   function newDirectory() {
     msgBoxConfig = {
       title: "New Directory Name",
-      items: [{
-        type: 'input',
-        msg: 'What name do you want to give the new directory?',
-        value: '',
-        id: 'msgboxMain'
-      }]
+      noShowButton: false
     };
+    msgBoxItems = [{
+      type: 'input',
+      msg: 'What name do you want to give the new directory?',
+      value: '',
+      id: 'msgboxMain'
+    }]
+
     showMessageBox = true;
     msgCallBack = newDirectoryReturn;
   }
@@ -1342,13 +1401,14 @@
   function renameEntry() {
     msgBoxConfig = {
       title: "Rename File or Directory",
-      items: [{
-        type: 'input',
-        msg: 'What name do you want to change to?',
-        value: localCurrentCursor.entry.name,
-        id: 'msgboxMain'
-      }]
+      noShowButton: false
     };
+    msgBoxItems = [{
+      type: 'input',
+      msg: 'What name do you want to change to?',
+      value: localCurrentCursor.entry.name,
+      id: 'msgboxMain'
+    }];
     showMessageBox = true;
     msgCallBack = renameReturn;
   }
@@ -1528,6 +1588,32 @@
     showGitHub = !showGitHub;
   }
 
+  function setShowAllFilter() {
+    flagFilter = 0;
+    localFS.setFilter(localFS.allFilter);
+    refreshPanes();
+  }
+
+  function setDefaultFilter() {
+    flagFilter = 1;
+    localFS.setFilter(localFS.defaultFilter);
+    refreshPanes();
+  }
+
+  function toggleFilter() {
+    switch(flagFilter) {
+      case 0:
+        setDefaultFilter();
+        break;
+      case 1:
+        setShowAllFilter();
+        break;
+      default:
+        setDefaultFilter();
+        break;
+    }
+  }
+
   function loadKeyMaps() {
     //
     // Load key maps from the config directory.
@@ -1693,6 +1779,12 @@
         meta: false,
         key: '.',
         command: "reRunLastCommand"
+      }, {
+        ctrl: false,
+        shift: false,
+        meta: false,
+        key: ',',
+        command: "toggleFilter"
       }];
       let defaultVisualMap = [{
         ctrl: false,

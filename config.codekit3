@@ -9,6 +9,14 @@
 	],
 "creatorBuild": "32186",
 "files": {
+	"/.github/FUNDING.yml": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/.github/FUNDING.yml",
+		"oF": 0
+		},
 	"/.gitignore": {
 		"cB": 0,
 		"ft": 8192,
@@ -23,6 +31,14 @@
 		"hM": 0,
 		"oA": 0,
 		"oAP": "/.startproject",
+		"oF": 0
+		},
+	"/LICENSE": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/LICENSE",
 		"oF": 0
 		},
 	"/maskfile.md": {
@@ -43,6 +59,972 @@
 		"pME": 1,
 		"rFN": 0,
 		"uCM": 0
+		},
+	"/misc/libffmpeg.dylib": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/libffmpeg.dylib",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/chromedriver": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/chromedriver",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/credits.html": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/credits.html",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/libffmpeg.dylib": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/libffmpeg.dylib",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/minidump_stackwalk": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/minidump_stackwalk",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjc": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjc",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/app_mode_loader": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/app_mode_loader",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/chrome_crashpad_handler": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/chrome_crashpad_handler",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (GPU).app/Contents/Info.plist": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (GPU).app/Contents/Info.plist",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (GPU).app/Contents/MacOS/nwjs Helper (GPU)": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (GPU).app/Contents/MacOS/nwjs Helper (GPU)",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (GPU).app/Contents/PkgInfo": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (GPU).app/Contents/PkgInfo",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Plugin).app/Contents/Info.plist": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Plugin).app/Contents/Info.plist",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Plugin).app/Contents/MacOS/nwjs Helper (Plugin)": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Plugin).app/Contents/MacOS/nwjs Helper (Plugin)",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Plugin).app/Contents/PkgInfo": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Plugin).app/Contents/PkgInfo",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Renderer).app/Contents/Info.plist": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Renderer).app/Contents/Info.plist",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Renderer).app/Contents/MacOS/nwjs Helper (Renderer)": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Renderer).app/Contents/MacOS/nwjs Helper (Renderer)",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Renderer).app/Contents/PkgInfo": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Renderer).app/Contents/PkgInfo",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper.app/Contents/Info.plist": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper.app/Contents/Info.plist",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper.app/Contents/MacOS/nwjs Helper": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper.app/Contents/MacOS/nwjs Helper",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper.app/Contents/PkgInfo": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper.app/Contents/PkgInfo",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/nacl_irt_x86_64.nexe": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/nacl_irt_x86_64.nexe",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_pnacl_json": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_pnacl_json",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_crtbegin_for_eh_o": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_crtbegin_for_eh_o",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_crtbegin_o": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_crtbegin_o",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_crtend_o": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_crtend_o",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_ld_nexe": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_ld_nexe",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_libcrt_platform_a": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_libcrt_platform_a",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_libgcc_a": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_libgcc_a",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_libpnacl_irt_shim_a": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_libpnacl_irt_shim_a",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_libpnacl_irt_shim_dummy_a": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_libpnacl_irt_shim_dummy_a",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_pnacl_llc_nexe": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_pnacl_llc_nexe",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_pnacl_sz_nexe": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Internet Plug-Ins/pnacl/pnacl_public_x86_64_pnacl_sz_nexe",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/libffmpeg.dylib": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/libffmpeg.dylib",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/libnode.dylib": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/libnode.dylib",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libEGL.dylib": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libEGL.dylib",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libGLESv2.dylib": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libGLESv2.dylib",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libswiftshader_libEGL.dylib": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libswiftshader_libEGL.dylib",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libswiftshader_libGLESv2.dylib": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libswiftshader_libGLESv2.dylib",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libvk_swiftshader.dylib": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libvk_swiftshader.dylib",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/MEIPreload/manifest.json": {
+		"ft": 524288,
+		"oA": 1,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/MEIPreload/manifest-min.json",
+		"oF": 0,
+		"oO": 0,
+		"oS": 1
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/MEIPreload/preloaded_data.pb": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/MEIPreload/preloaded_data.pb",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/vk_swiftshader_icd.json": {
+		"ft": 524288,
+		"oA": 1,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/vk_swiftshader_icd-min.json",
+		"oF": 0,
+		"oO": 0,
+		"oS": 1
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/nwjs Framework": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/nwjs Framework",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/app_mode-Info.plist": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/app_mode-Info.plist",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/en.lproj/locale.pak": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/en.lproj/locale.pak",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/en_GB.lproj/locale.pak": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/en_GB.lproj/locale.pak",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/icudtl.dat": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/icudtl.dat",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/Info.plist": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/Info.plist",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/install.sh": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/install.sh",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/nw_100_percent.pak": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/nw_100_percent.pak",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/nw_200_percent.pak": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/nw_200_percent.pak",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/product_logo_32.png": {
+		"ft": 32768,
+		"iS": 1524,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/product_logo_32.png",
+		"oF": 0,
+		"oIPL": 0,
+		"opt": 0,
+		"oT": 1,
+		"q": 100
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/resources.pak": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/resources.pak",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/th.lproj/locale.pak": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/th.lproj/locale.pak",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/v8_context_snapshot.x86_64.bin": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/v8_context_snapshot.x86_64.bin",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/XPCServices/AlertNotificationService.xpc/Contents/Info.plist": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/XPCServices/AlertNotificationService.xpc/Contents/Info.plist",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/XPCServices/AlertNotificationService.xpc/Contents/MacOS/AlertNotificationService": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/XPCServices/AlertNotificationService.xpc/Contents/MacOS/AlertNotificationService",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Info.plist": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Info.plist",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/MacOS/nwjs": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/MacOS/nwjs",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/PkgInfo": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/PkgInfo",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Resources/app.icns": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Resources/app.icns",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Resources/document.icns": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Resources/document.icns",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Resources/en.lproj/InfoPlist.strings": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Resources/en.lproj/InfoPlist.strings",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Resources/en_GB.lproj/InfoPlist.strings": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Resources/en_GB.lproj/InfoPlist.strings",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Resources/io.nwjs.nwjs.manifest/Contents/Resources/en.lproj/Localizable.strings": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Resources/io.nwjs.nwjs.manifest/Contents/Resources/en.lproj/Localizable.strings",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Resources/io.nwjs.nwjs.manifest/Contents/Resources/io.nwjs.nwjs.manifest": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Resources/io.nwjs.nwjs.manifest/Contents/Resources/io.nwjs.nwjs.manifest",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Resources/scripting.sdef": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Resources/scripting.sdef",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/nwjs.app/Contents/Resources/th.lproj/InfoPlist.strings": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/nwjs.app/Contents/Resources/th.lproj/InfoPlist.strings",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/payload": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/payload",
+		"oF": 0
+		},
+	"/misc/nwjs-sdk/v8_context_snapshot.x86_64.bin": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs-sdk/v8_context_snapshot.x86_64.bin",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/app_mode_loader": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/app_mode_loader",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/chrome_crashpad_handler": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/chrome_crashpad_handler",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (GPU).app/Contents/Info.plist": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (GPU).app/Contents/Info.plist",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (GPU).app/Contents/MacOS/nwjs Helper (GPU)": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (GPU).app/Contents/MacOS/nwjs Helper (GPU)",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (GPU).app/Contents/PkgInfo": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (GPU).app/Contents/PkgInfo",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Plugin).app/Contents/Info.plist": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Plugin).app/Contents/Info.plist",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Plugin).app/Contents/MacOS/nwjs Helper (Plugin)": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Plugin).app/Contents/MacOS/nwjs Helper (Plugin)",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Plugin).app/Contents/PkgInfo": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Plugin).app/Contents/PkgInfo",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Renderer).app/Contents/Info.plist": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Renderer).app/Contents/Info.plist",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Renderer).app/Contents/MacOS/nwjs Helper (Renderer)": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Renderer).app/Contents/MacOS/nwjs Helper (Renderer)",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Renderer).app/Contents/PkgInfo": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper (Renderer).app/Contents/PkgInfo",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper.app/Contents/Info.plist": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper.app/Contents/Info.plist",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper.app/Contents/MacOS/nwjs Helper": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper.app/Contents/MacOS/nwjs Helper",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper.app/Contents/PkgInfo": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Helpers/nwjs Helper.app/Contents/PkgInfo",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/libffmpeg.dylib": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/libffmpeg.dylib",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/libnode.dylib": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/libnode.dylib",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libEGL.dylib": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libEGL.dylib",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libGLESv2.dylib": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libGLESv2.dylib",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libswiftshader_libEGL.dylib": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libswiftshader_libEGL.dylib",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libswiftshader_libGLESv2.dylib": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libswiftshader_libGLESv2.dylib",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libvk_swiftshader.dylib": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/libvk_swiftshader.dylib",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/MEIPreload/manifest.json": {
+		"ft": 524288,
+		"oA": 1,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/MEIPreload/manifest-min.json",
+		"oF": 0,
+		"oO": 0,
+		"oS": 1
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/MEIPreload/preloaded_data.pb": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/MEIPreload/preloaded_data.pb",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/vk_swiftshader_icd.json": {
+		"ft": 524288,
+		"oA": 1,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Libraries/vk_swiftshader_icd-min.json",
+		"oF": 0,
+		"oO": 0,
+		"oS": 1
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/nwjs Framework": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/nwjs Framework",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/app_mode-Info.plist": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/app_mode-Info.plist",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/en.lproj/locale.pak": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/en.lproj/locale.pak",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/en_GB.lproj/locale.pak": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/en_GB.lproj/locale.pak",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/icudtl.dat": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/icudtl.dat",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/Info.plist": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/Info.plist",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/install.sh": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/install.sh",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/nw_100_percent.pak": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/nw_100_percent.pak",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/nw_200_percent.pak": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/nw_200_percent.pak",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/product_logo_32.png": {
+		"ft": 32768,
+		"iS": 1524,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/product_logo_32.png",
+		"oF": 0,
+		"oIPL": 0,
+		"opt": 0,
+		"oT": 1,
+		"q": 100
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/resources.pak": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/resources.pak",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/th.lproj/locale.pak": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/th.lproj/locale.pak",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/v8_context_snapshot.x86_64.bin": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/Resources/v8_context_snapshot.x86_64.bin",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/XPCServices/AlertNotificationService.xpc/Contents/Info.plist": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/XPCServices/AlertNotificationService.xpc/Contents/Info.plist",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/XPCServices/AlertNotificationService.xpc/Contents/MacOS/AlertNotificationService": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Frameworks/nwjs Framework.framework/Versions/89.0.4389.72/XPCServices/AlertNotificationService.xpc/Contents/MacOS/AlertNotificationService",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Info.plist": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Info.plist",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/MacOS/nwjs": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/MacOS/nwjs",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/PkgInfo": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/PkgInfo",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Resources/app.icns": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Resources/app.icns",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Resources/document.icns": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Resources/document.icns",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Resources/en.lproj/InfoPlist.strings": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Resources/en.lproj/InfoPlist.strings",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Resources/en_GB.lproj/InfoPlist.strings": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Resources/en_GB.lproj/InfoPlist.strings",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Resources/io.nwjs.nwjs.manifest/Contents/Resources/en.lproj/Localizable.strings": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Resources/io.nwjs.nwjs.manifest/Contents/Resources/en.lproj/Localizable.strings",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Resources/io.nwjs.nwjs.manifest/Contents/Resources/io.nwjs.nwjs.manifest": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Resources/io.nwjs.nwjs.manifest/Contents/Resources/io.nwjs.nwjs.manifest",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Resources/scripting.sdef": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Resources/scripting.sdef",
+		"oF": 0
+		},
+	"/misc/nwjs.app/Contents/Resources/th.lproj/InfoPlist.strings": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/misc/nwjs.app/Contents/Resources/th.lproj/InfoPlist.strings",
+		"oF": 0
 		},
 	"/node_modules": {
 		"ft": 65536,
@@ -204,6 +1186,14 @@
 		"sC": 3,
 		"tS": 0
 		},
+	"/node_modules/rollup-plugin-node-polyfills/dist/index.mjs": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 1,
+		"oAP": "/node_modules/rollup-plugin-node-polyfills/dist/index.mjs",
+		"oF": 0
+		},
 	"/node_modules/rollup-plugin-svelte/index.js": {
 		"bF": 0,
 		"ft": 64,
@@ -245,6 +1235,14 @@
 		"oAP": "/node_modules/svelte/store/./index.mjs",
 		"oF": 0
 		},
+	"/onivim2-crash.log": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/onivim2-crash.log",
+		"oF": 0
+		},
 	"/package-lock.json": {
 		"ft": 524288,
 		"oA": 1,
@@ -261,53 +1259,50 @@
 		"oO": 0,
 		"oS": 1
 		},
-	"/public/build/bundle.css": {
+	"/public/bundle.bin": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/public/bundle.bin",
+		"oF": 0
+		},
+	"/public/bundle.css": {
 		"aP": 1,
 		"bl": 0,
 		"ft": 16,
 		"ma": 0,
 		"oA": 0,
-		"oAP": "/public/build/bundle-min.css",
+		"oAP": "/public/bundle-min.css",
 		"oF": 0,
 		"oS": 3
 		},
-	"/public/build/bundle.css.map": {
+	"/public/bundle.css.map": {
 		"cB": 0,
 		"ft": 8192,
 		"hM": 0,
 		"oA": 0,
-		"oAP": "/public/build/bundle.css.map",
+		"oAP": "/public/bundle.css.map",
 		"oF": 0
 		},
-	"/public/build/bundle.js": {
+	"/public/bundle.js": {
 		"bF": 0,
 		"ft": 64,
 		"ma": 0,
 		"mi": 1,
 		"oA": 0,
-		"oAP": "/public/build/bundle-min.js",
+		"oAP": "/public/bundle-min.js",
 		"oF": 0,
 		"sC": 3,
 		"tS": 0
 		},
-	"/public/build/bundle.js.map": {
+	"/public/bundle.js.map": {
 		"cB": 0,
 		"ft": 8192,
 		"hM": 0,
 		"oA": 0,
-		"oAP": "/public/build/bundle.js.map",
+		"oAP": "/public/bundle.js.map",
 		"oF": 0
-		},
-	"/public/favicon.png": {
-		"ft": 32768,
-		"iS": 3127,
-		"oA": 0,
-		"oAP": "/public/favicon.png",
-		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
-		"oT": 1,
-		"q": 100
 		},
 	"/public/global.css": {
 		"aP": 1,
@@ -318,6 +1313,22 @@
 		"oAP": "/public/global-min.css",
 		"oF": 0,
 		"oS": 3
+		},
+	"/public/index-dev.html": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/public/index-dev.html",
+		"oF": 0
+		},
+	"/public/index-normal.html": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/public/index-normal.html",
+		"oF": 0
 		},
 	"/public/index.html": {
 		"cB": 0,
@@ -355,7 +1366,7 @@
 		"uCM": 0
 		},
 	"/rollup.config.js": {
-		"bF": 0,
+		"bF": 4,
 		"ft": 64,
 		"ma": 0,
 		"mi": 1,
@@ -364,6 +1375,14 @@
 		"oF": 0,
 		"sC": 3,
 		"tS": 0
+		},
+	"/src/components/CommandPrompt.svelte": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/src/components/CommandPrompt.svelte",
+		"oF": 0
 		},
 	"/src/components/DirectoryListing.svelte": {
 		"cB": 0,
@@ -379,6 +1398,22 @@
 		"hM": 0,
 		"oA": 0,
 		"oAP": "/src/components/Entry.svelte",
+		"oF": 0
+		},
+	"/src/components/ExtraPanel.svelte": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/src/components/ExtraPanel.svelte",
+		"oF": 0
+		},
+	"/src/components/GitHub.svelte": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/src/components/GitHub.svelte",
 		"oF": 0
 		},
 	"/src/components/MessageBox.svelte": {
@@ -495,6 +1530,17 @@
 		"sC": 3,
 		"tS": 0
 		},
+	"/src/modules/util.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "/src/modules/util-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
+		},
 	"/src/modules/windows.js": {
 		"bF": 0,
 		"ft": 64,
@@ -502,6 +1548,17 @@
 		"mi": 1,
 		"oA": 0,
 		"oAP": "/src/modules/windows-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
+		},
+	"/src/stores/config.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "/src/stores/config-min.js",
 		"oF": 0,
 		"sC": 3,
 		"tS": 0
@@ -535,6 +1592,28 @@
 		"mi": 1,
 		"oA": 0,
 		"oAP": "/src/stores/currentRightFile-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
+		},
+	"/src/stores/directoryListeners.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "/src/stores/directoryListeners-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
+		},
+	"/src/stores/dirHistory.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "/src/stores/dirHistory-min.js",
 		"oF": 0,
 		"sC": 3,
 		"tS": 0
@@ -593,6 +1672,14 @@
 		"oF": 0,
 		"sC": 3,
 		"tS": 0
+		},
+	"/v8.log": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/v8.log",
+		"oF": 0
 		}
 	},
 "hooks": [
@@ -601,8 +1688,8 @@
 	},
 "projectAttributes": {
 	"creationDate": 631893863.38570201,
-	"displayValue": "SvelteFileManager",
-	"displayValueWasSetByUser": 0,
+	"displayValue": "ModalFileManager",
+	"displayValueWasSetByUser": 1,
 	"iconImageName": "brackets-unblue",
 	"iconImageWasSetByUser": 0
 	},

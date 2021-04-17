@@ -15,6 +15,7 @@ The low level interface is still being mapped out and changes are happening. Thi
 - [Philosophy](#philosophy)
 - [Current Feature Set](#current-feature-set)
 - [Installation](#installation)
+- [Upgrading](#upgrading)
 - [Command Line Programs Used](#command-line-programs-used)
 - [Configuration Files](#configuration-files)
 - [Source File Layout](#source-file-layout)
@@ -32,10 +33,7 @@ The low level interface is still being mapped out and changes are happening. Thi
 
 ## Philosophy
 
-I started my programming career with Emacs as my main text editor on a main frame computer 
-in college. I really loved Emacs, but had a very hard time remembering all the key commands. 
-I ended up using Vim once for a class I had (the teacher loved Vim) and hit the perverbial Vim 
-wall -- How do I exit this thing! I finally had to kill the process. So, I went back to Emacs.
+I started my programming career with Emacs as my main text editor on a main frame computer in college. I really loved Emacs, but had a very hard time remembering all the key commands.  I ended up using Vim once for a class I had (the teacher loved Vim) and hit the perverbial Vim wall -- How do I exit this thing! I finally had to kill the process. So, I went back to Emacs.
 
 With Spacemacs and Doom-emacs, I learned that the Vim style keyboard was much more efficient. But, I kept going back to the Emacs key memory. I finally decided to really give Vim a run with neovim on my MacBook Air. I even installed Spacevim and really liked it. Now, I'm fully comfortable in the Vim style keyboard (but far from mastering it completely) and have adapted it to many other programs along the way. My current editor of choice is [OniVim2](https://github.com/onivim/oni2) which is the fastest programming editor I've ever used. It is great!
 
@@ -50,7 +48,7 @@ I've created multiple open source resources (I have around 80 GitHub repositorie
 ## Current Feature Set
 
 - Dual pane file manager with vim style model hotkeys for navigation and action launching.
-- Command bar for executing commands (':' in any mode or '<ctrl>p' in normal mode).
+- Command bar for executing commands (`:` in any mode or `<ctrl>p` in normal mode).
 - Fully extendable with extensions using the extensions API
 - Fully extendable to alternate file systems
 - Fully theme-able
@@ -61,15 +59,17 @@ I've created multiple open source resources (I have around 80 GitHub repositorie
 - Watches for changes in the current directory and updates accordingly.
 - Changing directories in the Directory Bar (normal mode `q`) shows a list of matching entries from history and then below the current directory.
 - File editor is configurable by the `~/.myeditorchoice` file (see `Editing Files` below)
-- Integrated with ScriptPad 
+- Integrated with ScriptPad - another project of mine coming soon!
 - Quick Search - a input to type text so that any entry at that level is removed that doesn't have that text in it. Just refresh the pane to get back to normal. I think of it as a quick filter more than a quic search.
-
+- Toggle System files/folders visibility
 
 ## Installation
 
-I have a run script made with [Mask](https://github.com/jakedeichert/mask) and [Node.js](https://nodejs.org/en/). You have to put a copy of [NW.js](https://nwjs.io/) in the 'misc' directory as `nwjs.app`. Or, you can change the script. I'm assuming you aren't changing the scirpt in the following.
+These directions currently work for the macOS. I haven't tested for finished the Linux or Windows installation.
 
-So, download the repository, create the `misc` directory, put nwjs.app in the `misc` directory. On the command line, run the following commands to accomplish these things:
+I have a run script made with [Mask](https://github.com/jakedeichert/mask) and [Node.js](https://nodejs.org/en/). You have to put a copy of [NW.js](https://nwjs.io/) in the 'misc' directory as `nwjs.app`. Or, you can change the script. I'm assuming you aren't changing the script in the following.
+
+So, download the repository, create the `misc` directory, put nwjs.app in the `misc` directory. On the command line, run the following commands to compile and run the program:
 
 ```sh 
 git clone https://github.com/raguay/ModalFileManager.git 
@@ -81,33 +81,30 @@ npm install
 This will install all the libraries for building the project. Then run:
 
 ```sh 
-mask build 
+mask build
 ```
 
 which will build the project. To run the project, run this command:
 
 ```sh 
-mask launchapp
+mask launch
 ``` 
 
-If everything is in place okay, it should then show you the file manager opened to your 
-home directory. Dive in and have fun.
+If everything is in place okay, it should then show you the file manager opened to your home directory. Dive in and have fun.
 
-If you are interested in running in development mode, you have to have the NW.js SDK in the 
-`misc` directory named `nwjs-sdk`. Then you can run:
+If you are interested in running in development mode, you have to have the NW.js SDK in the `misc` directory named `nwjs-sdk`. Then you can run:
 
 ```sh 
-mask launchdev
+mask launch -d
 ``` 
 
 which will launch the sdk version of NW.js with full development tools.
 
-I'm working on making actual releases, but I'm having issues with getting it right on 
-the macOS. You should be able to run it on Windows and Linux, but I haven't tested it 
-on those platforms. Actually, since I'm using mostly command line commands to perform actions, 
-running on Windows will most likely not work currently. But, I to plan on fleshing it out soon. 
-I currently only have a Mac and do all my work on it. Donations will help me expand out to the 
-other platforms, or if anyone wants to lend a hand!
+I'm working on making actual releases, but I'm having issues with getting it right on the macOS. You should be able to run it on Windows and Linux, but I haven't tested it on those platforms. Actually, since I'm using mostly command line commands to perform actions, running on Windows will most likely not work currently. But, I to plan on fleshing it out soon.  I currently only have a Mac and do all my work on it. Donations will help me expand out to the other platforms, or if anyone wants to lend a hand!
+
+## Upgrading
+
+If a new version comes out with new default key mappings, you will either have to manually alter the key maps or delete the `keyMaps` directory in the Modal File Manager configuration directory.
 
 ## Command Line Programs Used
 
@@ -127,7 +124,7 @@ In this configuration directory, there are the `themes`, `extensions`, and `keyM
 
 There is the `history.json` file and the `theme.json` file. The `history.json` file contains a list of directories that the Modal File Manager has visited. I use this to quickly pull up possible paths to go to in the file manager. 
 
-Modal File Manager doesn't use the actual theme files downloaded from GitHub. Those are stored in the `themes` directory and are just referenced. All actually used theming is in the `theme.json` file. When a user changes themes, that file is changed. Therefore, becareful if you manually change this file and want to keep it. It is best to create a theme in the theme directory and load it in the program.
+Modal File Manager doesn't use the actual theme files downloaded from GitHub. Those are stored in the `themes` directory and are just referenced. All actually used theming is in the `theme.json` file. When a user changes themes, that file is changed. Therefore, be careful if you manually change this file and want to keep it. It is best to create a theme in the theme directory and load it in the program.
 
 ## Source File Layout
 
@@ -179,6 +176,7 @@ file in the default file editor.
 - Get Windows working
 - Get Linux tested and working
 - Documentation!
+- Of course, bug fixing!
 
 ## Default Key Bindings
 
@@ -210,6 +208,7 @@ file in the default file editor.
 | `<cmd>p` | toggleCommandPrompt |
 | `:` | toggleCommandPrompt |
 | `.` | reRunLastCommand |
+| `,` | toggleFilter |
 
 ### Visual Mode
 
@@ -269,6 +268,9 @@ These commands can be ran from the command prompt. They all act upon the current
 | `Refresh Left Pane` | This will reload the files in the Left Pane. | refreshLeftPane  |
 | `Refresh Right Pane` | This will reload the files in the Right Pane. | refreshRightPane |
 | `Rerun Last Command` | This will rerun the last command along with it the number of times it was ran. | reRunLastCommand |
+|`Toggle Filter` | Toggles the show all and default filters. | toggleFilter |
+| `Show All Filter` | Sets to show all Entries. | setShowAllFilter |
+| `Show Only Non-System Files/Folders | Sets the default filter of not showing system files/folders. | setDefaultFilter |
 
 ### Extension Commands
 
@@ -292,16 +294,15 @@ hotkeys or command prompt. They are loaded and used in a different way as well.
 | `getSelectedFiles` | Returns a list of Entries that have been selected. |
 | `getCurrentFile`   | Get the current file. |
 | `getCurrentPane` | Get the pane that is currently active. |
-| `addSpinner` | Add a message box spinner value. | addSpinner |
-| `updateSpinner` | Update a message box spinner value. | updateSpinner |
-| `removeSpinner` | Remove a message box spinner value. | removeSpinner |
-| `keyProcessor` | 'Send a keystroke to be processed.' | keyProcessor |
-| `stringKeyProcessor` | 'Send a string of keystrokes to be processed.' | stringKeyProcessor |
+| `addSpinner` | Add a message box spinner value. | 
+| `updateSpinner` | Update a message box spinner value. | 
+| `removeSpinner` | Remove a message box spinner value. | 
+| `keyProcessor` | Send a keystroke to be processed. | 
+| `stringKeyProcessor` | Send a string of keystrokes to be processed. | 
 
 ## Creating Themes
 
-A theme is a GitHub repository or a repository on your system. It is setup as a normal npm 
-project with a `package.json` file. The `package.json` file should be similar to this:
+A theme is a GitHub repository or a repository on your system. It is setup as a normal npm project with a `package.json` file. The `package.json` file should be similar to this:
 
 ```json 
 {
@@ -323,13 +324,9 @@ project with a `package.json` file. The `package.json` file should be similar to
 }
 ```
 
-The subheading `mfmtheme` contains the information the program will use to load the 
-theme. The `main` is set to the path of the JSON file containing the themes values. If 
-it's in the top of the directory, then use just the file name as seen above.
+The subheading `mfmtheme` contains the information the program will use to load the theme. The `main` is set to the path of the JSON file containing the themes values. If it's in the top of the directory, then use just the file name as seen above.
 
-The `type` is 0 for local only and 1 for a GitHub download. The `github` value is the 
-URL to the repository on GitHub. The `description` is shown to the user that should 
-accurately describe the theme.
+The `type` is 0 for local only and 1 for a GitHub download. The `github` value is the URL to the repository on GitHub. The `description` is shown to the user that should accurately describe the theme.
 
 The Theme JSON file is like this one:
 
@@ -356,8 +353,7 @@ The Theme JSON file is like this one:
 
 ```
 
-It should be a proper JSON structure with these definitions. Change the color values 
-as you want.
+It should be a proper JSON structure with these definitions. Change the color values as you want.
 
 ## Creating Extensions
 
@@ -365,13 +361,9 @@ TODO:  Documentation Coming Soon.
 
 ## Adding Video Preview on Extra Panel
 
-The normal copy of NW.js doesn't come with the codeces for displaying videos. In order 
-for this feature, you will have to download the dynamically loaded library for your system 
-from here:  https://github.com/iteufel/nwjs-ffmpeg-prebuilt/releases.
+The normal copy of NW.js doesn't come with the codeces for displaying videos. In order for this feature, you will have to download the dynamically loaded library for your system from here:  https://github.com/iteufel/nwjs-ffmpeg-prebuilt/releases.
 
 Then place this in your copy of NW.js as described in step 5 here:  http://docs.nwjs.io/en/latest/For%20Developers/Enable%20Proprietary%20Codecs/#enable-proprietary-codecs-in-nwjs
 
-With this library in place, the Extra Panel will run mp4 files just fine. I haven't testing 
-other versions since that what I mostly use.
-
+With this library in place, the Extra Panel will run mp4 files just fine. I haven't testing other versions since that what I mostly use.
 

@@ -4,51 +4,68 @@
               border-color: {util.pSBC(.1,$theme.backgroundColor)};
               color: {$theme.textColor};" 
   >
-    <h2>{config.title}</h2>
-    {#each config.items as item}
-      {#if item.type === 'input'}
-        <p>{item.msg}</p>
-        <input type="text" 
-               id="{item.id}"
-               bind:value={item.value}
-               on:keydown={(e) => {
-                if(e.key === 'Enter') {
-                  e.preventDefault();
-                  returnValue(true);
-                }
-               }}
-        />
-      {:else if item.type === 'selector'}
-        <select
-          id="{item.id}"
-          bind:value={item.value}
-        >
-          {#each item.selections as selection}
-            <option
-              value={selection.value}
-            >
-              {selection.name}
-            </option>
-          {/each}
-        </select>
-      {:else if item.type === 'spinner'}
-        <progress
-          id={item.name}
-          value={item.value}
-          max="100"
-        />
-      {:else if item.type === ''}
-        <p>testing</p>
+    {#if config !== null}
+      <h2>{config.title}</h2>
+      {#if typeof items !== null}
+        {#each items as item}
+          {#if typeof item !== 'undefined'}
+            {#if item.type === 'input'}
+              <p>{item.msg}</p>
+              <input type="text" 
+                     id="{item.id}"
+                     bind:value={item.value}
+                     on:keydown={(e) => {
+                      if(e.key === 'Enter') {
+                        e.preventDefault();
+                        returnValue(true);
+                      }
+                     }}
+              />
+            {:else if item.type === 'selector'}
+              <select
+                id="{item.id}"
+                bind:value={item.value}
+              >
+                {#each item.selections as selection}
+                  <option
+                    value={selection.value}
+                  >
+                    {selection.name}
+                  </option>
+                {/each}
+              </select>
+            {:else if item.type === 'spinner'}
+              <progress
+                id={item.name}
+                value={item.value}
+                max="100"
+              />
+            {:else if item.type === 'label'}
+              <label
+                id={item.name}
+                for={item.for}
+              >
+                {item.text}
+              </label>
+            {/if}
+          {:else}
+            <p>System Error</p>
+          {/if}
+        {/each}
+      {:else}
+        <p>System Error</p>
       {/if}
-    {/each}
-    <div id='butRow'>
-      <button on:click={(e) => { returnValue(false); }} >
-        Okay
-      </button>
-      <button on:click={cancel} >
-        Cancel
-      </button>
-    </div>
+      {#if ((typeof config.noShowButton !== 'undefined')&&(!config.noShowButton))}
+        <div id='butRow'>
+          <button on:click={(e) => { returnValue(false); }} >
+            Okay
+          </button>
+          <button on:click={cancel} >
+            Cancel
+          </button>
+        </div>
+      {/if}
+    {/if}
   </div>
 </div>
 
@@ -97,42 +114,44 @@
 
   const dispatch = createEventDispatcher();
 
-  export let config;
+  export let config = null;
+  export let items = null;
   export let spinners = [];
-  
-  $: config = updateSpinners(spinners);
+
+  $: items = updateSpinners(spinners);
 
   onMount(() => {
     //
     // Turn off key processing.
     //
     keyProcess.set(false);
-    
+
     //
     // Return a function to be called when this component no longer
     // is being shown.
     //
     return(() => {
+      keyProcess.set(true);
     })
   });
 
   afterUpdate(async () => {
     await tick();
     var main = window.document.getElementById('msgboxMain');
-    main.focus();
+    if(main !== null) main.focus();
   });
 
   function updateSpinners(spins) {
-    if((typeof config !== 'undefined')&&(typeof spins === 'object')&&(spins.length > 0)) {
-      return config.items.map(item => {
+    if((items !== null)&&((typeof spins.length !== 'undefined')||(spins !== null))&&(spins.length > 0)) {
+      items = items.map(item => {
         if(item.type === 'spinner') {
           const nval = spins.find(spitem => spitem.name === item.name);
-          if(nval !== 'undefined') item.value = nval;
+          if(nval !== 'undefined') item.value = nval.value;
         }
+        return(item);
       });
-    } else {
-      return(config);
     }
+    return(items);
   }
 
   function returnValue(skip) {

@@ -14,6 +14,8 @@ var macOS = {
   dirFirst: true,
   sortFunction: null,
   filterFunction: null,
+  lastError: '',
+  lastOutput: '',
   getExtension: function(file) {
     return path.extname(file);
   },
@@ -77,23 +79,47 @@ var macOS = {
   preserveQuotes: function(str) {
     return(str.replaceAll(/(\"|\'|\`)/gi,'\\$1'));
   },
-  moveEntries: function(from, to) {
+  moveEntries: function(from, to, callback) {
     var fromName = this.preserveQuotes(from.fileSystem.appendPath(from.dir, from.name));
     var toName = this.preserveQuotes(to.dir);
-    childProcess.execSync("mv '" + fromName + "' '" + toName + "'");
+    var that = this;
+    if(typeof callback === 'undefined') {
+      childProcess.exec("mv '" + fromName + "' '" + toName + "'",(err,stdout) => {
+        if(err) that.lastError = err;
+        that.lastOutput = stdout;
+      });
+    } else {
+      childProcess.exec("mv '" + fromName + "' '" + toName + "'", callback);
+    }
   },
-  copyEntries: function(from, to, flag) {
+  copyEntries: function(from, to, flag, callback) {
     if(typeof flag === 'undefined') flag = false;
     var fromName = this.preserveQuotes(from.fileSystem.appendPath(from.dir, from.name));
     var toName = this.preserveQuotes(to.dir);
     if(flag) {
       toName = this.preserveQuotes(to.fileSystem.appendPath(to.dir,to.name));
     }
-    childProcess.execSync("cp -R '" + fromName + "' '" + toName + "'");
+    var that = this;
+    if(typeof callback === 'undefined') {
+      childProcess.exec("cp -R '" + fromName + "' '" + toName + "'",(err,stdout) => {
+        if(err) that.lastError = err;
+        that.lastOutput = stdout;
+      });
+    } else {
+      childProcess.exec("cp -R '" + fromName + "' '" + toName + "'", callback);
+    }
   },
-  deleteEntries: function(entry) {
+  deleteEntries: function(entry, callback) {
     var item = this.preserveQuotes(entry.fileSystem.appendPath(entry.dir, entry.name));
-    childProcess.execSync("rm -R '" + item + "'");
+    var that = this;
+    if(typeof callback === 'undefined') {
+      childProcess.exec("rm -R '" + item + "'",(err,stdout) => {
+        if(err) that.lastError = err;
+        that.lastOutput = stdout;
+      });
+    } else {
+      childProcess.exec("rm -R '" + item + "'", callback);
+    }
   },
   getDirList: function(dir) {
     //
@@ -195,7 +221,15 @@ var macOS = {
     return(entries);
   },
   defaultFilter: function(item) { 
-    return item.name[0] !== '.';
+    return ((item.name[0] !== '.') &&
+            (!item.name.includes('Icon')));
+  },
+  allFilter: function(item) {
+    //
+    // Still, don't show the Icon and DS_Store files.
+    //
+    return((!item.name.includes('Icon')) &&
+           (!item.name.includes('.DS_Store')));
   },
   alphaSort: function(item1, item2) {
     const a = item1.name.toLowerCase();
@@ -275,6 +309,7 @@ var macOS = {
       result = scriptFunction();
     }catch(e) {
       console.log(e);
+      this.lastError = e.toString();
       result = null;
     }
     return(result);
@@ -286,6 +321,7 @@ var macOS = {
         childProcess.exec('/usr/local/bin/fd -i --max-results ' + numEntries + ' -t d "' + pat + '" "' + dir + '"', (err, data) => {
           if(err) { 
             console.log(err);
+            this.lastError = err.toString();
           } else {
             returnFunction(data.toString().split('\n'));
           }
@@ -293,6 +329,7 @@ var macOS = {
       }
     } catch(e) {
       console.log(e);
+      this.lastError = e.toString();
     }
   }
 }

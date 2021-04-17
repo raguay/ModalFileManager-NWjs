@@ -1,20 +1,41 @@
 ## build
 
-```zsh
+> Build the Modal File Manager.
+
+**OPTIONS**
+* dev
+  * flags: -d --dev
+  * type: boolean
+  * desc: Runs the development build which doesn't compile the bitcode.
+
+```fish
 npm run build
-#/Applications/nwjs/nwjc public/build/bundle.js public/build/bundle.bin
-#rm public/build/bundle.js public/map/*.map
+if set -q dev
+  rm public/index.html
+  cp public/index-dev.html public/index.html
+else
+  /Applications/nwjs/nwjc public/bundle.js public/bundle.bin
+  rm public/*.map
+  rm public/index.html
+  cp public/index-normal.html public/index.html
+end
 ```
 
-## launchdev
+## launch
 
-```zsh
-./misc/nwjs-sdk/nwjs.app/Contents/MacOS/nwjs ./public > /dev/null 2>&1 &!
-```
+> Launch the application using the sdk version of NW.js.
 
-## launchapp
+**OPTIONS**
+* dev
+  * flags: -d --dev
+  * type: boolean
+  * desc: Runs the development build which doesn't compile the bitcode.
 
-```zsh
-./misc/nwjs.app/Contents/MacOS/nwjs ./public > /dev/null 2>&1 &!
+```fish
+if set -q dev
+  ./misc/nwjs-sdk/nwjs.app/Contents/MacOS/nwjs ./public > /dev/null 2>&1 &
+else
+  ./misc/nwjs.app/Contents/MacOS/nwjs ./public > /dev/null 2>&1 &
+end
 ```
 

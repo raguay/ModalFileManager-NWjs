@@ -1,11 +1,9 @@
 {
-  "name": "sveltefilemanager",
-  "description": "A file manager for ScriptPad.",
+  "name": "modalfilemanager",
+  "description": "A file manager with Vim style hotkeys",
   "version": "1.0.0",
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "start": "sirv public"
+    "build": "rollup -c"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^14.0.0",
@@ -22,5 +20,12 @@
     "chokidar": "^3.5.1",
     "sirv-cli": "^1.0.10",
     "svelte-icons": "^2.1.0"
+  },
+  "fig": {
+    "build": {
+      "name": "build",
+      "description": "Build the Modal File Manager.",
+      "icon": "🛠️"
+    }
   }
 }
