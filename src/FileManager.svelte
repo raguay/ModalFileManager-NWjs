@@ -1614,6 +1614,263 @@
     }
   }
 
+  function createDefaultKeyMaps() {
+    // 
+    // There are no key map files. We need to create them.
+    // 
+    let defaultNormalMap = [{
+        ctrl: false,
+      shift: true,
+      meta: false,
+      key: ':',
+      command: "toggleCommandPrompt"
+    },{
+        ctrl: true,
+      shift: false,
+      meta: false,
+      key: 'p',
+      command: "toggleCommandPrompt"
+    },{
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 's',
+      command: "toggleExtraPanel"
+    },{
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'q',
+      command: "editDirLoc"
+    },{
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'r',
+      command: "reloadPane"
+    },{
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'p',
+      command: "swapPanels"
+    },{
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'd',
+      command: "duplicateEntry"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'e',
+      command: "editEntry"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'm',
+      command: "moveEntries"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'c',
+      command: "copyEntries"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'x',
+      command: "deleteEntries"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'g',
+      command: "goTopFile"
+    }, {
+        ctrl: false,
+      shift: true,
+      meta: false,
+      key: 'G',
+      command: "goBottomFile"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'ArrowDown',
+      command: "moveCursorDown"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'ArrowUp',
+      command: "moveCursorUp"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'l',
+      command: "goDownDir"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'h',
+      command: "goUpDir"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'Enter',
+      command: "actionEntry"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'Tab',
+      command: "cursorToNextPane"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'k',
+      command: "moveCursorUp"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'j',
+      command: "moveCursorDown"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'i',
+      command: "changeModeInsert"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'v',
+      command: "changeModeVisual"
+    }, {    
+      ctrl: false,
+      shift: false,
+      meta: false,
+      key: '/',
+      command: "toggleQuickSearch"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: '.',
+      command: "reRunLastCommand"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: ',',
+      command: "toggleFilter"
+    }];
+    let defaultVisualMap = [{
+        ctrl: false,
+      shift: true,
+      meta: false,
+      key: ':',
+      command: "toggleCommandPrompt"
+    },{
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'k',
+      command: "moveCursorUpWithSelect"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'j',
+      command: "moveCursorDownWithSelect"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'ArrowDown',
+      command: "moveCursorDown"
+    }, {
+        ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'ArrowUp',
+      command: "moveCursorUp"
+    }, {    
+      ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'Escape',
+      command: "changeModeNormal"
+    }];
+    let defaultInsertMap = [{
+        ctrl: false,
+      shift: true,
+      meta: false,
+      key: ':',
+      command: "toggleCommandPrompt"
+    },{    
+      ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'Escape',
+      command: "changeModeNormal"
+    }, {    
+      ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'd',
+      command: "newDirectory"
+    }, {    
+      ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'f',
+      command: "newFile"
+    }, {    
+      ctrl: false,
+      shift: false,
+      meta: false,
+      key: 'r',
+      command: "renameEntry"
+    }];
+
+    //
+    // create an entry for the keymap directory.
+    //
+    var keyMapDir = { ...localCurrentCursor.entry };
+    keyMapDir.dir = configDir;
+    keyMapDir.name = 'keyMaps';
+
+    // 
+    // Create the directory for the keymaps if it doesn't exist.
+    //
+    if(!localFS.dirExists(keyMapDir)) localFS.createDir(keyMapDir);
+
+    //
+    // Create the default files if they don't exist.
+    //
+    localFS.writeFile(localFS.appendPath(keyMapDir, 'normalKeyMap.json'), JSON.stringify(defaultNormalMap));
+    localFS.writeFile(localFS.appendPath(keyMapDir, 'visualKeyMap.json'), JSON.stringify(defaultVisualMap));
+    localFS.writeFile(localFS.appendPath(keyMapDir, 'insertKeyMap.json'), JSON.stringify(defaultInsertMap));
+    
+    // 
+    // Set the proper commands.
+    //
+    stateMaps['normal'] = processKeyMap(defaultNormalMap);
+    stateMaps['visual'] = processKeyMap(defaultVisualMap);
+    stateMaps['insert'] = processKeyMap(defaultInsertMap);
+  }
+
   function loadKeyMaps() {
     //
     // Load key maps from the config directory.
@@ -1621,280 +1878,40 @@
     var keyMapDir = { ...localCurrentCursor.entry };
     keyMapDir.dir = configDir;
     keyMapDir.name = 'keyMaps';
-    var normalMap;
-    var visualMap;
-    var insertMap;
- 
+
     if(!localFS.dirExists(keyMapDir)) {
-      // 
-      // There are no key map files. We need to create them.
-      // 
-      let defaultNormalMap = [{
-        ctrl: false,
-        shift: true,
-        meta: false,
-        key: ':',
-        command: "toggleCommandPrompt"
-      },{
-        ctrl: true,
-        shift: false,
-        meta: false,
-        key: 'p',
-        command: "toggleCommandPrompt"
-      },{
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 's',
-        command: "toggleExtraPanel"
-      },{
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'q',
-        command: "editDirLoc"
-      },{
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'r',
-        command: "reloadPane"
-      },{
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'p',
-        command: "swapPanels"
-      },{
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'd',
-        command: "duplicateEntry"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'e',
-        command: "editEntry"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'm',
-        command: "moveEntries"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'c',
-        command: "copyEntries"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'x',
-        command: "deleteEntries"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'g',
-        command: "goTopFile"
-      }, {
-        ctrl: false,
-        shift: true,
-        meta: false,
-        key: 'G',
-        command: "goBottomFile"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'ArrowDown',
-        command: "moveCursorDown"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'ArrowUp',
-        command: "moveCursorUp"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'l',
-        command: "goDownDir"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'h',
-        command: "goUpDir"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'Enter',
-        command: "actionEntry"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'Tab',
-        command: "cursorToNextPane"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'k',
-        command: "moveCursorUp"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'j',
-        command: "moveCursorDown"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'i',
-        command: "changeModeInsert"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'v',
-        command: "changeModeVisual"
-      }, {    
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: '/',
-        command: "toggleQuickSearch"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: '.',
-        command: "reRunLastCommand"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: ',',
-        command: "toggleFilter"
-      }];
-      let defaultVisualMap = [{
-        ctrl: false,
-        shift: true,
-        meta: false,
-        key: ':',
-        command: "toggleCommandPrompt"
-      },{
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'k',
-        command: "moveCursorUpWithSelect"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'j',
-        command: "moveCursorDownWithSelect"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'ArrowDown',
-        command: "moveCursorDown"
-      }, {
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'ArrowUp',
-        command: "moveCursorUp"
-      }, {    
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'Escape',
-        command: "changeModeNormal"
-      }];
-      let defaultInsertMap = [{
-        ctrl: false,
-        shift: true,
-        meta: false,
-        key: ':',
-        command: "toggleCommandPrompt"
-      },{    
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'Escape',
-        command: "changeModeNormal"
-      }, {    
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'd',
-        command: "newDirectory"
-      }, {    
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'f',
-        command: "newFile"
-      }, {    
-        ctrl: false,
-        shift: false,
-        meta: false,
-        key: 'r',
-        command: "renameEntry"
-      }];
-
-      // 
-      // Create the directory for the keymaps.
-      //
-      localFS.createDir(keyMapDir);
-
-      //
-      // Create the default files.
-      //
-      localFS.writeFile(localFS.appendPath(keyMapDir, 'normalKeyMap.json'), JSON.stringify(defaultNormalMap));
-      localFS.writeFile(localFS.appendPath(keyMapDir, 'visualKeyMap.json'), JSON.stringify(defaultVisualMap));
-      localFS.writeFile(localFS.appendPath(keyMapDir, 'insertKeyMap.json'), JSON.stringify(defaultInsertMap));
-      
-      // 
-      // Set the proper commands.
-      //
-      normalMap = processKeyMap(defaultNormalMap);
-      visualMap = processKeyMap(defaultVisualMap);
-      insertMap = processKeyMap(defaultInsertMap);
+      createDefaultKeyMaps();
     } else {
       // 
-      // The keymaps are there. let's load them in.
+      // The keymap directory is there. let's load the files.
       // 
-      var defaultNormalMap = JSON.parse(localFS.readFile(localFS.appendPath(keyMapDir, 'normalKeyMap.json')));
-      var defaultVisualMap = JSON.parse(localFS.readFile(localFS.appendPath(keyMapDir, 'visualKeyMap.json')));
-      var defaultInsertMap = JSON.parse(localFS.readFile(localFS.appendPath(keyMapDir, 'insertKeyMap.json')));
+      var defaultInsertMap;
+      var defaultNormalMap;
+      var defaultVisualMap;
+
+      var fileLoc = localFS.appendPath(keyMapDir, 'normalKeyMap.json');
+      if(!localFS.fileExists(fileLoc)) {
+        createDefaultKeyMaps();
+      }
+      defaultNormalMap = JSON.parse(localFS.readFile(fileLoc));
+      fileLoc = localFS.appendPath(keyMapDir, 'visualKeyMap.json')
+      if(!localFS.fileExists(fileLoc)) {
+        createDefaultKeyMaps();
+      }
+      defaultVisualMap = JSON.parse(localFS.readFile(fileLoc));
+      fileLoc = localFS.appendPath(keyMapDir, 'insertKeyMap.json');
+      if(!localFS.fileExists(fileLoc)) {
+        createDefaultKeyMaps();
+      }
+      defaultInsertMap = JSON.parse(localFS.readFile(fileLoc));
 
       // 
       // Process the maps.
       //
-      normalMap = processKeyMap(defaultNormalMap);
-      visualMap = processKeyMap(defaultVisualMap);
-      insertMap = processKeyMap(defaultInsertMap);
+      stateMaps['normal'] = processKeyMap(defaultNormalMap);
+      stateMaps['visual'] = processKeyMap(defaultVisualMap);
+      stateMaps['insert'] = processKeyMap(defaultInsertMap);
     }
-
-    // 
-    // Setup the loaded key maps.
-    //
-    stateMaps['normal'] = normalMap;
-    stateMaps['visual'] = visualMap;
-    stateMaps['insert'] = insertMap;
   }
 
   function processKeyMap(kmap) {
