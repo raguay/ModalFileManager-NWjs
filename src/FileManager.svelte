@@ -1329,7 +1329,7 @@
     // Setup a null callback.
     //
     msgCallBack = (e) => {};
-    var nfname = data.ans.items[0].value;
+    var nfname = data[0].value;
 
     //
     // Create the new file.
@@ -1374,7 +1374,7 @@
     // Setup a null callback.
     //
     msgCallBack = (e) => {};
-    var ndname = data.ans.items[0].value;
+    var ndname = data[0].value;
 
     //
     // Create the new file.
@@ -1418,7 +1418,9 @@
     // Setup a null callback.
     //
     msgCallBack = (e) => {};
-    var nname = data.ans.items[0].value;
+    console.log(data);
+    
+    var nname = data[0].value;
 
     //
     // Create the new file.
@@ -1480,7 +1482,7 @@
 
   function msgReturn(e) {
     showMessageBox = false;
-    msgCallBack(e.detail);
+    msgCallBack(e.detail.ans);
   }
 
   function toggleQuickSearch() {

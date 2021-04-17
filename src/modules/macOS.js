@@ -285,6 +285,8 @@ var macOS = {
     fs.writeFileSync(file,data);
   },
   renameEntry: function(oldE, newE) {
+    console.log(oldE);
+    console.log(newE);
     var fromName = this.preserveQuotes(oldE.fileSystem.appendPath(oldE.dir, oldE.name));
     var toName = this.preserveQuotes(newE.fileSystem.appendPath(newE.dir, newE.name));
     childProcess.execSync('mv "' + fromName + '" "' + toName + '"');

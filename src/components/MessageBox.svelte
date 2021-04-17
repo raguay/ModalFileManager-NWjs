@@ -158,7 +158,7 @@
     if(typeof skip === 'undefined') skip = false;
     keyProcess.set(true);
     dispatch('msgReturn', {
-      ans: config
+      ans: items
     });
     dispatch('closeMsgBox',{
       skip: skip
