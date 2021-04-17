@@ -1614,7 +1614,7 @@
     }
   }
 
-  function createDefaultKeyMaps() {
+  function createDefaultNormalMap(keyMapDir) {
     // 
     // There are no key map files. We need to create them.
     // 
@@ -1775,6 +1775,24 @@
       key: ',',
       command: "toggleFilter"
     }];
+    
+    // 
+    // Create the directory for the keymaps if it doesn't exist.
+    //
+    if(!localFS.dirExists(keyMapDir)) localFS.createDir(keyMapDir);
+
+    //
+    // Create the default files if they don't exist.
+    //
+    localFS.writeFile(localFS.appendPath(keyMapDir, 'normalKeyMap.json'), JSON.stringify(defaultNormalMap));
+    
+    // 
+    // Set the proper commands.
+    //
+    stateMaps['normal'] = processKeyMap(defaultNormalMap);
+  }
+
+  function createDefaultVisualMap(keyMapDir) {
     let defaultVisualMap = [{
         ctrl: false,
       shift: true,
@@ -1812,6 +1830,24 @@
       key: 'Escape',
       command: "changeModeNormal"
     }];
+    
+    // 
+    // Create the directory for the keymaps if it doesn't exist.
+    //
+    if(!localFS.dirExists(keyMapDir)) localFS.createDir(keyMapDir);
+
+    //
+    // Create the default files if they don't exist.
+    //
+    localFS.writeFile(localFS.appendPath(keyMapDir, 'visualKeyMap.json'), JSON.stringify(defaultVisualMap));
+    
+    // 
+    // Set the proper commands.
+    //
+    stateMaps['visual'] = processKeyMap(defaultVisualMap);
+  }
+  
+  function createDefaultInsertMap(keyMapDir) {
     let defaultInsertMap = [{
         ctrl: false,
       shift: true,
@@ -1844,13 +1880,6 @@
       command: "renameEntry"
     }];
 
-    //
-    // create an entry for the keymap directory.
-    //
-    var keyMapDir = { ...localCurrentCursor.entry };
-    keyMapDir.dir = configDir;
-    keyMapDir.name = 'keyMaps';
-
     // 
     // Create the directory for the keymaps if it doesn't exist.
     //
@@ -1859,15 +1888,11 @@
     //
     // Create the default files if they don't exist.
     //
-    localFS.writeFile(localFS.appendPath(keyMapDir, 'normalKeyMap.json'), JSON.stringify(defaultNormalMap));
-    localFS.writeFile(localFS.appendPath(keyMapDir, 'visualKeyMap.json'), JSON.stringify(defaultVisualMap));
     localFS.writeFile(localFS.appendPath(keyMapDir, 'insertKeyMap.json'), JSON.stringify(defaultInsertMap));
     
     // 
     // Set the proper commands.
     //
-    stateMaps['normal'] = processKeyMap(defaultNormalMap);
-    stateMaps['visual'] = processKeyMap(defaultVisualMap);
     stateMaps['insert'] = processKeyMap(defaultInsertMap);
   }
 
@@ -1880,37 +1905,30 @@
     keyMapDir.name = 'keyMaps';
 
     if(!localFS.dirExists(keyMapDir)) {
-      createDefaultKeyMaps();
+      createDefaultNormalMap(keyMapDir);
+      createDefaultVisualMap(keyMapDir);
+      createDefaultInsertMap(keyMapDir);
     } else {
       // 
       // The keymap directory is there. let's load the files.
       // 
-      var defaultInsertMap;
-      var defaultNormalMap;
-      var defaultVisualMap;
-
       var fileLoc = localFS.appendPath(keyMapDir, 'normalKeyMap.json');
       if(!localFS.fileExists(fileLoc)) {
-        createDefaultKeyMaps();
+        createDefaultNormalMap(keyMapDir);
       }
-      defaultNormalMap = JSON.parse(localFS.readFile(fileLoc));
+      stateMaps['normal'] = processKeyMap(JSON.parse(localFS.readFile(fileLoc)));
+
       fileLoc = localFS.appendPath(keyMapDir, 'visualKeyMap.json')
       if(!localFS.fileExists(fileLoc)) {
-        createDefaultKeyMaps();
+        createDefaultVisualMap(keyMapDir);
       }
-      defaultVisualMap = JSON.parse(localFS.readFile(fileLoc));
+      stateMaps['visual'] = processKeyMap(JSON.parse(localFS.readFile(fileLoc)));
+      
       fileLoc = localFS.appendPath(keyMapDir, 'insertKeyMap.json');
       if(!localFS.fileExists(fileLoc)) {
-        createDefaultKeyMaps();
+        createDefaultInsertMap(keyMapDir);
       }
-      defaultInsertMap = JSON.parse(localFS.readFile(fileLoc));
-
-      // 
-      // Process the maps.
-      //
-      stateMaps['normal'] = processKeyMap(defaultNormalMap);
-      stateMaps['visual'] = processKeyMap(defaultVisualMap);
-      stateMaps['insert'] = processKeyMap(defaultInsertMap);
+      stateMaps['insert'] = processKeyMap(JSON.parse(localFS.readFile(fileLoc)));
     }
   }
 
