@@ -34,9 +34,10 @@ export default {
 		sourcemap: true,
 		format: 'iife',
 		name: 'app',
-	file: 'public/bundle.js'
+    file: 'public/bundle.js'
 	},
 	plugins: [
+	nodePolyfills(),
 		svelte({
 			// enable run-time checks when not in production
 			dev: !production,
@@ -57,7 +58,6 @@ export default {
 			dedupe: ['svelte']
 		}),
 	commonjs(),
-	nodePolyfills(),
 
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated
