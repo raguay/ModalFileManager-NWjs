@@ -1063,18 +1063,55 @@
       entries.push(localCurrentCursor.entry);
       sel = false;
     }
-    entries.forEach( item => {
-      item.fileSystem.deleteEntries(item);
-    });
+    msgBoxConfig = {
+      title: "Deleting Entries",
+      noShowButton: true
+    };
+    msgBoxItems = [];
+    msgBoxItems.push({
+        type: 'label',
+        name: 'msgboxMain',
+        for: 'progress1',
+        text: 'Deleting ' + entries.length + ' Entries...'
+      });
+    msgBoxItems.push({
+        type: 'spinner',
+        name: 'progress1',
+        value: 1
+      });
+    msgBoxItems = msgBoxItems;
+    msgReturn = (e) => { showMessageBox = false; };
+    addSpinner('progress1', 1);
+ 
+    entries.forEach((item, key, arr) => {
+      item.fileSystem.deleteEntries(item, (err, stdout)=>{
+        if(key >= (arr.length-1)) {
+          showMessageBox = false;
+          keyProcess.set(true);
+          localKeyProcess = true;
 
+          //
+          // Refresh the side deleted from.
+          //
+          if(localCurrentCursor.pane === 'left') {
+            refreshLeftPane();
+          } else {
+            refreshRightPane();
+          }
+
+          //
+          // Remove the spinner from being checked.
+          //
+          removeSpinner('progress1');
+        }
+      });
+      updateSpinner('progress1',((key+1)/entries.length)*100);
+    });
+   
     //
-    // Refresh the file list.
+    // It is all set up. Show the message box.
     //
-    if(localCurrentCursor.pane === 'left') {
-      refreshLeftPane();
-    } else {
-      refreshRightPane(); 
-    }
+    showMessageBox = true;
   }
 
   function copyEntries() {
@@ -1088,7 +1125,6 @@
       sel = false;
     }
     var otherPane = localCurrentCursor.pane === 'left' ? { ...localCurrentRightFile.entry } : { ...localCurrentLeftFile.entry };
-    var count = 0;
     msgBoxConfig = {
       title: "Copying Entries",
       noShowButton: true
@@ -1108,9 +1144,6 @@
     msgBoxItems = msgBoxItems;
     msgReturn = (e) => { showMessageBox = false; };
     addSpinner('progress1', 1);
-    var cnt = 0;
-    var finish = () => {
-    }
  
     entries.forEach((item, key, arr) => {
       item.fileSystem.copyEntries(item, otherPane, false, (err, stdout)=>{
@@ -1234,14 +1267,56 @@
       sel = false;
     }
     var otherPane = localCurrentCursor.pane === 'left' ? localCurrentRightFile.entry : localCurrentLeftFile.entry;
-    entries.forEach( item => {
-      item.fileSystem.moveEntries(item, otherPane);
-    });
+    msgBoxConfig = {
+      title: "Moving Entries",
+      noShowButton: true
+    };
+    msgBoxItems = [];
+    msgBoxItems.push({
+        type: 'label',
+        name: 'msgboxMain',
+        for: 'progress1',
+        text: 'Moving ' + entries.length + ' Entries...'
+      });
+    msgBoxItems.push({
+        type: 'spinner',
+        name: 'progress1',
+        value: 1
+      });
+    msgBoxItems = msgBoxItems;
+    msgReturn = (e) => { showMessageBox = false; };
+    addSpinner('progress1', 1);
+ 
+    entries.forEach((item, key, arr) => {
+      item.fileSystem.moveEntries(item, otherPane, (err, stdout)=>{
+        if(key >= (arr.length-1)) {
+          showMessageBox = false;
+          keyProcess.set(true);
+          localKeyProcess = true;
 
+          //
+          // Refresh both sides.
+          //
+          refreshPanes();
+
+          //
+          // clear out the selections.
+          //
+          if(sel) clearSelectedFiles();
+
+          //
+          // Remove the spinner from being checked.
+          //
+          removeSpinner('progress1');
+        }
+      });
+      updateSpinner('progress1',((key+1)/entries.length)*100);
+    });
+   
     //
-    // Refresh both sides.
+    // It is all set up. Show the message box.
     //
-    refreshPanes();
+    showMessageBox = true;
   }
 
   function refreshRightPane() {
@@ -1621,139 +1696,139 @@
     // There are no key map files. We need to create them.
     // 
     let defaultNormalMap = [{
-        ctrl: false,
+      ctrl: false,
       shift: true,
       meta: false,
       key: ':',
       command: "toggleCommandPrompt"
     },{
-        ctrl: true,
+      ctrl: true,
       shift: false,
       meta: false,
       key: 'p',
       command: "toggleCommandPrompt"
     },{
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 's',
       command: "toggleExtraPanel"
     },{
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'q',
       command: "editDirLoc"
     },{
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'r',
       command: "reloadPane"
     },{
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'p',
       command: "swapPanels"
     },{
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'd',
       command: "duplicateEntry"
     }, {
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'e',
       command: "editEntry"
     }, {
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'm',
       command: "moveEntries"
     }, {
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'c',
       command: "copyEntries"
     }, {
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'x',
       command: "deleteEntries"
     }, {
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'g',
       command: "goTopFile"
     }, {
-        ctrl: false,
+      ctrl: false,
       shift: true,
       meta: false,
       key: 'G',
       command: "goBottomFile"
     }, {
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'ArrowDown',
       command: "moveCursorDown"
     }, {
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'ArrowUp',
       command: "moveCursorUp"
     }, {
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'l',
       command: "goDownDir"
     }, {
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'h',
       command: "goUpDir"
     }, {
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'Enter',
       command: "actionEntry"
     }, {
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'Tab',
       command: "cursorToNextPane"
     }, {
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'k',
       command: "moveCursorUp"
     }, {
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'j',
       command: "moveCursorDown"
     }, {
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'i',
       command: "changeModeInsert"
     }, {
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: 'v',
@@ -1765,13 +1840,13 @@
       key: '/',
       command: "toggleQuickSearch"
     }, {
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: '.',
       command: "reRunLastCommand"
     }, {
-        ctrl: false,
+      ctrl: false,
       shift: false,
       meta: false,
       key: ',',

@@ -14,7 +14,7 @@ if set -q dev
   rm public/index.html
   cp public/index-dev.html public/index.html
 else
-  /Applications/nwjs/nwjc public/bundle.js public/bundle.bin
+  /Applications/nwjs-sdk/nwjc public/bundle.js public/bundle.bin
   rm public/*.map
   rm public/index.html
   cp public/index-normal.html public/index.html
@@ -33,9 +33,9 @@ end
 
 ```fish
 if set -q dev
-  ./misc/nwjs-sdk/nwjs.app/Contents/MacOS/nwjs ./public > /dev/null 2>&1 &
+  /Applications/nwjs-sdk/nwjs.app/Contents/MacOS/nwjs ./public > /dev/null 2>&1 &
 else
-  ./misc/nwjs.app/Contents/MacOS/nwjs ./public > /dev/null 2>&1 &
+  /Applications/nwjs.app/Contents/MacOS/nwjs ./public > /dev/null 2>&1 &
 end
 ```
 

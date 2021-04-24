@@ -77,7 +77,7 @@ var macOS = {
     fs.mkdirSync(this.preserveQuotes(dir));
   },
   preserveQuotes: function(str) {
-    return(str.replaceAll(/(\"|\'|\`)/gi,'\\$1'));
+    return(str);
   },
   moveEntries: function(from, to, callback) {
     var fromName = this.preserveQuotes(from.fileSystem.appendPath(from.dir, from.name));

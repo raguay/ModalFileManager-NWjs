@@ -13,7 +13,7 @@
   >
     {localCurrentCursor.pane}
   </span>
-  <span class='file'>
+  <span class='file customdata' data-tooltip='{localCurrentCursor.entry.name}' data-tpbgcolor='{$theme.textColor}' data-tpcolor='{$theme.backgroundColor}' >
     {localCurrentCursor.entry.name}
   </span>
   <span class='file'
@@ -62,7 +62,24 @@
     margin: 0px 5px;
     padding: 5px 5px;
     min-width: 50px;
+    overflow: hidden;
   }
+
+  span.customdata {
+    position: relative ;
+  }
+
+  span.customdata:hover::after {
+    content: attr(data-tooltip) ;
+    position: fixed;
+    bottom: 2em ;
+    min-width: 200px ;
+    border: 1px #808080 solid ;
+    padding: 8px ;
+    color: attr(data-tpcolor) ;
+    background-color: attr(data-tpbgcolor) ;
+    z-index: 1 ;
+  } 
 </style>
 
 <script>
