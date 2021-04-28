@@ -1,28 +1,34 @@
 <div id='statusLine' style='padding: 0px; 
                       margin: 0px; 
-                      background-color: {$theme.backgroundColor};
-                      color: {$theme.textColor};
+                      background-color: {$theme.textColor};
+                      color: {$theme.backgroudColor};
                       border-top: 3px solid {$theme.borderColor};'>
   <span class='state' 
-        style='background-color: {stateColor};'
+        style='color: "black"; background-color: {stateColor};'
   >
     {localInputState}
   </span>
   <span class='pane'
-        style='color: {$theme.Cyan};'
+        style='color: {$theme.Cyan}; background-color: {$theme.backgroundColor};'
   >
     {localCurrentCursor.pane}
   </span>
-  <span class='file customdata' data-tooltip='{localCurrentCursor.entry.name}' data-tpbgcolor='{$theme.textColor}' data-tpcolor='{$theme.backgroundColor}' >
+  <span class='file customdata' 
+        style='color: {$theme.color}; background-color: {$theme.backgroundColor};'
+        data-tooltip='{localCurrentCursor.entry.name}' 
+  >
     {localCurrentCursor.entry.name}
   </span>
-  <span class='file'
-        style='color: {$theme.Orange};'
+  <span class='file customdata'
+        style='color: {$theme.Orange}; background-color: {$theme.backgroundColor};'
+        data-tooltip='{localCurrentCursor.entry.datetime}' 
   >
     {localCurrentCursor.entry.datetime}
   </span>
   <span class='file'
-        style='color: {$theme.Green};'
+        style='color: {$theme.Green}; 
+               background-color: {$theme.backgroundColor};
+               flex-grow: 2;'
   >
     {size}
   </span>
@@ -45,40 +51,41 @@
   }
 
   .pane {
-    margin: 0px 5px;
-    padding: 5px 5px;
-    width: 30px;
+    margin: 0px;
+    padding: 5px 5px 5px 10px;
+    width: 35px;
     min-width: 50px;
   }
 
   .state {
-    margin: 0px 0px;
+    margin: 0px;
     padding: 5px 10px 5px 10px;
     color: black;
     min-width: 50px;
   }
 
   .file {
-    margin: 0px 5px;
-    padding: 5px 5px;
+    margin: 0px;
+    padding: 5px 10px 5px 5px;
     min-width: 50px;
     overflow: hidden;
+    white-space: nowrap;
   }
 
   span.customdata {
     position: relative ;
   }
 
-  span.customdata:hover::after {
-    content: attr(data-tooltip) ;
+  span.customdata:hover::before {
+    content: attr(data-tooltip);
+    background-color: inherit;
+    color: inherit;
     position: fixed;
-    bottom: 2em ;
-    min-width: 200px ;
-    border: 1px #808080 solid ;
-    padding: 8px ;
-    color: attr(data-tpcolor) ;
-    background-color: attr(data-tpbgcolor) ;
-    z-index: 1 ;
+    bottom: 2em;
+    min-width: 20px;
+    border: 1px #808080 solid;
+    padding: 8px;
+    z-index: 1;
   } 
 </style>
 
@@ -107,7 +114,7 @@
     // Here, we are subscribing to the different stores and setting their 
     // default values;
     //
-    inputState.subscribe(value => {
+    var unSubscribeInputState = inputState.subscribe(value => {
       localInputState = value;
       switch(value) {
         case 'normal':
@@ -121,7 +128,7 @@
           break;
       }
     })
-    currentCursor.subscribe(value => {
+    var unSubscribeCurrentCursor = currentCursor.subscribe(value => {
       localCurrentCursor = value;
       if(typeof value.entry === 'undefined') {
         localCurrentCursor = {
@@ -137,7 +144,7 @@
         size = util.readableSize(localCurrentCursor.entry.size);
       }
     });
-   theme.subscribe(value => {
+    var unSubscribeTheme = theme.subscribe(value => {
       localTheme = value;
       switch(localInputState) {
         case 'normal':
@@ -150,7 +157,12 @@
           stateColor = localTheme.visualbackgroundColor;
           break;
       }
-    });    
-  })
+    });
+    return(() => {
+      unSubscribeTheme();
+      unSubscribeCurrentCursor();
+      unSubscribeInputState();
+    })
+  });
 </script>
 

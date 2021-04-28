@@ -550,6 +550,8 @@
     extensions.addExtCommand('removeSpinner', 'Remove a message box spinner value.', removeSpinner);
     extensions.addExtCommand('keyProcessor', 'Send a keystroke to be processed.', keyProcessor);
     extensions.addExtCommand('stringKeyProcessor', 'Send a string of keystrokes to be processed.', stringKeyProcessor);
+    extensions.addExtCommand('askQuestion', 'Ask a question and get the response.', askQuestion);
+    extensions.addExtCommand('pickItem', 'Chose from a list of items.', pickItem);
   }
 
   function installDefaultCommands() {
@@ -1080,7 +1082,7 @@
         value: 1
       });
     msgBoxItems = msgBoxItems;
-    msgReturn = (e) => { showMessageBox = false; };
+    msgCallBack = (e) => { showMessageBox = false; };
     addSpinner('progress1', 1);
  
     entries.forEach((item, key, arr) => {
@@ -1142,7 +1144,7 @@
         value: 1
       });
     msgBoxItems = msgBoxItems;
-    msgReturn = (e) => { showMessageBox = false; };
+    msgCallBack = (e) => { showMessageBox = false; };
     addSpinner('progress1', 1);
  
     entries.forEach((item, key, arr) => {
@@ -1284,7 +1286,7 @@
         value: 1
       });
     msgBoxItems = msgBoxItems;
-    msgReturn = (e) => { showMessageBox = false; };
+    msgCallBack = (e) => { showMessageBox = false; };
     addSpinner('progress1', 1);
  
     entries.forEach((item, key, arr) => {
@@ -1382,6 +1384,36 @@
   function refreshPanes() {
     refreshLeftPane();
     refreshRightPane();
+  }
+
+  function pickItem(title, items, returnValue) {
+    msgBoxConfig = {
+      title: title,
+      noShowButton: false
+    };
+    msgBoxItems = [{
+      type: 'selector',
+      selections: items,
+      value: items[0],
+      id: 'msgboxMain'
+    }];
+    showMessageBox = true;
+    msgCallBack = returnValue;
+  }
+
+  function askQuestion(title, question, returnValue) {
+    msgBoxConfig = {
+      title: title,
+      noShowButton: false
+    };
+    msgBoxItems = [{
+      type: 'input',
+      msg: question,
+      value: '',
+      id: 'msgboxMain'
+    }];
+    showMessageBox = true;
+    msgCallBack = returnValue;
   }
 
   function newFile() {
