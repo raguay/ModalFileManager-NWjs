@@ -1409,7 +1409,7 @@
       noShowButton: false
     };
     msgBoxItems = [{
-      type: 'selector',
+      type: 'picker',
       selections: items,
       value: items[0].value,
       id: 'msgboxMain'

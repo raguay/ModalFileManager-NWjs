@@ -34,6 +34,48 @@
                   </option>
                 {/each}
               </select>
+            {:else if item.type === 'picker'}
+              <div
+                id='pickerDiv'
+              >
+                <input
+                  id="{item.id}"
+                  bind:value={pickerValue}
+                  on:keydown|preventDefault={pickerInputChange}
+                >
+                <div
+                  id="{item.id}picker"
+                  class="picker"
+                  bind:this={pickerDOM}
+                >
+                  {#each pickerItems as selection, key }
+                    {#if key === pickerNum }
+                      <a 
+                        href="/#"
+                        class="pickerSelected"
+                        style="color: {$theme.backgroundColor};
+                               background-color: {$theme.textColor};"
+                        on:click|preventDefault={(e) => {
+                          pickerSelected(selection);
+                        }}
+                      >
+                        {selection.name}
+                      </a>
+                    {:else}
+                      <a 
+                        href="/#"
+                        style="background-color: {$theme.backgroundColor};
+                               color: {$theme.textColor};"
+                        on:click|preventDefault={(e) => {
+                          pickerSelected(selection);
+                        }}
+                      >
+                        {selection.name}
+                      </a>
+                    {/if}
+                  {/each}
+                </div>
+              </div>
             {:else if item.type === 'spinner'}
               <progress
                 id={item.name}
@@ -104,6 +146,24 @@
     margin: auto auto auto 10px;
     border-radius: 5px;
   }
+
+  #pickerDiv input {
+    width: 100%
+  }
+
+  .picker {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  .picker a {
+    text-decoration: none;
+  }
+
+  .pickerSelected {
+  }
 </style>
 
 <script>
@@ -118,7 +178,15 @@
   export let items = null;
   export let spinners = [];
 
+  let pickerNum = 0;
+  let pickerItems = [];
+  let pickerItemsOrig = [];
+  let pickerValue = "";
+  let pickerDOM;
+
   $: items = updateSpinners(spinners);
+  $: updateItems(items);
+  $: updateHeight(pickerDOM);
 
   onMount(() => {
     //
@@ -157,6 +225,7 @@
   function returnValue(skip) {
     if(typeof skip === 'undefined') skip = false;
     keyProcess.set(true);
+    if(pickerItems.length > 0) items[0].value = pickerItems[pickerNum].value;
     dispatch('msgReturn', {
       ans: items
     });
@@ -171,6 +240,91 @@
     dispatch('closeMsgBox',{
       skip:skip
     });
+  }
+
+  function updateHeight(dom) {
+    if(typeof dom !== 'undefined') {
+      dom.style.maxHeight = new Number(document.body.clientHeight - 200).toString() + 'px';
+    }
+  }
+
+  function pickerInputChange(e) {
+    if(e.key === 'ArrowUp') {
+      movePickerBar(-1);
+    } else if(e.key === 'ArrowDown') {
+      movePickerBar(1);
+    } else if(e.key === 'Escape') {
+      //
+      // Enter key. Take the highlighted value and return.
+      //
+      keyProcess.set(true);
+      dispatch('closeMsgBox',{
+        skip: false
+      });
+    } else if(((e.which >= 48)&&(e.which <= 90))||(e.which >= 186)||(e.which === 32)) {
+      pickerValue += e.key;
+      var cur = pickerValue.toLowerCase();
+      pickerItems = pickerItemsOrig.filter( it => it.name.toLowerCase().includes(cur));
+      movePickerBar(0);
+    } else if(e.keyCode === 8) {
+      pickerValue = pickerValue.slice(0, pickerValue.length-1);
+      var cur = pickerValue.toLowerCase();
+      pickerItems = pickerItemsOrig.filter( it => it.name.toLowerCase().includes(cur));
+      movePickerBar(0);
+    } else if(e.which === 13) {
+      //
+      // Enter key. Take the highlighted value and return.
+      //
+      keyProcess.set(true);
+      dispatch('msgReturn', {
+        ans: [{
+          type: 'picker',
+          value: pickerItems[pickerNum].value
+        }]
+      });
+      dispatch('closeMsgBox',{
+        skip: true
+      });
+    }
+  } 
+
+  function pickerSelected(sel) {
+    //
+    // Enter key. Take the highlighted value and return.
+    //
+    keyProcess.set(true);
+    dispatch('msgReturn', {
+      ans: [{
+        type: 'picker',
+        value: sel.value
+      }]
+    });
+    dispatch('closeMsgBox',{
+      skip: true
+    });
+  }
+
+  function updateItems(itms) {
+    itms.forEach(itm => {
+      if(itm.type === 'picker') {
+        pickerItems = itm.selections;
+        pickerItemsOrig = itm.selections;
+      }
+    })
+  }
+  
+  function movePickerBar(amount) {
+    pickerNum = pickerNum + amount;
+    if(pickerNum > pickerItems.length - 1) pickerNum = pickerItems.length - 1;
+    if(pickerNum < 0) pickerNum = 0;
+    
+    if(pickerDOM !== null) {
+      var itemDOM = window.document.body.getElementsByClassName('pickerSelected')[0];
+      var cur = pickerNum * itemDOM.clientHeight;
+      if(pickerDOM.clientHeight < cur) pickerDOM.scrollTop += itemDOM.clientHeight; 
+      if(pickerDOM.scrollTop > cur) pickerDOM.scrollTop = cur;
+      if(pickerDOM.scrollTop < 0) DOM.scrollTop = 0;
+    }
   }
 </script>
 
