@@ -299,7 +299,10 @@ hotkeys or command prompt. They are loaded and used in a different way as well.
 | `removeSpinner` | Remove a message box spinner value. | 
 | `keyProcessor` | Send a keystroke to be processed. | 
 | `stringKeyProcessor` | Send a string of keystrokes to be processed. | 
-
+| `askQuestion` | Ask a question and get the response. |
+| `pickItem` | Choose from a list of items. |
+| `showMessage` | Show a message to the user. |
+ 
 ## Creating Themes
 
 A theme is a GitHub repository or a repository on your system. It is setup as a normal npm project with a `package.json` file. The `package.json` file should be similar to this:

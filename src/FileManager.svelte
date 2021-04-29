@@ -551,7 +551,8 @@
     extensions.addExtCommand('keyProcessor', 'Send a keystroke to be processed.', keyProcessor);
     extensions.addExtCommand('stringKeyProcessor', 'Send a string of keystrokes to be processed.', stringKeyProcessor);
     extensions.addExtCommand('askQuestion', 'Ask a question and get the response.', askQuestion);
-    extensions.addExtCommand('pickItem', 'Chose from a list of items.', pickItem);
+    extensions.addExtCommand('pickItem', 'Choose from a list of items.', pickItem);
+    extensions.addExtCommand('showMessage', 'Show a message to the user.', showMessage);
   }
 
   function installDefaultCommands() {
@@ -909,6 +910,7 @@
 
   function changeDir(dirOb, npane) {
     var ndir = dirOb.path;
+    if(typeof npane === 'undefined') npane = localCurrentCursor.pane;
     if(typeof dirOb.cursor === 'undefined') dirOb.cursor = true;
     if(npane == 'left') {
       leftDir.set({path: ndir, fileSystemType: localLeftDir.fileSystemType, fileSystem: localLeftDir.fileSystem});
@@ -1386,6 +1388,21 @@
     refreshRightPane();
   }
 
+  function showMessage(title, msg) {
+    msgBoxConfig = {
+      title: title,
+      noShowButton: false
+    };
+    msgBoxItems = [{
+      type: 'label',
+      for: 'msgboxMain',
+      text: msg,
+      id: 'msgboxMain'
+    }];
+    showMessageBox = true;
+    msgCallBack = (e) => {};
+  }
+
   function pickItem(title, items, returnValue) {
     msgBoxConfig = {
       title: title,
@@ -1394,11 +1411,14 @@
     msgBoxItems = [{
       type: 'selector',
       selections: items,
-      value: items[0],
+      value: items[0].value,
       id: 'msgboxMain'
     }];
     showMessageBox = true;
-    msgCallBack = returnValue;
+    msgCallBack = (e) => {
+      returnValue(e[0].value);
+      msgCallBack = (e) => {};
+    };
   }
 
   function askQuestion(title, question, returnValue) {
@@ -1413,7 +1433,10 @@
       id: 'msgboxMain'
     }];
     showMessageBox = true;
-    msgCallBack = returnValue;
+    msgCallBack = (e) => {
+      returnValue(e[0].value);
+      msgCallBack = (e) => {};
+    }
   }
 
   function newFile() {
@@ -1525,8 +1548,6 @@
     // Setup a null callback.
     //
     msgCallBack = (e) => {};
-    console.log(data);
-    
     var nname = data[0].value;
 
     //

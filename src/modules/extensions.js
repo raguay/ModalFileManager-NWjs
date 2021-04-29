@@ -78,6 +78,9 @@ var extensions = {
   getExtensionDir: function() {
     return extensions.extensionDir;
   },
+  getConfigDir: function() {
+    return extensions.localFS.getConfigDir();
+  },
   setFileSystems: function(fs) {
     extensions.fileSystems = fs;
   },

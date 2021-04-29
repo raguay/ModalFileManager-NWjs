@@ -57,8 +57,13 @@ var macOS = {
     if(typeof dir === 'object') dir = this.appendPath(dir.dir, dir.name);
     return fs.readdirSync(this.preserveQuotes(dir));
   },
+  normalize: function(dir) {
+    if(dir[0] === '~') dir = this.appendPath(this.getHomeDir(),dir.slice(1,dir.length));
+    dir = path.normalize(dir);
+    return(dir);
+  },
   dirExists: function(dir) {
-    if(typeof dir.name !== 'undefined') dir = this.appendPath(dir.dir, dir.name);
+    if((typeof dir === 'object') && (typeof dir.name !== 'undefined')) dir = this.appendPath(dir.dir, dir.name);
     return this.fileExists(this.preserveQuotes(dir));
   },
   fileExists: function(file) {
@@ -135,6 +140,7 @@ var macOS = {
     //
     var entries = [];
     if((typeof dir === 'object') && (typeof dir.name !== 'undefined')) dir = this.appendPath(dir.dir, dir.name);
+    dir = this.normalize(dir);
     if(this.dirExists(dir)) {
       var items = fs.readdirSync(dir);
       for (var i=0; i<items.length; i++) {
@@ -285,8 +291,6 @@ var macOS = {
     fs.writeFileSync(file,data);
   },
   renameEntry: function(oldE, newE) {
-    console.log(oldE);
-    console.log(newE);
     var fromName = this.preserveQuotes(oldE.fileSystem.appendPath(oldE.dir, oldE.name));
     var toName = this.preserveQuotes(newE.fileSystem.appendPath(newE.dir, newE.name));
     childProcess.execSync('mv "' + fromName + '" "' + toName + '"');
@@ -296,7 +300,8 @@ var macOS = {
     childProcess.execSync('touch "' + fnm + '"');
   },
   createDir: function(dir) {
-    var dnm = this.preserveQuotes(dir.fileSystem.appendPath(dir.dir, dir.name));
+    var dnm = dir;
+    if(typeof dir === 'object') dnm = this.preserveQuotes(dir.fileSystem.appendPath(dir.dir, dir.name));
     childProcess.execSync('mkdir "' + dnm + '"');
   },
   loadJavaScript: function(file) {

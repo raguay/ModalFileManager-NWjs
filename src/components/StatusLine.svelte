@@ -1,7 +1,5 @@
 <div id='statusLine' style='padding: 0px; 
                       margin: 0px; 
-                      background-color: {$theme.textColor};
-                      color: {$theme.backgroudColor};
                       border-top: 3px solid {$theme.borderColor};'>
   <span class='state' 
         style='color: "black"; background-color: {stateColor};'

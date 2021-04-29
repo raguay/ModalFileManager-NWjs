@@ -1,7 +1,7 @@
 # Changelog
 
 <a name="1.0.0"></a>
-## 1.0.0 (2021-04-24)
+## 1.0.0 (2021-04-28)
 
 ### Added
 
@@ -16,6 +16,8 @@
 
 ### Fixed
 
+- 🐛 StatusLine overflows fixed [[e67c365](https://github.com/raguay/ModalFileManager/commit/e67c365bebe55a01cb912db0ba76ef64d6e3bcf2)]
+- 🐛 StatusLine name and dateline fixed. [[44dd2e2](https://github.com/raguay/ModalFileManager/commit/44dd2e2c8861a0dfc819d8ada4489a974e14caae)]
 - 🐛 Critical bug with MessageBox [[2d0dd5f](https://github.com/raguay/ModalFileManager/commit/2d0dd5f8384cafa3ca106232fcf5a85d5c7293e1)]
 - 🐛 Single config file missing doesn&#x27;t kill the whole thing. [[7569f6b](https://github.com/raguay/ModalFileManager/commit/7569f6bd361832db2e42a1994872c968d072ed95)]
 - 🐛 Extra files generated [[a1fb489](https://github.com/raguay/ModalFileManager/commit/a1fb4896803f48af3a2602b1ca15cd8539c5779a)]

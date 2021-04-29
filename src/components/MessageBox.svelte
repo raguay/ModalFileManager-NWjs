@@ -42,7 +42,7 @@
               />
             {:else if item.type === 'label'}
               <label
-                id={item.name}
+                id={item.id}
                 for={item.for}
               >
                 {item.text}
