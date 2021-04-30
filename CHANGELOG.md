@@ -1,10 +1,11 @@
 # Changelog
 
 <a name="1.0.0"></a>
-## 1.0.0 (2021-04-28)
+## 1.0.0 (2021-04-29)
 
 ### Added
 
+- ✨ MessageBox has Picker [[fe849db](https://github.com/raguay/ModalFileManager/commit/fe849dbedebc6ad7041fb7a1ed85503df41fd939)]
 - ✨ Added the &#x27;.&#x27; repeat last command and bug fixes [[8e3f10b](https://github.com/raguay/ModalFileManager/commit/8e3f10be554d12484ab61abd0581200138fb57d7)]
 
 ### Changed
@@ -16,6 +17,7 @@
 
 ### Fixed
 
+- 🐛 Fixed Various Bugs [[b77bcc4](https://github.com/raguay/ModalFileManager/commit/b77bcc4252b1100f417f6245715630f84e414836)]
 - 🐛 StatusLine overflows fixed [[e67c365](https://github.com/raguay/ModalFileManager/commit/e67c365bebe55a01cb912db0ba76ef64d6e3bcf2)]
 - 🐛 StatusLine name and dateline fixed. [[44dd2e2](https://github.com/raguay/ModalFileManager/commit/44dd2e2c8861a0dfc819d8ada4489a974e14caae)]
 - 🐛 Critical bug with MessageBox [[2d0dd5f](https://github.com/raguay/ModalFileManager/commit/2d0dd5f8384cafa3ca106232fcf5a85d5c7293e1)]

@@ -52,9 +52,9 @@
                     {#if key === pickerNum }
                       <a 
                         href="/#"
-                        class="pickerSelected"
                         style="color: {$theme.backgroundColor};
                                background-color: {$theme.textColor};"
+                        class="pickerSelected"
                         on:click|preventDefault={(e) => {
                           pickerSelected(selection);
                         }}
@@ -163,6 +163,7 @@
   }
 
   .pickerSelected {
+    text-decoration: none;
   }
 </style>
 
@@ -250,18 +251,27 @@
 
   function pickerInputChange(e) {
     if(e.key === 'ArrowUp') {
+      // 
+      // Go up the list. Zero is at the top.
+      //
       movePickerBar(-1);
     } else if(e.key === 'ArrowDown') {
+      // 
+      // Go down the list. The largest index is at the bottom.
+      //
       movePickerBar(1);
     } else if(e.key === 'Escape') {
       //
-      // Enter key. Take the highlighted value and return.
+      // Escape key. Just exit without doing anything.
       //
       keyProcess.set(true);
       dispatch('closeMsgBox',{
         skip: false
       });
     } else if(((e.which >= 48)&&(e.which <= 90))||(e.which >= 186)||(e.which === 32)) {
+      // 
+      // It's a normal printable character. Add it and re-evaluate.
+      //
       pickerValue += e.key;
       var cur = pickerValue.toLowerCase();
       pickerItems = pickerItemsOrig.filter( it => it.name.toLowerCase().includes(cur));
@@ -321,7 +331,9 @@
     if(pickerDOM !== null) {
       var itemDOM = window.document.body.getElementsByClassName('pickerSelected')[0];
       var cur = pickerNum * itemDOM.clientHeight;
+      var curP1 = (pickerNum + 1) * itemDOM.clientHeight;
       if(pickerDOM.clientHeight < cur) pickerDOM.scrollTop += itemDOM.clientHeight; 
+      if((pickerDOM.clientTop+pickerDOM.clientHeight) < curP1) pickerDOM.scrollTop += itemDOM.clientHeight;
       if(pickerDOM.scrollTop > cur) pickerDOM.scrollTop = cur;
       if(pickerDOM.scrollTop < 0) DOM.scrollTop = 0;
     }
