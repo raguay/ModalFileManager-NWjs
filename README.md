@@ -130,7 +130,8 @@ Modal File Manager doesn't use the actual theme files downloaded from GitHub. Th
 
 The directory structure is:
 
-modalfilemanager
+```
+- modalfilemanager
   |
   - src 
     |
@@ -139,6 +140,7 @@ modalfilemanager
     - stores                      This directory contains all the Svelte Store items
     - FileManager.svelte          This is the main program
     - main.js                     This installs the main program into the HTML
+```
 
 All low level functions are in the `modules/macOS.js`, `modules/linux.js`, and `modules/windows.js` for the particular operating system. This is the initial breakdown and will be added upon in the future as needed.
 
