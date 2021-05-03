@@ -1,10 +1,10 @@
 {
-  "name": "SvelteFileManager",
-  "description": "A file manager.",
-  "license": "private",
+  "name": "Modal File Manager",
+  "description": "A file manager written in Svelte, HTML, and CSS running in NW.js.",
+  "license": "MIT",
   "version": "1.0.0",
   "window": {
-    "id": "filemanager",
+    "id": "modalfilemanager",
     "height": 300,
     "width": 500,
     "show_in_taskbar": true,

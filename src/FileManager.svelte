@@ -196,6 +196,7 @@
   import { config } from './stores/config.js';
   import { dirHistory } from './stores/dirHistory.js';
   import { directoryListeners } from './stores/directoryListeners.js';
+  import { stateMapColors } from './stores/stateMapColors.js';
   import commands from './modules/commands.js';
   import filesystems from './modules/filesystems';
   import extensions from './modules/extensions.js';
@@ -248,6 +249,7 @@
   let localFStype = '';
   let osNames = ['macOS', 'linux', 'windows'];
   let stateMaps = [];
+  let localStateMapColors;
   let localDirListeners = null;
   let showGitHub = false;
   let numberAcc = '';
@@ -376,9 +378,19 @@
         // Save the new theme values.
         //
         localFS.writeFile(localFS.appendPath(configDir, 'theme.json'), JSON.stringify(value));
+
+        //
+        // Set the default state map colors.
+        //
+        localStateMapColors['normal'] = localTheme.normalbackgroundColor;
+        localStateMapColors['insert'] = localTheme.insertbackgroundColor;
+        localStateMapColors['visual'] = localTheme.visualbackgroundColor;
+        stateMapColors.set(localStateMapColors);
       }
     });
-    
+    var unsubscriptStateMapColors = stateMapColors.subscribe(value => {
+      localStateMapColors = value;
+    });
     var unsubscribeInputState = inputState.subscribe(value => {
       localState = value;
     });
@@ -437,7 +449,15 @@
       //
       localTheme = JSON.parse(localFS.readFile(localFS.appendPath(configDir, 'theme.json')));
     }
-    
+
+    //
+    // Get the stateMapColors setup.
+    //
+    localStateMapColors['normal'] = localTheme.normalbackgroundColor;
+    localStateMapColors['insert'] = localTheme.insertbackgroundColor;
+    localStateMapColors['visual'] = localTheme.visualbackgroundColor;
+    stateMapColors.set(localStateMapColors);
+
     //
     // Set the theme.
     //
@@ -491,6 +511,7 @@
       unsubscribeRightDir();
       unsubscribeLeftDir();
       unsubscribeDirListeners();
+      unsubscriptStateMapColors();
     })
   });
 
@@ -553,6 +574,8 @@
     extensions.addExtCommand('askQuestion', 'Ask a question and get the response.', askQuestion);
     extensions.addExtCommand('pickItem', 'Choose from a list of items.', pickItem);
     extensions.addExtCommand('showMessage', 'Show a message to the user.', showMessage);
+    extensions.addExtCommand('createNewMode', 'Allows the creation of a new mode for keyboard commands.', createNewMode);
+    extensions.addExtCommand('changeMode', 'Change to mode given.', changeMode);
   }
 
   function installDefaultCommands() {
@@ -633,8 +656,9 @@
       //
       // Get the command for the current state in the stateMaps.
       //
+      
       const command = getCommand(stateMaps[localState], key, ctrlKey, shiftKey, metaKey);
-
+      
       // 
       // Figure the number of times to run the command.
       // 
@@ -659,13 +683,19 @@
       numberAcc = '';
     }
   }
-  
-  function getCommand(map, key, ctrlKey, shiftKey, metaKey) {
-    var result = {
+
+ function createNewMode(name, color) {
+    stateMaps[name] = [];
+    localStateMapColors[name] = color;
+    stateMapColors.set(localStateMapColors);
+ }
+
+ function getCommand(map, key, ctrlKey, shiftKey, metaKey) {
+     var result = {
       command: () => {},
       name: 'empty'
     };
-    var rmap = map.find(item => item.key == key && item.meta == metaKey && item.ctrl == ctrlKey && item.shift == shiftKey);
+    var rmap = map.find(item => ((item.key == key) && (item.meta == metaKey) && (item.ctrl == ctrlKey) && (item.shift == shiftKey)));
     if(typeof rmap !== 'undefined') {
       result = rmap;
     }
@@ -851,19 +881,21 @@
     }
   }
 
+  function changeMode(newMode) {
+    inputState.set(newMode);
+    localState = newMode;
+  }
+
   function changeModeNormal() {
-    inputState.set('normal');
-    localState = 'normal';
+    changeMode('normal');
   }
   
   function changeModeInsert() {
-    inputState.set('insert');
-    localState = 'insert';
+    changeMode('insert');
   }
   
   function changeModeVisual() {
-    inputState.set('visual');
-    localState = 'visual';
+    changeMode('visual');
   }
 
   function cursorToPane(npane) {
@@ -1685,8 +1717,8 @@
   }
 
   function addDirectoryListener(listener) {
-    localDirListener.push(listener);
-    directoryListeners.set(localDirListener);
+    localDirListeners.push(listener);
+    directoryListeners.set(localDirListeners);
   }
 
   function toggleCommandPrompt() {

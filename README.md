@@ -163,7 +163,7 @@ file in the default file editor.
 - Translating my fman extensions to work with Modal File Manager
 	- Project Manager
 		- Notes - Should be part of Project Manager?
-	- Favorites
+	- Favorites: paritally done.
 	- Dropbox File System
 	- Launch Scripts
 	- Regular Expression selection
@@ -177,6 +177,7 @@ file in the default file editor.
 - Create a proper macOS application
 - Get Windows working
 - Get Linux tested and working
+- Get audio listening in the Extras Panel.
 - Documentation!
 - Of course, bug fixing!
 
@@ -304,7 +305,9 @@ hotkeys or command prompt. They are loaded and used in a different way as well.
 | `askQuestion` | Ask a question and get the response. |
 | `pickItem` | Choose from a list of items. |
 | `showMessage` | Show a message to the user. |
- 
+| `createNewMode` | Allows the creation of a new mode for keyboard commands. |
+| `changeMode` | Change to mode given. |
+
 ## Creating Themes
 
 A theme is a GitHub repository or a repository on your system. It is setup as a normal npm project with a `package.json` file. The `package.json` file should be similar to this:

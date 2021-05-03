@@ -92,6 +92,8 @@
   import { theme } from '../stores/theme.js';
   import { currentCursor } from '../stores/currentCursor.js';
   import { inputState } from '../stores/inputState.js';
+  import { stateMapColors } from '../stores/stateMapColors.js';
+
   import util from '../modules/util.js';
 
   let localInputState = "normal";
@@ -103,7 +105,7 @@
     },
     pane: ''
   };
-  let localTheme = {};
+  let localStateMapColors = [];
   let stateColor = "#6fb1e9";
   let size = 0;
 
@@ -114,17 +116,7 @@
     //
     var unSubscribeInputState = inputState.subscribe(value => {
       localInputState = value;
-      switch(value) {
-        case 'normal':
-          stateColor = localTheme.normalbackgroundColor;
-          break;
-        case 'insert':
-          stateColor = localTheme.insertbackgroundColor;
-          break;
-        case 'visual':
-          stateColor = localTheme.visualbackgroundColor;
-          break;
-      }
+      stateColor = localStateMapColors[localInputState];
     })
     var unSubscribeCurrentCursor = currentCursor.subscribe(value => {
       localCurrentCursor = value;
@@ -142,24 +134,14 @@
         size = util.readableSize(localCurrentCursor.entry.size);
       }
     });
-    var unSubscribeTheme = theme.subscribe(value => {
-      localTheme = value;
-      switch(localInputState) {
-        case 'normal':
-          stateColor = localTheme.normalbackgroundColor;
-          break;
-        case 'insert':
-          stateColor = localTheme.insertbackgroundColor;
-          break;
-        case 'visual':
-          stateColor = localTheme.visualbackgroundColor;
-          break;
-      }
-    });
+    var unSubscribeStateMapColors = stateMapColors.subscribe( value => {
+      localStateMapColors = value;
+      stateColor = localStateMapColors[localInputState];
+    })
     return(() => {
-      unSubscribeTheme();
       unSubscribeCurrentCursor();
       unSubscribeInputState();
+      unSubscribeStateMapColors();
     })
   });
 </script>
