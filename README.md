@@ -379,5 +379,5 @@ With this library in place, the Extra Panel will run mp4 files just fine. I have
 
 I finally made my first attempt at an icon for Modal File Manager. The files are in the `icons` directory. Any constructive criticizm is welcome.
 
-![Icon](icons/mfm-icon.svg = width=100)
+![Icon](icons/mfm-icon.svg)
 
