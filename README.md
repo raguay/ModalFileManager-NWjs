@@ -375,3 +375,9 @@ Then place this in your copy of NW.js as described in step 5 here:  http://docs.
 
 With this library in place, the Extra Panel will run mp4 files just fine. I haven't testing other versions since that what I mostly use.
 
+## Icon
+
+I finally made my first attempt at an icon for Modal File Manager. The files are in the `icons` directory. Any constructive criticizm is welcome.
+
+![Icon](icons/mfm-icon.svg)
+
