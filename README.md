@@ -30,6 +30,7 @@ The low level interface is still being mapped out and changes are happening. Thi
 - [Creating Themes](#creating-themes)
 - [Creating Extensions](#creating-extensions)
 - [Adding Video Preview on Extra Panel](#adding-video-preview-on-extra-panel)
+- [Icon](#icon)
 
 ## Philosophy
 
