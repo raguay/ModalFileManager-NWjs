@@ -213,6 +213,7 @@ file in the default file editor.
 | `:` | toggleCommandPrompt |
 | `.` | reRunLastCommand |
 | `,` | toggleFilter |
+| `O` | openOppositePanel |
 
 ### Visual Mode
 
@@ -275,6 +276,7 @@ These commands can be ran from the command prompt. They all act upon the current
 |`Toggle Filter` | Toggles the show all and default filters. | toggleFilter |
 | `Show All Filter` | Sets to show all Entries. | setShowAllFilter |
 | `Show Only Non-System Files/Folders | Sets the default filter of not showing system files/folders. | setDefaultFilter |
+| `Open in Opposite Panel` | Opens the directory the cursor is on or the directory the cursor is in in the opposite panel. | openOppositePanel |
 
 ### Extension Commands
 

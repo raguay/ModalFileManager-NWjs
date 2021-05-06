@@ -36,7 +36,7 @@
   {#if showGitHub}
     <GitHub 
       on:closeGitHub={(e) => {
-        showGitHub = false;
+        toggleGitHub();
       }}
     />
   {/if}
@@ -397,6 +397,8 @@
     inputState.set(localState);
     var unsubscribeKeyProcess = keyProcess.subscribe(value => {
       localKeyProcess = value;
+      console.log('Key Process changed...');
+      console.log(value);
     });
 
     // 
@@ -617,6 +619,7 @@
     commands.addCommand('Toggle Filter', 'toggleFilter', 'Toggles the show all and default filters.', toggleFilter );
     commands.addCommand('Show All Filter', 'setShowAllFilter', 'Sets to show all Entries.', setShowAllFilter);
     commands.addCommand('Show Only Non-System Files/Folders', 'setDefaultFilter', 'Sets the default filter of not showing system files/folders.', setDefaultFilter);
+    commands.addCommand('Open in Opposite Panel', 'openOppositePanel', 'Set the opposite panel to the directory under the current cursor or the directory of the current cursor.', openOppositePanel);
   }
   
   function processKey(e) {
@@ -896,6 +899,24 @@
   
   function changeModeVisual() {
     changeMode('visual');
+  }
+
+  function openOppositePanel() {
+    var nEntry = localCurrentCursor.entry.dir;
+    if(localCurrentCursor.entry.type === 1) {
+      nEntry = localCurrentCursor.entry.fileSystem.appendPath(localCurrentCursor.entry.dir, localCurrentCursor.entry.name);
+    }
+    if(localCurrentCursor.pane === 'right') {
+      changeDir({
+        path: nEntry,
+        cursor: true
+      },'left');
+    } else {
+      changeDir({
+        path: nEntry,
+        cursor: true
+      },'right');
+    }
   }
 
   function cursorToPane(npane) {
@@ -1748,6 +1769,13 @@
 
   function toggleGitHub() {
     showGitHub = !showGitHub;
+    if(showGitHub) {
+      keyProcess.set(false);
+      localKeyProcess = false;
+    } else {
+      keyProcess.set(true);
+      localKeyProcess = true;
+    }
   }
 
   function setShowAllFilter() {
@@ -1936,6 +1964,12 @@
       meta: false,
       key: ',',
       command: "toggleFilter"
+    }, {
+      ctrl: false,
+      shift: true,
+      meta: false,
+      key: 'O',
+      command: "openOppositePanel"
     }];
     
     // 

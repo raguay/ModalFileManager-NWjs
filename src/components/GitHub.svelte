@@ -4,7 +4,7 @@
              max-height: {getHeight()}px;
              width: {width !== null ? width : 100}px;
              color: {$theme.textColor};" 
-             on:blur={(e) => { exitGitHub(); }}
+      on:blur={(e) => { exitGitHub(); }}
 >
   <div id='GitHubHeader'>
     <h3>GitHub Themes and Extensions Importer</h3>
@@ -17,7 +17,10 @@
      X
     </span>
   </div>
-  <div id='GitHubList'>
+  <div id='GitHubList'
+       bind:this={pickerDOM}
+       on:keydown={inputChange}
+  >
     {#await repos}
       <h3>Loading Extensions Repositories....</h3>
     {:then value}
@@ -208,10 +211,11 @@
 </style>
 
 <script>
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { createEventDispatcher, onMount, afterUpdate } from 'svelte';
   import { get } from 'svelte/store';
   import { theme } from '../stores/theme.js';
   import { config } from '../stores/config.js';
+  import { keyProcess } from '../stores/keyProcess.js';
   import util from '../modules/util.js';
   import { Octokit } from "@octokit/rest";
 
@@ -222,11 +226,23 @@
   var themes;
   var width = null;
   var msgs = [];
+  var pickerDOM;
 
   onMount(() => {
+    keyProcess.set(false);
     width = window.innerWidth - 30;
     octok = new Octokit();
     loadRepoInfo();
+    setTimeout(() => {
+      keyProcess.set(false);
+      if(typeof pickerDOM !== 'undefined') pickerDOM.focus();
+    }, 1000);
+  });
+
+  afterUpdate(() => {
+    if(typeof pickerDOM !== 'undefined') {
+      pickerDOM.focus();
+    }
   });
 
   function loadRepoInfo() {
@@ -252,6 +268,7 @@
   }
 
   function exitGitHub() {
+    keyProcess.set(true);
     dispatch('closeGitHub',{});
   }
 
@@ -368,6 +385,37 @@
     msgs = msgs;
     themes = themes;
     repos = repos;
+  }
+  
+  function inputChange(e) {
+    console.log('GitHub key Processing...');
+    
+    if((e.key === 'ArrowUp')||(e.key === 'k')) {
+      // 
+      // Go up the list. Zero is at the top.
+      //
+      scrollDOM(-1);
+    } else if((e.key === 'ArrowDown')||(e.key === 'j')) {
+      // 
+      // Go down the list. The largest index is at the bottom.
+      //
+      scrollDOM(1);
+    } else if(e.key === 'Escape') {
+      //
+      // Escape key. Just exit without doing anything.
+      //
+      exitGitHub();
+    }
+  } 
+
+  function scrollDOM(amount) {
+    var adj = amount * 20;
+
+    if(pickerDOM !== null) {
+      pickerDOM.scrollTop += adj;
+      if(pickerDOM.scrollTop < 0) pickerDOM.scrollTop = 0;
+      if(pickerDOM.scrollTop > pickerDOM.clientHeight) pickerDOM.scrollTop = pickerDOM.clientHeight;
+    }
   }
 </script>
 
