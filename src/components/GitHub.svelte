@@ -246,15 +246,18 @@
     width = window.innerWidth - 30;
     octok = new Octokit();
     loadRepoInfo();
-    setTimeout(() => {
-      keyProcess.set(false);
-      if(typeof hiddenInput !== 'undefined') hiddenInput.focus();
-    }, 1000);
+    setTimeout(focusInput, 1000);
   });
 
   afterUpdate(() => {
     if(typeof hiddenInput !== 'undefined') hiddenInput.focus();
   });
+
+  function focusInput() {
+    keyProcess.set(false);
+    if(typeof hiddenInput !== 'undefined') hiddenInput.focus();
+    setTimeout(focusInput, 1000);
+  }
 
   function loadRepoInfo() {
     if(typeof repos !== 'undefined') {
@@ -425,7 +428,6 @@
     if(pickerDOM !== null) {
       pickerDOM.scrollTop += adj;
       if(pickerDOM.scrollTop < 0) pickerDOM.scrollTop = 0;
-      if(pickerDOM.scrollTop > pickerDOM.clientHeight) pickerDOM.scrollTop = pickerDOM.clientHeight;
     }
   }
 </script>
