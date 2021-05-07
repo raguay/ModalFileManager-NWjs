@@ -240,13 +240,18 @@
   var msgs = [];
   var pickerDOM;
   var hiddenInput;
+  var timeOut;
+  var once = true;
 
   onMount(() => {
     keyProcess.set(false);
     width = window.innerWidth - 30;
     octok = new Octokit();
     loadRepoInfo();
-    setTimeout(focusInput, 1000);
+    timeOut = setTimeout(focusInput, 1000);
+    (() => {
+      clearTimeout(timeOut);
+    })
   });
 
   afterUpdate(() => {
@@ -254,9 +259,11 @@
   });
 
   function focusInput() {
-    keyProcess.set(false);
+    if(once) keyProcess.set(false);
+    once = false;
+    clearTimeout(timeOut);
     if(typeof hiddenInput !== 'undefined') hiddenInput.focus();
-    setTimeout(focusInput, 1000);
+    timeOut = setTimeout(focusInput, 1000);
   }
 
   function loadRepoInfo() {
