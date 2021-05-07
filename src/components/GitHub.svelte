@@ -16,10 +16,14 @@
     >
      X
     </span>
+    <input
+      id="inputHidden"
+      bind:this={hiddenInput}
+      on:keydown={inputChange}
+    />
   </div>
   <div id='GitHubList'
        bind:this={pickerDOM}
-       on:keydown={inputChange}
   >
     {#await repos}
       <h3>Loading Extensions Repositories....</h3>
@@ -174,6 +178,14 @@
     overflow-x: hidden;
   }
 
+  #inputHidden {
+    width: 0px;
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+    border: 0px solid transparent;
+  }
+
   .reporow {
     display: flex;
     flex-direction: row;
@@ -227,6 +239,7 @@
   var width = null;
   var msgs = [];
   var pickerDOM;
+  var hiddenInput;
 
   onMount(() => {
     keyProcess.set(false);
@@ -235,14 +248,12 @@
     loadRepoInfo();
     setTimeout(() => {
       keyProcess.set(false);
-      if(typeof pickerDOM !== 'undefined') pickerDOM.focus();
+      if(typeof hiddenInput !== 'undefined') hiddenInput.focus();
     }, 1000);
   });
 
   afterUpdate(() => {
-    if(typeof pickerDOM !== 'undefined') {
-      pickerDOM.focus();
-    }
+    if(typeof hiddenInput !== 'undefined') hiddenInput.focus();
   });
 
   function loadRepoInfo() {
