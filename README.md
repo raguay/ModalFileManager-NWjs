@@ -49,24 +49,26 @@ I've created multiple open source resources (I have around 80 GitHub repositorie
 ## Current Feature Set
 
 - Dual pane file manager with vim style model hotkeys for navigation and action launching.
-- Command bar for executing commands (`:` in any mode or `<ctrl>p` in normal mode).
+- Command Prompt for executing commands (`:` in any mode or `<ctrl>p` in normal mode).
 - Fully extendable with extensions using the extensions API
 - Fully extendable to alternate file systems
-- Fully theme-able
+- Fully theme-able. Theme manager in the development.
 - A file details side panel can be shown to overlay the panel not currently focused (`toggleExtraPanel` command). It shows video previews and stats with the ffmpeg programs installed.
 - Themes and extensions are explorable and downloadable from GitHub inside the program.
 - Hot keys are programmable
 - A number before a hot key runs it's associated command that many times (ex: `5j` will move the cursor 5 entries down the list).
 - Watches for changes in the current directory and updates accordingly.
 - Changing directories in the Directory Bar (normal mode `q`) shows a list of matching entries from history and then below the current directory.
-- File editor is configurable by the `~/.myeditorchoice` file (see `Editing Files` below)
+- File editor is configurable by the `~/.myeditorchoice` file (see `Editing Files` below). Otherwise, the system editor for the file type will be used.
 - Integrated with ScriptPad - another project of mine coming soon!
 - Quick Search - a input to type text so that any entry at that level is removed that doesn't have that text in it. Just refresh the pane to get back to normal. I think of it as a quick filter more than a quic search.
 - Toggle System files/folders visibility
+- Optionally deletes to the OS's trashcan (external program has to be installed)
+- Change the environment used to execute external programs using the `Show Preferences` Command Prompt command.
 
 ## Installation
 
-These directions currently work for the macOS. I haven't tested for finished the Linux or Windows installation.
+These directions currently work for the macOS. I haven't tested for finished the Linux or Windows installation. All external programs should be installed before first running the Modal File Manager. Otherwise, you will have to modify the path used to execute external programs to find them.
 
 I have a run script made with [Mask](https://github.com/jakedeichert/mask) and [Node.js](https://nodejs.org/en/). You have to put a copy of [NW.js](https://nwjs.io/) in the 'misc' directory as `nwjs.app`. Or, you can change the script. I'm assuming you aren't changing the script in the following.
 
@@ -101,7 +103,7 @@ mask launch -d
 
 which will launch the sdk version of NW.js with full development tools.
 
-I'm working on making actual releases, but I'm having issues with getting it right on the macOS. You should be able to run it on Windows and Linux, but I haven't tested it on those platforms. Actually, since I'm using mostly command line commands to perform actions, running on Windows will most likely not work currently. But, I to plan on fleshing it out soon.  I currently only have a Mac and do all my work on it. Donations will help me expand out to the other platforms, or if anyone wants to lend a hand!
+If you just want to download a program to use, check the releases. I'm currently releasing alpha level macOS binaries in the releases.
 
 ## Upgrading
 
@@ -113,9 +115,11 @@ There are a few non-standard command line programs I use with Modal File Manager
 
 - [ffmpeg](https://ffmpeg.org/) for getting and using video information in the Extra Panel.
 - [fd](https://github.com/sharkdp/fd) for quick file finding. It's a `find` replacement written in Rust.
-- I also use the standard cp, mv, and rm commands on the command line. These still run faster than rewriting them in the scripting language. The major drawback is there isn't a backup method. Once deleted, always deleted. `Trashcan` support will come later.
+- For using the macOS trashcan, you have to have (`trash`)[https://github.com/andreafrancia/trash-cli] command line program installed using `brew install trash-cli`. If the program isn't installed before installing mfm, then you will need to adjust the environment variable for PATH in the preferences to make sure it is in the path.
 
-All of the programs should be downloaded and in your shells path. Modal File Manager doesn't assume location for anything except or it's own configuration files. 
+I also use the standard `cp`, `mv`, and `rm` commands on the command line. These still run faster than rewriting them in the scripting language. The major drawback is there isn't a backup method. Once deleted, always deleted. 
+
+All of the programs should be downloaded and in your shell's path. Modal File Manager doesn't assume location for anything except or it's own configuration files. But, if Modal File Manager can't find the program, you can adjust the path used in the preferences (Command Prompt command is `Show Preferences`).
 
 ## Configuration Files
 
@@ -174,8 +178,6 @@ file in the default file editor.
 - Reloading extensions without relaunching
 - Add more file views for the Extra Panel
 - Multiple windows
-- Create an icon for the program
-- Create a proper macOS application
 - Get Windows working
 - Get Linux tested and working
 - Get audio listening in the Extras Panel.
@@ -275,8 +277,9 @@ These commands can be ran from the command prompt. They all act upon the current
 | `Rerun Last Command` | This will rerun the last command along with it the number of times it was ran. | reRunLastCommand |
 |`Toggle Filter` | Toggles the show all and default filters. | toggleFilter |
 | `Show All Filter` | Sets to show all Entries. | setShowAllFilter |
-| `Show Only Non-System Files/Folders | Sets the default filter of not showing system files/folders. | setDefaultFilter |
+| `Show Only Non-System Files/Folders` | Sets the default filter of not showing system files/folders. | setDefaultFilter |
 | `Open in Opposite Panel` | Opens the directory the cursor is on or the directory the cursor is in in the opposite panel. | openOppositePanel |
+| `Reload Extensions` | Reload all the extensions, keyboard maps, and theme. | reloadExtensions |
 
 ### Extension Commands
 

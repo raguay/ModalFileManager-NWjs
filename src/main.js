@@ -1,9 +1,9 @@
-import FileManager from './FileManager.svelte';
+import Start from './Start.svelte';
 
-const FM = new FileManager({
+const ST = new Start({
   target: document.body,
   props: {
   }
 });
 
-export default FM;
+export default ST;

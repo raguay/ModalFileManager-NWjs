@@ -123,6 +123,13 @@ var extensions = {
       github: github
     });
   },
+  unloadExtensions: function() {
+    if(extensions.extensionList !== null) {
+      extensions.extensionList.forEach(item => {
+        if((typeof item.extension !== 'undefined')&&(typeof item.extension.unload !== 'undefined')) item.extension.unload();
+      });
+    }
+  },
   init: function() {
     if(extensions.extensionList !== null) {
       extensions.extensionList.forEach(item => {
@@ -147,8 +154,10 @@ var extensions = {
         description: item.description
       };
     })
-},
+  },
   removeExtension: function(ext) {
+    var exten = extensions.extensionList.filter(item => item.name === ext)[0];
+    exten.unload();
     extensions.extensionList = extensions.extensionList.filter(item => item.name != ext);
   },
   getLocalFS: function() {

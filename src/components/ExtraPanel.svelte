@@ -99,10 +99,15 @@
   function getDimensions(fileName) {
     var com = 'ffprobe -v error -of flat=s=_ -select_streams v:0 -show_entries stream=height,width "' + fileName + '"';
     localCurrentCursor.entry.fileSystem.runCommandLine(com, (err, stdout, stderr) => {
-      var stdout = stdout.toString('utf8');
-      var width = /width=(\d+)/.exec(stdout);
-      var height = /height=(\d+)/.exec(stdout);
-      videoDem = parseInt(width[1]) + "x" + parseInt(height[1]);
+      if(err) {
+        console.log(err);
+        console.log(stderr);
+      } else {
+        var stdout = stdout.toString('utf8');
+        var width = /width=(\d+)/.exec(stdout);
+        var height = /height=(\d+)/.exec(stdout);
+        videoDem = parseInt(width[1]) + "x" + parseInt(height[1]);
+      }
     });
   }
 </script>

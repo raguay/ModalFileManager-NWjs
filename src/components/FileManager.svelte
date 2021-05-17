@@ -3,7 +3,7 @@
     lctrlKey = e.ctrlKey;
     lshiftKey = e.shiftKey;
     lmetaKey = e.metaKey;
-    if(skipKey && (e.key === 'Enter')) {
+    if((skipKey && (e.key === 'Enter'))||(component !== 'filemanager')) {
       skipKey = false;
       keyProcess.set(true);
       localKeyProcess = true;
@@ -151,16 +151,6 @@
     width: 50%;
   }
 
-
-  :global(body) {
-    padding: 0px;
-    margin: 0px;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    user-select: none;
-  }
-
   #container {
     padding: 0px;
     margin: 0px;
@@ -174,36 +164,39 @@
 </style>
 
 <script>
-  import { onMount, tick } from 'svelte';
+  import { onMount, tick, createEventDispatcher } from 'svelte';
   import { get } from 'svelte/store';
-  import Pane from './components/Pane.svelte';
-  import MessageBox from './components/MessageBox.svelte';
-  import DirectoryListing from './components/DirectoryListing.svelte';
-  import StatusLine from './components/StatusLine.svelte';
-  import ResizeBorder from './components/ResizeBorder.svelte';
-  import QuickSearch from './components/QuickSearch.svelte';
-  import ExtraPanel from './components/ExtraPanel.svelte';
-  import CommandPrompt from './components/CommandPrompt.svelte';
-  import GitHub from './components/GitHub.svelte';
-  import { currentCursor } from './stores/currentCursor.js';
-  import { currentLeftFile } from './stores/currentLeftFile.js';
-  import { currentRightFile } from './stores/currentRightFile.js';
-  import { theme } from './stores/theme.js';
-  import { inputState } from './stores/inputState.js';
-  import { leftDir } from './stores/leftDir.js';
-  import { rightDir } from './stores/rightDir.js';
-  import { keyProcess } from './stores/keyProcess.js';
-  import { config } from './stores/config.js';
-  import { dirHistory } from './stores/dirHistory.js';
-  import { directoryListeners } from './stores/directoryListeners.js';
-  import { stateMapColors } from './stores/stateMapColors.js';
-  import commands from './modules/commands.js';
-  import filesystems from './modules/filesystems';
-  import extensions from './modules/extensions.js';
-  import macOS from './modules/macOS.js';
-  import linux from './modules/linux.js';
-  import windows from './modules/windows.js';
+  import Pane from '../components/Pane.svelte';
+  import MessageBox from '../components/MessageBox.svelte';
+  import DirectoryListing from '../components/DirectoryListing.svelte';
+  import StatusLine from '../components/StatusLine.svelte';
+  import ResizeBorder from '../components/ResizeBorder.svelte';
+  import QuickSearch from '../components/QuickSearch.svelte';
+  import ExtraPanel from '../components/ExtraPanel.svelte';
+  import CommandPrompt from '../components/CommandPrompt.svelte';
+  import GitHub from '../components/GitHub.svelte';
+  import { currentCursor } from '../stores/currentCursor.js';
+  import { currentLeftFile } from '../stores/currentLeftFile.js';
+  import { currentRightFile } from '../stores/currentRightFile.js';
+  import { theme } from '../stores/theme.js';
+  import { inputState } from '../stores/inputState.js';
+  import { leftDir } from '../stores/leftDir.js';
+  import { rightDir } from '../stores/rightDir.js';
+  import { keyProcess } from '../stores/keyProcess.js';
+  import { config } from '../stores/config.js';
+  import { dirHistory } from '../stores/dirHistory.js';
+  import { directoryListeners } from '../stores/directoryListeners.js';
+  import { stateMapColors } from '../stores/stateMapColors.js';
+  import commands from '../modules/commands.js';
+  import filesystems from '../modules/filesystems';
+  import extensions from '../modules/extensions.js';
+  import macOS from '../modules/macOS.js';
+  import linux from '../modules/linux.js';
+  import windows from '../modules/windows.js';
+
+  export let component;
   
+	const dispatch = createEventDispatcher();
   const os = require('os');
 
   let showMessageBox = false;
@@ -213,35 +206,36 @@
   let msgBoxItems = null;
   let msgCallBack = (e) => {};
   let configDir = "";
+  let localConfig = null;
   let setEditDirFlagLeft = false;
   let setEditDirFlagRight = false;
   let showExtra = false;
   let showCommandPrompt = false;
   let skipKey = false;
-  let leftEntries;
-  let rightEntries;
+  let leftEntries = {};
+  let rightEntries = {};
   let localCurrentCursor = {
     pane: 'left',
     entry: {}
   };
-  let localCurrentLeftFile;
-  let localCurrentRightFile;
-  let localTheme;
+  let localCurrentLeftFile = {};
+  let localCurrentRightFile = {};
+  let localTheme = {};
   let localState = 'normal';
   let localLeftDir = {
     fileSystemType: 'macOS',
     fileSystem: null,
-    path: 'left'
+    path: ''
   };
   let localRightDir = {
     fileSystemType: 'macOS',
     fileSystem: null,
-    path: 'right'
+    path: ''
   };
-  let rightDOM;
-  let leftDOM;
-  let containerDOM;
-  let localKeyProcess;
+  let rightDOM = null;
+  let leftDOM = null;
+  let containerDOM = null;
+  let localKeyProcess = true;
   let mdown = false;
   let lastError = null;
   let userEditor = '.myeditorchoice';
@@ -249,7 +243,7 @@
   let localFStype = '';
   let osNames = ['macOS', 'linux', 'windows'];
   let stateMaps = [];
-  let localStateMapColors;
+  let localStateMapColors = [];
   let localDirListeners = null;
   let showGitHub = false;
   let numberAcc = '';
@@ -260,6 +254,28 @@
   let flagFilter = 1;
 
   onMount(() => {
+    //
+    // Initialize all the stores with minimal settings.
+    //
+    keyProcess.set(true);
+    inputState.set('normal');
+    theme.set({});
+    currentCursor.set({});
+    currentRightFile.set({});
+    currentLeftFile.set({});
+    rightDir.set({});
+    leftDir.set({});
+    directoryListeners.set([]);
+    stateMapColors.set([]);
+    config.set({});
+
+    //
+    // reset all the extensions and commands.
+    //
+    clearCommands();
+    clearExtensions();
+    clearKeyboard();
+
     // 
     // Get the local file system utilities.
     // 
@@ -298,12 +314,30 @@
     }
 
     // 
+    // Load the configuration file.
+    // 
+    if(!localFS.dirExists(localFS.appendPath(configDir,'config.json'))) {
+      //
+      // Create the default configuration and save it.
+      //
+      localConfig = localFS.getConfig();
+      localFS.writeFile(localFS.appendPath(configDir,'config.json'), JSON.stringify(localConfig));
+    } else {
+      //
+      // Read in the local configuration.
+      //
+      localConfig = JSON.parse(localFS.readFile(localFS.appendPath(configDir,'config.json')));
+    }
+
+    // 
     // Set the configuration store.
     //
     config.set({
       configDir: configDir,
-      localFS: localFS
+      localFS: localFS,
+      configuration: localConfig
     });
+    localFS.setConfig(localConfig);
 
     //
     // Setup the directory listeners.
@@ -397,8 +431,6 @@
     inputState.set(localState);
     var unsubscribeKeyProcess = keyProcess.subscribe(value => {
       localKeyProcess = value;
-      console.log('Key Process changed...');
-      console.log(value);
     });
 
     // 
@@ -409,15 +441,55 @@
     dirHistory.set(dhist);
 
     //
+    // Setup the user editor data file.
+    //
+    userEditor = localFS.appendPath(localFS.getHomeDir(), '.myeditorchoice');
+    if(!localFS.fileExists(userEditor)) {
+      if(!localFS.fileExists(localFS.appendPath(configDir, '.myeditorchoice'))) {
+        //
+        // They don't have this file setup. TODO: Set it up or not?
+        //
+      } else {
+        //
+        // Use this file then.
+        //
+        userEditor = localFS.appendPath(configDir, '.myeditorchoice');
+      }
+    }
+
+    //
+    // Load the extensions, keyboard, and theme.
+    //
+    loadExtensionsKeyboard();
+
+    //
+    // return a command to unsubscribe from everything.
+    //
+    return(() => {
+      unsubscribeKeyProcess();
+      unsubscribeInputState();
+      unsubscribeTheme();
+      unsubscribeCurrentRightFile();
+      unsubscribeCurrentLeftFile();
+      unsubscribeCurrentCursor();
+      unsubscribeRightDir();
+      unsubscribeLeftDir();
+      unsubscribeDirListeners();
+      unsubscriptStateMapColors();
+    })
+  });
+
+ function loadExtensionsKeyboard() {
+    //
     // Setup the default commands.
     //
     installDefaultCommands();
 
-    // 
+    //
     // load the theme.
     //
     if(!localFS.fileExists(localFS.appendPath(configDir, 'theme.json'))) {
-      // 
+      //
       // Setup the Dracula Pro as default theme colors:
       //
       localTheme = {
@@ -441,7 +513,7 @@
         Yellow: "#FFFF80"
       };
 
-      // 
+      //
       // Save the default theme.
       //
       localFS.writeFile(localFS.appendPath(configDir, 'theme.json'), JSON.stringify(localTheme));
@@ -465,23 +537,7 @@
     //
     theme.set(localTheme);
 
-    //
-    // Setup the user editor data file.
-    //
-    userEditor = localFS.appendPath(localFS.getHomeDir(), '.myeditorchoice');
-    if(!localFS.fileExists(userEditor)) {
-      if(!localFS.fileExists(localFS.appendPath(configDir, '.myeditorchoice'))) {
-        // 
-        // They don't have this file setup. TODO: Set it up or not?
-        //
-      } else {
-        // 
-        // Use this file then.
-        // 
-        userEditor = localFS.appendPath(configDir, '.myeditorchoice');
-      }
-    }
-    
+
     //
     // Setup Extensions.
     //
@@ -494,28 +550,44 @@
     extensions.init();
 
     //
-    // Setup State Maps. This has to be after setting up extensions in case 
+    // Setup State Maps. This has to be after setting up extensions in case
     // an extension command is being used.
     //
     loadKeyMaps();
     extensions.installKeyMaps();
+  }
 
-    //
-    // return a command to unsubscribe from everything.
-    //
-    return(() => {
-      unsubscribeKeyProcess();
-      unsubscribeInputState();
-      unsubscribeTheme();
-      unsubscribeCurrentRightFile();
-      unsubscribeCurrentLeftFile();
-      unsubscribeCurrentCursor();
-      unsubscribeRightDir();
-      unsubscribeLeftDir();
-      unsubscribeDirListeners();
-      unsubscriptStateMapColors();
-    })
-  });
+  function clearKeyboard() {
+    stateMaps = [];
+  }
+
+  function clearExtensions() {
+    extensions.unloadExtensions();
+  }
+
+  function clearCommands() {
+    commands.commandList = [];
+    commands.lastError = '';
+  }
+
+  function reloadExtensions() {
+    clearKeyboard();
+    clearExtensions();
+    clearCommands();
+    loadExtensionsKeyboard();
+  }
+
+ function switchView(view) {
+    if((view === 'filemanager')||(view === 'preferences')) {
+      dispatch('switchView', {
+        view: view
+      });
+    }
+  }
+
+  function showPreferences() {
+    switchView('preferences');
+  }
 
   function getOS() {
     var result = osNames[0];
@@ -578,6 +650,7 @@
     extensions.addExtCommand('showMessage', 'Show a message to the user.', showMessage);
     extensions.addExtCommand('createNewMode', 'Allows the creation of a new mode for keyboard commands.', createNewMode);
     extensions.addExtCommand('changeMode', 'Change to mode given.', changeMode);
+    extensions.addExtCommand('switchView', 'Switch the active program view.', switchView);
   }
 
   function installDefaultCommands() {
@@ -620,6 +693,8 @@
     commands.addCommand('Show All Filter', 'setShowAllFilter', 'Sets to show all Entries.', setShowAllFilter);
     commands.addCommand('Show Only Non-System Files/Folders', 'setDefaultFilter', 'Sets the default filter of not showing system files/folders.', setDefaultFilter);
     commands.addCommand('Open in Opposite Panel', 'openOppositePanel', 'Set the opposite panel to the directory under the current cursor or the directory of the current cursor.', openOppositePanel);
+    commands.addCommand('Show Preferences', 'showPreferences', 'Show the preferences.', showPreferences);
+    commands.addCommand('Reload Extensions', 'reloadExtensions', 'Reload the extensions, keyboard maps, and theme.', reloadExtensions);
   }
   
   function processKey(e) {
@@ -1142,6 +1217,12 @@
  
     entries.forEach((item, key, arr) => {
       item.fileSystem.deleteEntries(item, (err, stdout)=>{
+        if(err) {
+          //
+          // There was an error in deleting.
+          //
+          console.log(err);
+        } 
         if(key >= (arr.length-1)) {
           showMessageBox = false;
           keyProcess.set(true);
@@ -1271,7 +1352,7 @@
           //
           // Open emacs.
           //
-          localFS.runCommandLine(editor + ' "' + file + '"');
+          localFS.runCommandLine('emacsclient -n -q "' + file + '"');
         } else {
           //
           // Open in a terminal program.
@@ -1355,11 +1436,6 @@
           // Refresh both sides.
           //
           refreshPanes();
-
-          //
-          // clear out the selections.
-          //
-          if(sel) clearSelectedFiles();
 
           //
           // Remove the spinner from being checked.
@@ -1452,8 +1528,8 @@
       text: msg,
       id: 'msgboxMain'
     }];
-    showMessageBox = true;
     msgCallBack = (e) => {};
+    showMessageBox = true;
   }
 
   function pickItem(title, items, returnValue) {
@@ -1467,11 +1543,11 @@
       value: items[0].value,
       id: 'msgboxMain'
     }];
-    showMessageBox = true;
     msgCallBack = (e) => {
       returnValue(e[0].value);
       msgCallBack = (e) => {};
     };
+    showMessageBox = true;
   }
 
   function askQuestion(title, question, returnValue) {

@@ -284,7 +284,7 @@
     // 
     // If the Enter key, quit the edit mode.
     //
-    if((key === 'Escape')) {
+    if((key === 'Escape')||(key === 'Enter')) {
       editOff();
     }
 

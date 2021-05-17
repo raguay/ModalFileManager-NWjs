@@ -16,6 +16,10 @@ var macOS = {
   filterFunction: null,
   lastError: '',
   lastOutput: '',
+  config: null,
+  setConfig: function(cfg) {
+    this.config = cfg;
+  },
   getExtension: function(file) {
     return path.extname(file);
   },
@@ -117,13 +121,32 @@ var macOS = {
   deleteEntries: function(entry, callback) {
     var item = this.preserveQuotes(entry.fileSystem.appendPath(entry.dir, entry.name));
     var that = this;
-    if(typeof callback === 'undefined') {
-      childProcess.exec("rm -R '" + item + "'",(err,stdout) => {
-        if(err) that.lastError = err;
-        that.lastOutput = stdout;
-      });
-    } else {
-      childProcess.exec("rm -R '" + item + "'", callback);
+    if(this.config !== null) {
+      if(this.config.useTrash) {
+        // 
+        // Use the trashcan on the system.
+        // 
+        if(typeof callback === 'undefined') {
+          this.runCommandLine("trash '" + item + "'",(err,stdout) => {
+            if(err) {
+              that.lastError = err;
+              console.log(err);
+            }
+            that.lastOutput = stdout;
+          });
+        } else {
+          this.runCommandLine("trash '" + item + "'", callback);
+        }
+      } else {
+        if(typeof callback === 'undefined') {
+          childProcess.exec("rm -R '" + item + "'",(err,stdout) => {
+            if(err) that.lastError = err;
+            that.lastOutput = stdout;
+          });
+        } else {
+          childProcess.exec("rm -R '" + item + "'", callback);
+        }
+      }
     }
   },
   getDirList: function(dir) {
@@ -257,11 +280,71 @@ var macOS = {
   openInTerminal: function(prog, file) {
     childProcess.exec("/usr/bin/osascript " + this.terminalScript + " '" + prog + " \"" + file + "\"'", (err, stdin, stdout) => {});
   },
+  getConfig: function() {
+    if(this.config === null) {
+      //
+      // Create the minimum config and then add to the path as needed. The path from process
+      // will not contain everything the user would have in his shell.
+      //
+      this.config = {
+        env: null,
+        shell: '',
+        useTrash: false
+      };
+
+      //
+      // Copy the environment from the process.
+      //
+      this.config.env = {
+        ...process.env
+      };
+
+      //
+      // Add directories that the user's system should have.
+      //
+      if(this.dirExists(this.getHomeDir() + '/bin')) {
+        this.config.env.PATH = this.getHomeDir() + '/bin:' + this.config.env.PATH;
+      }
+      if(this.dirExists('/opt/homebrew/bin')) {
+        this.config.env.PATH = '/opt/homebrew/bin:' + this.config.env.PATH;
+      }
+      if(this.dirExists('/usr/local/bin')) {
+        this.config.env.PATH = '/usr/local/bin:' + this.config.env.PATH;
+      }
+      if(this.dirExists(this.getHomeDir() + '/.cargo/bin')) {
+        this.config.env.PATH += ':' + this.getHomeDir() + '/.cargo/bin';
+      }
+      if(this.dirExists(this.getHomeDir() + '/go/bin')) {
+        this.config.env.PATH += ':' + this.getHomeDir() + '/go/bin';
+      }
+
+      //
+      // Set the defaults for everything else.
+      //
+      this.config.shell = this.config.env.SHELL;
+      this.config.useTrash = true;
+    }
+    return(this.config);
+  },
   runCommandLine: function(line, callback) {
+    //
+    // Get the environment to use.
+    //
+    var cnfg = this.getConfig();
+    
+    //
+    // Run with default callback if a callback wasn't given.
+    //
     if(typeof callback === 'undefined') {
-      childProcess.exec(line, (err, stdin, stdout) => {});
+      childProcess.exec(line, {
+        env: cnfg.env,
+        shell: cnfg.shell
+      }, (err, stdin, stdout) => {});
     } else {
-      childProcess.exec(line, callback);
+      childProcess.exec(line, {
+        env: cnfg.env,
+        shell: cnfg.shell
+      }, callback);
     }
   },
   appendPath: function(dir, name) {
@@ -325,7 +408,7 @@ var macOS = {
     try {
       if(dir === '') dir = this.pathSep();
       if(pat !== '') {
-        childProcess.exec('/usr/local/bin/fd -i --max-results ' + numEntries + ' -t d "' + pat + '" "' + dir + '"', (err, data) => {
+        this.runCommandLine('fd -i --max-results ' + numEntries + ' -t d "' + pat + '" "' + dir + '"', (err, data) => {
           if(err) { 
             console.log(err);
             this.lastError = err.toString();
