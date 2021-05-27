@@ -6,9 +6,9 @@ Currently, it can`t transfer files to other programs with Drag and Drop due to a
 
 This file manager is designed around the same principle as Vim: a state controled keyboard actions. The number of states isn't fixed, but very programmable. Therefore, an infinite number of keyboard configurations can be created and used. This is the main difference from other file managers.
 
-# Disclamer:  Alpha level software. Use at your own risk! I accept no liability for lost information from the use of this software. User beware! But, if you have a major problem, please let me know so that I can look for solutions. This file manager is built using command line commands (rm, cp, mv, etc) and therefore doesn't protect from accidental deletions.
+# Disclamer:  Beta level software. Use at your own risk! I accept no liability for lost information from the use of this software. User beware! But, if you have a major problem, please let me know so that I can look for solutions. This file manager is built using command line commands (rm, cp, mv, etc). Deletions currently default to moving to the trashcan on new installations.
 
-The low level interface is still being mapped out and changes are happening. This means that extensions made using the current API will most likely need changes as the project moves forward. I'm looking at having it final by 0.1 Alpha.
+The low level interface is still being mapped out and changes are happening. This means that extensions made using the current API will most likely need changes as the project moves forward. 
 
 ## Table of Contents
 
@@ -20,6 +20,7 @@ The low level interface is still being mapped out and changes are happening. Thi
 - [Configuration Files](#configuration-files)
 - [Source File Layout](#source-file-layout)
 - [Editing Files](#editing-files)
+- [Preferences](#preferences)
 - [Things in the Works](#things-in-the-works)
 - [Default Key Bindings](#default-key-bindings)
   - [Normal Mode](#normal-mode)
@@ -40,9 +41,11 @@ With Spacemacs and Doom-emacs, I learned that the Vim style keyboard was much mo
 
 But, I've never been happy with the file managers I've used. [fman](https://fman.io/) is great, but not actively being maintained and expanded upon. I also don't really like python, it's API language. So, I decided to jump in and make one to suit me better. This is how Modal File Manager was started. I wanted something that was as configurable as TkDesk was, but with a modal keyboard model for hotkeys. To take it even further, new modes and keymaps can be added with extensions. Along with anything else you can do with a full Node.js backend.
 
+Modal File Manager is also somewhat minimal in the UI. Many graphical file managers have buttons, shelves, etc. all over the place with information everywhere. I decided to make the main interface as low keyed as possible with all other information in the status line or extras panel. Extra file information is on the status line for the current cursor location. More information is displayed in extras panel as well.
+
 Since there are so many dual pane file managers available, I knew this would never be a marketable product (and I did not want the hassle of endless customer complaint over a feature not working the way they want it). Therefore, I'm making this an open source project to hopefully get some help from other to really making this thing shine.
 
-Therefore, I hope you enjoy this little program as much as I have. Feel free to sponor the project or just give me some tips along the way. Any help is appriciated.
+Therefore, I hope you enjoy this little program as much as I have. Feel free to sponsor the project, help code some of it (just send in the pull requests), or just give me some tips along the way. Any help is appreciated.
 
 I've created multiple open source resources (I have around 80 GitHub repositories), but this is the first full product. Therefore, please bear with me as I learn about maintaining and supporting an open source project.  
 
@@ -52,7 +55,7 @@ I've created multiple open source resources (I have around 80 GitHub repositorie
 - Command Prompt for executing commands (`:` in any mode or `<ctrl>p` in normal mode).
 - Fully extendable with extensions using the extensions API
 - Fully extendable to alternate file systems
-- Fully theme-able. Theme manager in the development.
+- Fully theme-able. 
 - A file details side panel can be shown to overlay the panel not currently focused (`toggleExtraPanel` command). It shows video previews and stats with the ffmpeg programs installed.
 - Themes and extensions are explorable and downloadable from GitHub inside the program.
 - Hot keys are programmable
@@ -65,6 +68,21 @@ I've created multiple open source resources (I have around 80 GitHub repositorie
 - Toggle System files/folders visibility
 - Optionally deletes to the OS's trashcan (external program has to be installed)
 - Change the environment used to execute external programs using the `Show Preferences` Command Prompt command.
+- Theme Creator/Editor
+- Extension Creator/Editor with template.
+- Reloads extensions without relaunching when leaving the Preferences panel.
+- Extensions currently created and downloadable from GitHub:
+  - Favorites: Create a list of favorite directories and quickly jump to them. There is also quick save and jump to directory registers with a new `fav` keyboard mode.
+  - Copy to Clipboard: copy file name or path to clipboard with command prompt
+  - Alfred: Launch Afred Browser on the current cursor location
+  - Move to Dir: Selected files are moved to the folder under the cursor in the same panel
+  - iTerm: open the current cursor directory in iTerm2
+- Themes currently created and downloadable from GitHub:
+  - Dracula Pro
+  - Dracula "Buffy"
+  - Dracula "Van Helsing"
+
+All Dracula based themes are here with permission from the author. Please support his great work at [Dracula Themes](https://draculatheme.com/). The Dracula "Buffy" theme is my preferred theme for everything. I'm having many issues with my eyes having light sensitivity and this theme allows me to keep working longer than other themes.
 
 ## Installation
 
@@ -103,7 +121,7 @@ mask launch -d
 
 which will launch the sdk version of NW.js with full development tools.
 
-If you just want to download a program to use, check the releases. I'm currently releasing alpha level macOS binaries in the releases.
+If you just want to download a program to use, check the releases. I'm currently releasing beta level macOS binaries in the releases.
 
 ## Upgrading
 
@@ -117,9 +135,9 @@ There are a few non-standard command line programs I use with Modal File Manager
 - [fd](https://github.com/sharkdp/fd) for quick file finding. It's a `find` replacement written in Rust.
 - For using the macOS trashcan, you have to have (`trash`)[https://github.com/andreafrancia/trash-cli] command line program installed using `brew install trash-cli`. If the program isn't installed before installing mfm, then you will need to adjust the environment variable for PATH in the preferences to make sure it is in the path.
 
-I also use the standard `cp`, `mv`, and `rm` commands on the command line. These still run faster than rewriting them in the scripting language. The major drawback is there isn't a backup method. Once deleted, always deleted. 
+I also use the standard `cp`, `mv`, `mkdir`, and `rm` commands on the command line. These still run faster than rewriting them in the scripting language. The major drawback is there isn't a backup method. Once deleted with `rm`, it will always be deleted. The `rm` command is used only if the user sets the `Trashcan` general preference to off (unchecked). On a new install, this is usually set to on (checked) even if the `trash-cli` isn't installed. In that case, nothing get deleted. This is for safety of the user files and directories.
 
-All of the programs should be downloaded and in your shell's path. Modal File Manager doesn't assume location for anything except or it's own configuration files. But, if Modal File Manager can't find the program, you can adjust the path used in the preferences (Command Prompt command is `Show Preferences`).
+All of the programs should be downloaded and in your shell's path. Modal File Manager doesn't assume location for anything except or it's own configuration files. But, if Modal File Manager can't find the program, you can adjust the path used in the preferences general tab (Command Prompt command is `Show Preferences`).
 
 ## Configuration Files
 
@@ -127,9 +145,15 @@ All extensions, themes, keyboard layouts, and anything else for configuring the 
 
 In this configuration directory, there are the `themes`, `extensions`, and `keyMaps` directories that contain their respective subfolders and files. Please refer the specific section for each directory for more details.
 
-There is the `history.json` file and the `theme.json` file. The `history.json` file contains a list of directories that the Modal File Manager has visited. I use this to quickly pull up possible paths to go to in the file manager. 
+There is the `history.json` file, `config.json` file, and the `theme.json` files in the configuration directory. 
+
+The `history.json` file contains a list of directories that the Modal File Manager has visited. I use this to quickly pull up possible paths to go to in the file manager. 
+
+The `config.json` file contains the environment variables used to launch command line commands and whether or not to use the `trash-cli` program to delete files and directories.
 
 Modal File Manager doesn't use the actual theme files downloaded from GitHub. Those are stored in the `themes` directory and are just referenced. All actually used theming is in the `theme.json` file. When a user changes themes, that file is changed. Therefore, be careful if you manually change this file and want to keep it. It is best to create a theme in the theme directory and load it in the program.
+
+All configuration files should be edited from the `Show Preferences` command prompt command.
 
 ## Source File Layout
 
@@ -160,27 +184,33 @@ Alternatively, you can use the [TextBar](http://richsomerfield.com/apps/textbar/
 If the above editor setup isn't on the system, it will use the operating system to open the 
 file in the default file editor.
 
+## Preferences
+
+With the command prompt command of `Show Preferences`, you can now open a new panel over the filemanager that shows all the program preferences. It is setup as a tab system with a General, Theme, and Extension tab.
+
+The General tab allows the user to delete, edit, or add environment variables to the running of command line programs. This give the user complete control over the environment variables used in launching commands from Modal File Manager. You can also turn on/off the use of the trashcan for deletions.
+
+The Theme tab allows you to create, update, and delete themes from the Modal File Manager.
+
+The Extension tab allows you to create, edit, and delete extensions from the Modal File Manager. The creation and editing of an extension will open the main file for the extension in the code editor that has been setup and moves the Modal File Manager to the extension's directory in the pane opposite the current cursor.
+
 ## Things in the Works
 
-- Theme Creator/Editor
-- Extension Creator/Editor with templates.
-- Add and test dynamically added states for keyboard
 - Translating my fman extensions to work with Modal File Manager
 	- Project Manager
 		- Notes - Should be part of Project Manager?
-	- Favorites: paritally done.
 	- Dropbox File System
 	- Launch Scripts
 	- Regular Expression selection
 	- Zip Selected Entries
 - Internal drag and drop - I can't seem to get it to work right.
 - Proper drag and drop with outside programs (NW.js doesn't support it directly, but I should be able to get it going with Node.js talking directly to the OS). 
-- Reloading extensions without relaunching
 - Add more file views for the Extra Panel
 - Multiple windows
 - Get Windows working
 - Get Linux tested and working
 - Get audio listening in the Extras Panel.
+- Extensions controled content in the Extras Panel.
 - Documentation!
 - Of course, bug fixing!
 
