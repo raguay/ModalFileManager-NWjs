@@ -19,6 +19,7 @@
     "@octokit/rest": "^18.3.5",
     "chokidar": "^3.5.1",
     "sirv-cli": "^1.0.10",
+    "svelte-color-picker": "^1.0.7",
     "svelte-icons": "^2.1.0"
   },
   "fig": {

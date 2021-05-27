@@ -329,16 +329,6 @@
       localConfig = JSON.parse(localFS.readFile(localFS.appendPath(configDir,'config.json')));
     }
 
-    // 
-    // Set the configuration store.
-    //
-    config.set({
-      configDir: configDir,
-      localFS: localFS,
-      configuration: localConfig
-    });
-    localFS.setConfig(localConfig);
-
     //
     // Setup the directory listeners.
     //
@@ -433,13 +423,6 @@
       localKeyProcess = value;
     });
 
-    // 
-    // Setup the directory history.
-    //
-    var dhist = get(dirHistory);
-    dhist.loadHistory();
-    dirHistory.set(dhist);
-
     //
     // Setup the user editor data file.
     //
@@ -461,6 +444,26 @@
     // Load the extensions, keyboard, and theme.
     //
     loadExtensionsKeyboard();
+    
+    // 
+    // Set the configuration store.
+    //
+    config.set({
+      configDir: configDir,
+      localFS: localFS,
+      configuration: localConfig,
+      commands: commands,
+      extensions: extensions,
+      userEditor: userEditor
+    });
+    localFS.setConfig(localConfig);
+
+    // 
+    // Setup the directory history.
+    //
+    var dhist = get(dirHistory);
+    dhist.loadHistory();
+    dirHistory.set(dhist);
 
     //
     // return a command to unsubscribe from everything.

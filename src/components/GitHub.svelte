@@ -233,15 +233,15 @@
 
   const dispatch = createEventDispatcher();
 
-  var octok;
-  var repos;
-  var themes;
-  var width = null;
-  var msgs = [];
-  var pickerDOM;
-  var hiddenInput;
-  var timeOut;
-  var once = true;
+  let octok;
+  let repos;
+  let themes;
+  let width = null;
+  let msgs = [];
+  let pickerDOM;
+  let hiddenInput;
+  let once = true;
+  let timeOut;
 
   onMount(() => {
     keyProcess.set(false);
@@ -409,8 +409,6 @@
   }
   
   function inputChange(e) {
-    console.log('GitHub key Processing...');
-    
     if((e.key === 'ArrowUp')||(e.key === 'k')) {
       // 
       // Go up the list. Zero is at the top.

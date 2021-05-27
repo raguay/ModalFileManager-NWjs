@@ -1,7 +1,12 @@
 <div
   id='general' 
+  bind:this={scrollDOM}
 >
   {#if localConfig !== null}
+    <h3>Environment for Launching Programs</h3>
+    <Env />
+
+    <h3>Other Configuration Items</h3>
     <div 
       class='row'
     >
@@ -34,11 +39,15 @@
     flex-direction: column;
     height: 100%;
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: auto;
   }
 
   #trashcanans {
     margin: auto 0px auto 10px;
+  }
+  
+  h3 {
+    margin-left: 10px;
   }
 
   .row {
@@ -49,10 +58,15 @@
 </style>
 
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, afterUpdate, createEventDispatcher } from 'svelte';
+  import Env from '../components/Env.svelte';
   import { config } from '../stores/config.js';
 
+  const dispatch = createEventDispatcher();
+
   let localConfig = null;
+  let scrollDOM = null;
+  let first = true;
 
   onMount(() => {
     var unsubscribeConfig = config.subscribe(value => {
@@ -62,6 +76,10 @@
       // env          The environment to use when executing command line programs.
       // useTrash     If true, delete to the trashcan, otherwise delete with 'rm' command.
       //
+      if(localConfig !== null) {
+        localConfig.localFS.writeFile(localConfig.localFS.appendPath(localConfig.configDir,'config.json'), JSON.stringify(value.configuration));
+        localConfig.localFS.setConfig(value.configuration);
+      }
       localConfig = value;
     });
 
@@ -70,14 +88,17 @@
     });
   });
 
+  afterUpdate(() => {
+    if((scrollDOM !== null)&&(first)) {
+      dispatch('setScrollDOM', {
+        DOM: scrollDOM
+      });
+      first = false;
+    }
+  });
+
   function trashChanged(e) {
     localConfig.configuration.useTrash = e.target.checked;
-    saveConfig();
-  }
-
-  function saveConfig() {
     config.set(localConfig);
-    localConfig.localFS.writeFile(localConfig.localFS.appendPath(localConfig.configDir,'config.json'), JSON.stringify(localConfig.configuration));
-    localConfig.localFS.setConfig(localConfig.configuration);
   }
 </script>

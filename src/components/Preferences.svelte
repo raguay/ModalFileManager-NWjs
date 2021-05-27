@@ -5,6 +5,45 @@
          font-family: {$theme.font};
          font-size: {$theme.fontSize};"
 >
+  <input 
+    id="vimInputDiv"
+    bind:this={vimInput}
+    on:blur={() => {
+      if(keepBlur&&(vimInput !== null)) {
+        vimInput.focus();
+      }
+    }}
+    on:keydown={(e) => {
+      if(keepBlur) {
+        e.preventDefault();
+        switch(e.key) {
+          case 'g': 
+            showPanel = 'general';
+            break;
+          case 't': 
+            showPanel = 'theme';
+            break;
+          case 'e': 
+            showPanel = 'extension';
+            break;
+          case 'ArrowUp': 
+          case 'k':
+            scrollDiv(-1);
+            break;
+          case 'ArrowDown': 
+          case 'j':
+            scrollDiv(1);
+            break;
+          case 'Escape': 
+            keepBlur = false;
+            exitPrefs();
+            break;
+          default:
+            break;
+        }
+      }
+    }}
+  />
   <h2>Preferences</h2>
   <ul>
     {#if showPanel === 'general'}
@@ -45,11 +84,59 @@
         Theme
       </li>
     {/if}
+    {#if showPanel === 'extension'}
+      <li
+        on:click={(e) => { showPanel = 'extension'; }}
+        style="border-color: {$theme.textColor};
+               background-color: {$theme.textColor};
+               color: {$theme.backgroundColor};"
+      >
+        Extension
+      </li>
+    {:else}
+      <li
+        on:click={(e) => { showPanel = 'extension'; }}
+        style="border-color: {$theme.textColor};
+               color: {$theme.textColor};
+               background-color: {$theme.backgroundColor};"
+      >
+        Extension
+      </li>
+    {/if}
   </ul>
   {#if showPanel === 'general'}
-    <GeneralPrefs />
+    <GeneralPrefs 
+      on:setScrollDOM={(e) => {
+        scrollDOM = e.detail.DOM;
+      }}
+      on:setKeyProcess={(e) => {
+        keepBlur = e.detail.blur;
+        if(keepBlur) timeOut = setTimeout(focusInput, 1000);
+      }}
+    />
   {:else if showPanel === 'theme'}
-    <ThemePrefs />
+    <ThemePrefs  
+      on:setScrollDOM={(e) => {
+        scrollDOM = e.detail.DOM;
+      }}
+      on:setKeyProcess={(e) => {
+        keepBlur = e.detail.blur;
+        if(keepBlur) timeOut = setTimeout(focusInput, 1000);
+      }}
+    />
+  {:else if showPanel === 'extension'}
+    <ExtensionPrefs 
+      on:switchView={(e)=>{
+        switchView(e.detail.view);
+      }} 
+      on:setScrollDOM={(e) => {
+          scrollDOM = e.detail.DOM;
+      }}
+      on:setKeyProcess={(e) => {
+        keepBlur = e.detail.blur;
+        if(keepBlur) timeOut = setTimeout(focusInput, 1000);
+      }}
+    />
   {/if}
   <div
     id='buttonRow'
@@ -78,6 +165,14 @@
     z-index: 100;
     width: 100%;
     height: 100%;
+  }
+
+  #vimInputDiv {
+    width: 0px;
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+    border: 0px solid transparent;
   }
 
   #buttonRow {
@@ -119,6 +214,7 @@
   import { theme } from '../stores/theme.js';
   import GeneralPrefs from './GeneralPrefs.svelte';
   import ThemePrefs from './ThemePrefs.svelte';
+  import ExtensionPrefs from './ExtensionPrefs.svelte';
   import macOS from '../modules/macOS.js';
   import linux from '../modules/linux.js';
   import windows from '../modules/windows.js';
@@ -131,6 +227,10 @@
   let configDir;
   let osNames = ['macOS', 'linux', 'windows'];
   let showPanel = 'general';
+  let vimInput = null;
+  let keepBlur = true;
+  let scrollDOM = null;
+  let timeOut;
 
   onMount(() => {
     // 
@@ -169,10 +269,16 @@
       });
     }
 
+    // 
+    // keep the input focused. 
+    // 
+    timeOut = setTimeout(focusInput, 1000);
+
     //
     // return a command to unsubscribe from everything.
     //
     return(() => {
+      clearTimeout(timeOut);
     })
   });
 
@@ -220,6 +326,22 @@
 
   function exitPrefs() {
     switchView('filemanager');
+  }
+
+  function scrollDiv(amount) {
+      var adj = amount * 20;
+
+    if(scrollDOM !== null) {
+        scrollDOM.scrollTop += adj;
+      if(scrollDOM.scrollTop < 0) scrollDOM.scrollTop = 0;
+    }
+  }
+
+  function focusInput() {
+    if((vimInput !== null)&&(keepBlur)) {
+      vimInput.focus();
+    }
+    timeOut = setTimeout(focusInput, 1000);
   }
 </script>
 
