@@ -457,6 +457,7 @@
       userEditor: userEditor
     });
     localFS.setConfig(localConfig);
+    extensions.setConfig(localConfig);
 
     // 
     // Setup the directory history.
@@ -544,13 +545,7 @@
     //
     // Setup Extensions.
     //
-    const extDir = localFS.appendPath(configDir, 'extensions');
-    extensions.setExtensionDir(extDir);
-    extensions.setCommands(commands);
-    extensions.setFileSystems(filesystems);
-    extensions.load(localFS);
-    installDefaultExtCommands();
-    extensions.init();
+    setUpExt();
 
     //
     // Setup State Maps. This has to be after setting up extensions in case
@@ -558,6 +553,16 @@
     //
     loadKeyMaps();
     extensions.installKeyMaps();
+  }
+
+  function setUpExt() {
+    const extDir = localFS.appendPath(configDir, 'extensions');
+    extensions.setExtensionDir(extDir);
+    extensions.setCommands(commands);
+    extensions.setFileSystems(filesystems);
+    extensions.load(localConfig, localFS);
+    installDefaultExtCommands();
+    extensions.init();
   }
 
   function clearKeyboard() {
@@ -581,11 +586,9 @@
   }
 
  function switchView(view) {
-    if((view === 'filemanager')||(view === 'preferences')) {
-      dispatch('switchView', {
-        view: view
-      });
-    }
+    dispatch('switchView', {
+      view: view
+    });
   }
 
   function showPreferences() {
@@ -654,6 +657,7 @@
     extensions.addExtCommand('createNewMode', 'Allows the creation of a new mode for keyboard commands.', createNewMode);
     extensions.addExtCommand('changeMode', 'Change to mode given.', changeMode);
     extensions.addExtCommand('switchView', 'Switch the active program view.', switchView);
+    extensions.addExtCommand('copyEntriesCommand', 'Copy the list of entries to new location.', copyEntriesCommand);
   }
 
   function installDefaultCommands() {
@@ -1266,6 +1270,10 @@
       sel = false;
     }
     var otherPane = localCurrentCursor.pane === 'left' ? { ...localCurrentRightFile.entry } : { ...localCurrentLeftFile.entry };
+    copyEntriesCommand(entries, otherPane);
+  }
+
+  function copyEntriesCommand(entries, otherPane) {
     msgBoxConfig = {
       title: "Copying Entries",
       noShowButton: true

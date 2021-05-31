@@ -11,7 +11,8 @@ var extensions = {
   extensionList: [],
   extensionDir: '',
   localFS: null,
-  load: function(lFS) {
+  config: null,
+  load: function(confg, LFS) {
     //
     // Load the extensions from the file system. The extension directory 
     // contains each extension in it's own directory. Each extension should 
@@ -31,7 +32,8 @@ var extensions = {
     //
     // Single files in the extensions directory will be ignored.
     //
-    extensions.localFS = lFS;
+    extensions.config = confg;
+    extensions.localFS = LFS;
     try{
       var items = extensions.localFS.readDir(extensions.extensionDir);
       var stats = [];
@@ -92,6 +94,12 @@ var extensions = {
   },
   getCommands: function() {
     return extensions.commands;
+  },
+  getConfig: function() {
+    return extensions.config;
+  },
+  setConfig: function(value) {
+    extensions.config = value;
   },
   addExtCommand: function(name, description, extCommand) {
     //

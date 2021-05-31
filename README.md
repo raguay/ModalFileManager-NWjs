@@ -52,6 +52,7 @@ I've created multiple open source resources (I have around 80 GitHub repositorie
 ## Current Feature Set
 
 - Dual pane file manager with vim style model hotkeys for navigation and action launching.
+- Drag and Drop works for copying single file or directory (the current cursor location) within the application itself.
 - Command Prompt for executing commands (`:` in any mode or `<ctrl>p` in normal mode).
 - Fully extendable with extensions using the extensions API
 - Fully extendable to alternate file systems
@@ -203,8 +204,7 @@ The Extension tab allows you to create, edit, and delete extensions from the Mod
 	- Launch Scripts
 	- Regular Expression selection
 	- Zip Selected Entries
-- Internal drag and drop - I can't seem to get it to work right.
-- Proper drag and drop with outside programs (NW.js doesn't support it directly, but I should be able to get it going with Node.js talking directly to the OS). 
+- Drag and drop with external programs (NW.js doesn't support it directly, but I should be able to get it going with Node.js talking directly to the OS). 
 - Add more file views for the Extra Panel
 - Multiple windows
 - Get Windows working
@@ -343,6 +343,7 @@ hotkeys or command prompt. They are loaded and used in a different way as well.
 | `showMessage` | Show a message to the user. |
 | `createNewMode` | Allows the creation of a new mode for keyboard commands. |
 | `changeMode` | Change to mode given. |
+| `switchView` | Change to new program view. Currently `filemanager` or `preferences`. |
 
 ## Creating Themes
 

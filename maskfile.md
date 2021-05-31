@@ -48,6 +48,7 @@ else
   /Applications/nwjs.app/Contents/MacOS/nwjs ./public > /dev/null 2>&1 &
 end
 ```
+
 ## launchapp
 > Launch the application.
 

@@ -17,6 +17,7 @@ var macOS = {
   lastError: '',
   lastOutput: '',
   config: null,
+  type: 'macOS',
   setConfig: function(cfg) {
     this.config = cfg;
   },
@@ -421,6 +422,12 @@ var macOS = {
       console.log(e);
       this.lastError = e.toString();
     }
+  },
+  splitFilePath: function(filePath) {
+    return({
+      dir: path.dirname(filePath),
+      name: path.basename(filePath)
+    });
   }
 }
 

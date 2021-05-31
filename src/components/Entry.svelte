@@ -6,10 +6,10 @@
      bind:this={DOM}
      draggable="true"
      on:dragstart={dragStart}
-     on:dragover={(e) => { dropFiles(e,'dragover'); }}
-     on:dragend={(e) => { dropNoPrevent(e,'dragend'); }}
-     on:drop={(e) => { dropFiles(e, 'drop'); }}
-     on:dragenter={(e) => {dropNoPrevent(e, 'dragenter'); }}
+     on:dragend|preventDefault={(e) => { dropFiles(e,'dragend'); }}
+     on:drop|preventDefault={(e) => { dropFiles(e, 'drop'); }}
+     on:dragover|preventDefault={(e) => { dropFiles(e,'dragover'); }}
+     on:dragenter|preventDefault={(e) => {dropFiles(e, 'dragenter'); }}
 >
   <span class='type'>
     {#if entry.type === 0}
@@ -28,6 +28,9 @@
      on:click={cursorToEntry(pane, entry, index)}
      on:dblclick={openEntry(pane, entry, index)}
      bind:this={DOM}
+     draggable="false"
+     on:drop|preventDefault={(e) => { dropFiles(e, 'drop'); }}
+     on:dragover|preventDefault={(e) => { dropFiles(e,'dragover'); }}
 >
   <span class='type'>
     {#if entry.type === 0}
@@ -74,10 +77,12 @@
 
 <script>
   import { onMount, createEventDispatcher, tick } from 'svelte';
+  import { get } from 'svelte/store';
   import { currentCursor } from '../stores/currentCursor.js';
   import { theme } from '../stores/theme.js';
   import { currentLeftFile } from '../stores/currentLeftFile.js';
   import { currentRightFile } from '../stores/currentRightFile.js';
+  import { config } from '../stores/config.js';
   import FaRegFolder from 'svelte-icons/fa/FaRegFolder.svelte';
   import FaRegFileAlt from 'svelte-icons/fa/FaRegFileAlt.svelte';
   import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte'
@@ -197,18 +202,54 @@
   function dragStart(e) {
     e.dataTransfer.dropEffect = 'copy';
     const file = utilities.appendPath(entry.dir, entry.name);
-    e.dataTransfer.setData('text/plain', file);
+    e.dataTransfer.setData('text/plain', file + "|" + entry.type);
     e.dataTransfer.setData('text/uri-url', "file://" + file);
     e.dataTransfer.setData("text/x-moz-url", "file://"+file);
     e.dataTransfer.setData("application/x-moz-file-promise-url", "file://" + file);
   }
   
   function dropFiles(e,type) {
-    e.preventDefault();
-    const dataTrans = e.dataTransfer;
-  }
-  
-  function dropNoPrevent(e,type) {
-    const dataTrans = e.dataTransfer;
+    switch(type) {
+      case 'drop':
+        // 
+        // Create the drop to entry.
+        //
+        var dirPath = '';
+        var fileName = '';
+        var toEntry = {...entry};
+        if(toEntry.type === 1) {
+          toEntry.dir = utilities.appendPath(toEntry.dir, toEntry.name);
+          toEntry.name = ''
+        }
+       
+        // 
+        // Create the entries from the drop.
+        //
+        const dataTrans = e.dataTransfer.getData('text/plain');
+        const lconfig = get(config);
+        const parts = dataTrans.split('|');
+        if(parts[1] === '1') {
+          dirPath = parts[0];
+          var fdir = utilities.splitFilePath(dirPath);
+          const nwDir = utilities.appendPath(toEntry.dir, fdir.name);
+          utilities.makeDir(nwDir);
+          toEntry.dir = nwDir;
+        } else {
+          const result = utilities.splitFilePath(parts[0]);
+          dirPath = result.dir;
+          fileName = result.name;
+        }
+        var fromEntries = [];
+        fromEntries.push({
+          dir: dirPath,
+          name: fileName,
+          fileSystemType: entry.fileSystemType,
+          fileSystem: entry.fileSystem
+        });
+        lconfig.extensions.getExtCommand('copyEntriesCommand').command(fromEntries, toEntry);
+        break;
+      default:
+        break;
+    }
   }
 </script>
