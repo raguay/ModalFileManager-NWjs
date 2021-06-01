@@ -658,6 +658,9 @@
     extensions.addExtCommand('changeMode', 'Change to mode given.', changeMode);
     extensions.addExtCommand('switchView', 'Switch the active program view.', switchView);
     extensions.addExtCommand('copyEntriesCommand', 'Copy the list of entries to new location.', copyEntriesCommand);
+    extensions.addExtCommand('moveEntriesCommand', 'Move the list of entries to the new location.', moveEntriesCommand);
+    extensions.addExtCommand('deleteEntriesCommand', 'Delete the list of entries.', deleteEntriesCommand);
+    extensions.addExtCommand('editEntryCommand', 'Edit the given entry.', editEntryCommand);
   }
 
   function installDefaultCommands() {
@@ -1194,14 +1197,16 @@
 
   function deleteEntries() {
     var entries = getSelectedFiles();
-    var sel = true;
     if(entries.length === 0) {
       //
       // Get the entry at the current cursor
       //
       entries.push(localCurrentCursor.entry);
-      sel = false;
     }
+    deleteEntriesCommand(entries);
+  }
+
+  function deleteEntriesCommand(entries) {
     msgBoxConfig = {
       title: "Deleting Entries",
       noShowButton: true
@@ -1331,7 +1336,6 @@
   }
 
   async function swapPanels() {
-    var cfile = localCurrentCursor.entry.name;
     var npane = localCurrentCursor.pane === 'left' ? 'right' : 'left';
     tmp = localCurrentLeftFile;
     currentLeftFile.set(localCurrentRightFile);
@@ -1347,11 +1351,15 @@
   }
 
   function editEntry() {
+    editEntryCommand(localCurrentCursor.entry);
+  }
+
+  function editEntryCommand(entry) {
     if(localFS.fileExists(userEditor)) {
       //
       // There is an editor defined by the user. Use it.
       //
-      var file = localFS.appendPath(localCurrentCursor.entry.dir, localCurrentCursor.entry.name);
+      var file = localFS.appendPath(entry.dir, entry.name);
       var editor = localFS.readFile(userEditor).toString().trim();
       if(editor.endsWith('.app')) {
         localFS.openFileWithProgram(editor, file);
@@ -1375,7 +1383,7 @@
       //
       // Open with the system default editor.
       //
-      openFile(localCurrentCursor.entry);
+      openFile(entry);
     }
   }
 
@@ -1407,15 +1415,17 @@
 
   function moveEntries() {
     var entries = getSelectedFiles();
-    var sel = true;
     if(entries.length === 0) {
       //
       // Get the entry at the current cursor
       //
       entries.push(localCurrentCursor.entry);
-      sel = false;
     }
     var otherPane = localCurrentCursor.pane === 'left' ? localCurrentRightFile.entry : localCurrentLeftFile.entry;
+    moveEntriesCommand(entries, otherPane);
+  }
+
+  function moveEntriesCommand(entries, otherPane) {
     msgBoxConfig = {
       title: "Moving Entries",
       noShowButton: true

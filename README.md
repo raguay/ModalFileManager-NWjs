@@ -52,7 +52,7 @@ I've created multiple open source resources (I have around 80 GitHub repositorie
 ## Current Feature Set
 
 - Dual pane file manager with vim style model hotkeys for navigation and action launching.
-- Drag and Drop works for copying single file or directory (the current cursor location) within the application itself.
+- Drag and Drop works for copying or moving the current cursor and all selected files or directories (the current cursor location) within the application itself. If no keys pressed, it will be copied. If shift key is pressed, it will be moved. The drag begins with the current cursor.
 - Command Prompt for executing commands (`:` in any mode or `<ctrl>p` in normal mode).
 - Fully extendable with extensions using the extensions API
 - Fully extendable to alternate file systems
@@ -344,6 +344,10 @@ hotkeys or command prompt. They are loaded and used in a different way as well.
 | `createNewMode` | Allows the creation of a new mode for keyboard commands. |
 | `changeMode` | Change to mode given. |
 | `switchView` | Change to new program view. Currently `filemanager` or `preferences`. |
+| `copyEntriesCommand` | Copy the entry list to the destination entry. |
+| `moveEntriesCommand` | Move the entry list to the destination entry. |
+| `deleteEntriesCommand` | Delete the entry list |
+| `editEntriesCommand` | Edit the entry |
 
 ## Creating Themes
 

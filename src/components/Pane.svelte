@@ -78,14 +78,16 @@
   }
 
   function dropFiles(e,type) {
+    var shiftKey = e.shiftKey;
     switch(type) {
+      case 'over':
+        if(e.shiftKey) {
+          e.dataTransfer.dropEffect = 'move';
+        } else {
+          e.dataTransfer.dropEffect = 'copy';
+        }
+        break;
       case 'drop':
-        // 
-        // Get the drop information.
-        //
-        const dataTrans = e.dataTransfer.getData('text/plain');
-        const lconfig = get(config);
-
         // 
         // Get the local information for dropping into.
         //
@@ -115,26 +117,34 @@
         // 
         // Process the information from the drop.
         // 
+        const dataTransArray = e.dataTransfer.getData('text/plain').split('\n');
+        const lconfig = get(config);
         var fromEntries = [];
-        const parts = dataTrans.split('|');
-        if(parts[1] === '1') {
-          dirPath = parts[0];
-          var fdir = utilities.splitFilePath(dirPath);
-          const nwDir = utilities.appendPath(toEntry.dir, fdir.name);
-          utilities.makeDir(nwDir);
-          toEntry.dir = nwDir;
-        } else {
-          const result = utilities.splitFilePath(parts[0]);
-          dirPath = result.dir;
-          fileName = result.name;
-        }
-        fromEntries.push({
-          dir: dirPath,
-          name: fileName,
-          fileSystemType: toEntry.fileSystemType,
-          fileSystem: toEntry.fileSystem
+        dataTransArray.forEach(dataTrans => {
+          const parts = dataTrans.split('|');
+          if(parts[1] === '1') {
+            dirPath = parts[0];
+            var fdir = utilities.splitFilePath(dirPath);
+            const nwDir = utilities.appendPath(toEntry.dir, fdir.name);
+            utilities.makeDir(nwDir);
+            toEntry.dir = nwDir;
+          } else {
+            const result = utilities.splitFilePath(parts[0]);
+            dirPath = result.dir;
+            fileName = result.name;
+          }
+          fromEntries.push({
+            dir: dirPath,
+            name: fileName,
+            fileSystemType: utilities.type,
+            fileSystem: utilities
+          });
         });
-        lconfig.extensions.getExtCommand('copyEntriesCommand').command(fromEntries, toEntry);
+        if(shiftKey) {
+          lconfig.extensions.getExtCommand('moveEntriesCommand').command(fromEntries, toEntry);
+        } else {
+          lconfig.extensions.getExtCommand('copyEntriesCommand').command(fromEntries, toEntry);
+        }
         break;
       default:
         break;
@@ -164,8 +174,6 @@
       nEntry.dir = curPane.path;
       nEntry.name = '';
     }
-    console.log(nEntry);
-    
     currentCursor.set({
       pane: pane,
       entry: nEntry

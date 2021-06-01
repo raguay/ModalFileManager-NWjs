@@ -200,16 +200,39 @@
   }
 
   function dragStart(e) {
-    e.dataTransfer.dropEffect = 'copy';
+    if(e.shiftKey) {
+      e.dataTransfer.dropEffect = 'move';
+    } else {
+      e.dataTransfer.dropEffect = 'copy';
+    }
+    const lconfig = get(config);
+    var flist = lconfig.extensions.getExtCommand('getSelectedFiles').command();
+    var included = false;
+    var data = [];
+    flist.map(item => {
+      data.push(utilities.appendPath(item.dir, item.name) + "|" + item.type);
+      if(item.name === entry.name) included = true;
+    });
     const file = utilities.appendPath(entry.dir, entry.name);
-    e.dataTransfer.setData('text/plain', file + "|" + entry.type);
+    if(!included) {
+      data.push(file + "|" + entry.type);
+    }
+    e.dataTransfer.setData('text/plain', data.join('\n'));
     e.dataTransfer.setData('text/uri-url', "file://" + file);
     e.dataTransfer.setData("text/x-moz-url", "file://"+file);
     e.dataTransfer.setData("application/x-moz-file-promise-url", "file://" + file);
   }
   
   function dropFiles(e,type) {
+    var shiftKey = e.shiftKey;
     switch(type) {
+      case 'over':
+        if(e.shiftKey) {
+          e.dataTransfer.dropEffect = 'move';
+        } else {
+          e.dataTransfer.dropEffect = 'copy';
+        }
+        break;
       case 'drop':
         // 
         // Create the drop to entry.
@@ -225,28 +248,34 @@
         // 
         // Create the entries from the drop.
         //
-        const dataTrans = e.dataTransfer.getData('text/plain');
+        const dataTransArray = e.dataTransfer.getData('text/plain').split('\n');
         const lconfig = get(config);
-        const parts = dataTrans.split('|');
-        if(parts[1] === '1') {
-          dirPath = parts[0];
-          var fdir = utilities.splitFilePath(dirPath);
-          const nwDir = utilities.appendPath(toEntry.dir, fdir.name);
-          utilities.makeDir(nwDir);
-          toEntry.dir = nwDir;
-        } else {
-          const result = utilities.splitFilePath(parts[0]);
-          dirPath = result.dir;
-          fileName = result.name;
-        }
         var fromEntries = [];
-        fromEntries.push({
-          dir: dirPath,
-          name: fileName,
-          fileSystemType: entry.fileSystemType,
-          fileSystem: entry.fileSystem
+        dataTransArray.forEach(dataTrans => {
+          const parts = dataTrans.split('|');
+          if(parts[1] === '1') {
+            dirPath = parts[0];
+            var fdir = utilities.splitFilePath(dirPath);
+            const nwDir = utilities.appendPath(toEntry.dir, fdir.name);
+            utilities.makeDir(nwDir);
+            toEntry.dir = nwDir;
+          } else {
+            const result = utilities.splitFilePath(parts[0]);
+            dirPath = result.dir;
+            fileName = result.name;
+          }
+          fromEntries.push({
+            dir: dirPath,
+            name: fileName,
+            fileSystemType: entry.fileSystemType,
+            fileSystem: entry.fileSystem
+          });
         });
-        lconfig.extensions.getExtCommand('copyEntriesCommand').command(fromEntries, toEntry);
+        if(shiftKey) {
+          lconfig.extensions.getExtCommand('moveEntriesCommand').command(fromEntries, toEntry);
+        } else {
+          lconfig.extensions.getExtCommand('copyEntriesCommand').command(fromEntries, toEntry);
+        }
         break;
       default:
         break;
