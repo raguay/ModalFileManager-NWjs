@@ -89,7 +89,7 @@ All Dracula based themes are here with permission from the author. Please suppor
 
 These directions currently work for the macOS. I haven't tested for finished the Linux or Windows installation. All external programs should be installed before first running the Modal File Manager. Otherwise, you will have to modify the path used to execute external programs to find them.
 
-I have a run script made with [Mask](https://github.com/jakedeichert/mask) and [Node.js](https://nodejs.org/en/). You have to put a copy of [NW.js](https://nwjs.io/) in the 'misc' directory as `nwjs.app`. Or, you can change the script. I'm assuming you aren't changing the script in the following.
+I have a run script made with [Mask](https://github.com/jakedeichert/mask) and [Node.js](https://nodejs.org/en/). You have to put a copy of [NW.js](https://nwjs.io/) in the 'misc' directory as `nwjs.app`. Or, you can change the script. I'm assuming you aren't changing the script in the following. Also, the scripts in the mask file are running in a [fish shell](https://github.com/fish-shell/fish-shell). If you don't have fish shell on your system, you will need to either install it or convert the script to run in zsh or sh.
 
 So, download the repository, create the `misc` directory, put nwjs.app in the `misc` directory. On the command line, run the following commands to compile and run the program:
 
@@ -313,8 +313,7 @@ These commands can be ran from the command prompt. They all act upon the current
 
 ### Extension Commands
 
-These commands require inputs and supply results. Therefore these commands can`t be used in 
-hotkeys or command prompt. They are loaded and used in a different way as well.
+These commands require inputs and supply results. Therefore these commands can`t be used in hotkeys or the command prompt. They are loaded and used in a different way as well. Please refer to the [Creating Extensions Section](#creating-extensions) for more details.
 
 | Function Name | Description |
 | --- | ---------- |
@@ -347,7 +346,9 @@ hotkeys or command prompt. They are loaded and used in a different way as well.
 | `copyEntriesCommand` | Copy the entry list to the destination entry. |
 | `moveEntriesCommand` | Move the entry list to the destination entry. |
 | `deleteEntriesCommand` | Delete the entry list |
-| `editEntriesCommand` | Edit the entry |
+| `editEntryCommand` | Edit the entry |
+| `getRightDir` | Get the directory path for the right panel. |
+| `getLeftDir` | Get the directory path for the left panel. |
 
 ## Creating Themes
 

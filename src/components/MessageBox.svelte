@@ -89,6 +89,8 @@
               >
                 {item.text}
               </label>
+            {:else if item.type === 'html'}
+              {@html item.text}
             {/if}
           {:else}
             <p>System Error</p>
@@ -135,6 +137,7 @@
   #butRow {
     display: flex;
     flex-direction: row;
+    margin: 20px 0px 0px 0px;
   }
 
   #butRow button:first-child {
@@ -184,6 +187,7 @@
   let pickerItemsOrig = [];
   let pickerValue = "";
   let pickerDOM;
+  let pickerExtra = false;
 
   $: items = updateSpinners(spinners);
   $: updateItems(items);
@@ -226,7 +230,13 @@
   function returnValue(skip) {
     if(typeof skip === 'undefined') skip = false;
     keyProcess.set(true);
-    if(pickerItems.length > 0) items[0].value = pickerItems[pickerNum].value;
+    console.log(pickerItems);
+    if(pickerItems.length > 0) {
+      items[0].value = pickerItems[pickerNum].value;
+    } else if(pickerExtra) {
+      items[0].value = pickerValue;
+    }
+    console.log(items);
     dispatch('msgReturn', {
       ans: items
     });
@@ -268,6 +278,8 @@
       dispatch('closeMsgBox',{
         skip: false
       });
+    } else if(e.key === 'Tab') {
+      pickerValue = pickerItems[pickerNum].value;
     } else if(((e.which >= 48)&&(e.which <= 90))||(e.which >= 186)||(e.which === 32)) {
       // 
       // It's a normal printable character. Add it and re-evaluate.
@@ -286,10 +298,14 @@
       // Enter key. Take the highlighted value and return.
       //
       keyProcess.set(true);
+      var pickerval = pickerItems[pickerNum].value;
+      if(pickerExtra && (pickerItems.length = 0)) {
+        pickerval = pickerValue;
+      }
       dispatch('msgReturn', {
         ans: [{
           type: 'picker',
-          value: pickerItems[pickerNum].value
+          value: pickerval
         }]
       });
       dispatch('closeMsgBox',{
@@ -319,6 +335,7 @@
       if(itm.type === 'picker') {
         pickerItems = itm.selections;
         pickerItemsOrig = itm.selections;
+        pickerExtra = itm.extra;
       }
     })
   }
@@ -330,12 +347,14 @@
     
     if(pickerDOM !== null) {
       var itemDOM = window.document.body.getElementsByClassName('pickerSelected')[0];
-      var cur = pickerNum * itemDOM.clientHeight;
-      var curP1 = (pickerNum + 1) * itemDOM.clientHeight;
-      if(pickerDOM.clientHeight < cur) pickerDOM.scrollTop += itemDOM.clientHeight; 
-      if((pickerDOM.clientTop+pickerDOM.clientHeight) < curP1) pickerDOM.scrollTop += itemDOM.clientHeight;
-      if(pickerDOM.scrollTop > cur) pickerDOM.scrollTop = cur;
-      if(pickerDOM.scrollTop < 0) DOM.scrollTop = 0;
+      if(typeof itemDOM !== 'undefined') {
+        var cur = pickerNum * itemDOM.clientHeight;
+        var curP1 = (pickerNum + 1) * itemDOM.clientHeight;
+        if(pickerDOM.clientHeight < cur) pickerDOM.scrollTop += itemDOM.clientHeight; 
+        if((pickerDOM.clientTop+pickerDOM.clientHeight) < curP1) pickerDOM.scrollTop += itemDOM.clientHeight;
+        if(pickerDOM.scrollTop > cur) pickerDOM.scrollTop = cur;
+        if(pickerDOM.scrollTop < 0) DOM.scrollTop = 0;
+      }
     }
   }
 </script>

@@ -1,4 +1,4 @@
-{#if ((localCursor.pane === pane) && (localCursor.entry.name == entry.name))}
+{#if (((localCursor.pane === pane) && (localCursor.entry.name == entry.name))||(entry.selected))}
 <div class='entry' 
      style="background-color: {localTheme.cursorColor};"
      on:click={cursorToEntry(pane, entry, index)}
@@ -227,7 +227,7 @@
     var shiftKey = e.shiftKey;
     switch(type) {
       case 'over':
-        if(e.shiftKey) {
+        if(shiftKey) {
           e.dataTransfer.dropEffect = 'move';
         } else {
           e.dataTransfer.dropEffect = 'copy';

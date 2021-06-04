@@ -327,25 +327,31 @@ var macOS = {
     }
     return(this.config);
   },
-  runCommandLine: function(line, callback) {
+  runCommandLine: function(line, callback, rEnv, rOpt) {
     //
     // Get the environment to use.
     //
     var cnfg = this.getConfig();
+    var nEnv = {...cnfg.env};
+    if(typeof rEnv !== 'undefined') {
+      nEnv = {...nEnv, ...rEnv};
+    }
+
+    var nOpt = {
+      env: nEnv,
+      shell: cnfg.shell
+    };
+    if(typeof rOpt !== 'undefined') {
+      nOpt = {...nOpt, ...rOpt};
+    }
     
     //
     // Run with default callback if a callback wasn't given.
     //
     if(typeof callback === 'undefined') {
-      childProcess.exec(line, {
-        env: cnfg.env,
-        shell: cnfg.shell
-      }, (err, stdin, stdout) => {});
+      childProcess.exec(line, nOpt, (err, stdin, stdout) => {});
     } else {
-      childProcess.exec(line, {
-        env: cnfg.env,
-        shell: cnfg.shell
-      }, callback);
+      childProcess.exec(line, nOpt, callback);
     }
   },
   appendPath: function(dir, name) {
@@ -354,12 +360,12 @@ var macOS = {
     //
     if(typeof dir === 'object') dir = this.appendPath(dir.dir, dir.name);
     if(dir == path.sep) {
-      return path.sep + name;
+      return path.normalize(path.sep + name);
     } else {
       if(dir[dir.length-1] === path.sep) {
-        return dir + name;
+        return path.normalize(dir + name);
       } else {
-        return dir + path.sep + name;
+        return path.normalize(dir + path.sep + name);
       }
     }
   },

@@ -661,6 +661,8 @@
     extensions.addExtCommand('moveEntriesCommand', 'Move the list of entries to the new location.', moveEntriesCommand);
     extensions.addExtCommand('deleteEntriesCommand', 'Delete the list of entries.', deleteEntriesCommand);
     extensions.addExtCommand('editEntryCommand', 'Edit the given entry.', editEntryCommand);
+    extensions.addExtCommand('getRightDir', 'Get the path for the right pane.', getRightDir);
+    extensions.addExtCommand('getLeftDir', 'Get the path for the left pane.', getLeftDir);
   }
 
   function installDefaultCommands() {
@@ -1359,7 +1361,10 @@
       //
       // There is an editor defined by the user. Use it.
       //
-      var file = localFS.appendPath(entry.dir, entry.name);
+      var file = entry;
+      if(typeof entry === 'object'){
+        file = localFS.appendPath(entry.dir, entry.name);
+      }
       var editor = localFS.readFile(userEditor).toString().trim();
       if(editor.endsWith('.app')) {
         localFS.openFileWithProgram(editor, file);
@@ -1543,17 +1548,32 @@
       title: title,
       noShowButton: false
     };
-    msgBoxItems = [{
-      type: 'label',
-      for: 'msgboxMain',
-      text: msg,
-      id: 'msgboxMain'
-    }];
+
+    // 
+    // If the msg starts with a tag open, then assume it is 
+    // a block of html and use that for displaying. Otherwise, 
+    // use a label.
+    //
+    if(msg[0] === '<') {
+      msgBoxItems = [{
+        type: 'html',
+        text: msg,
+        id: 'msgboxMain'
+      }];
+    } else {
+      msgBoxItems = [{
+        type: 'label',
+        for: 'msgboxMain',
+        text: msg,
+        id: 'msgboxMain'
+      }];
+    }
     msgCallBack = (e) => {};
     showMessageBox = true;
   }
 
-  function pickItem(title, items, returnValue) {
+  function pickItem(title, items, returnValue, extra) {
+    if(typeof extra === 'undefined') extra = false;
     msgBoxConfig = {
       title: title,
       noShowButton: false
@@ -1562,7 +1582,8 @@
       type: 'picker',
       selections: items,
       value: items[0].value,
-      id: 'msgboxMain'
+      id: 'msgboxMain',
+      extra: extra
     }];
     msgCallBack = (e) => {
       returnValue(e[0].value);
@@ -2245,6 +2266,14 @@
         delete arr[index];
       }
     });
+  }
+
+  function getRightDir() {
+    return(localRightDir);
+  }
+
+  function getLeftDir() {
+    return(localLeftDir);
   }
 </script>
 

@@ -81,7 +81,7 @@
     var shiftKey = e.shiftKey;
     switch(type) {
       case 'over':
-        if(e.shiftKey) {
+        if(shiftKey) {
           e.dataTransfer.dropEffect = 'move';
         } else {
           e.dataTransfer.dropEffect = 'copy';
