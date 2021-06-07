@@ -12,22 +12,26 @@
 npm run build
 if set -q dev
   rm public/index.html
-  rm mfm.app/Contents/Resources/app.nw/*.*
+  rm -Rf mfm.app/Contents/Resources/app.nw
+  mkdir mfm.app/Contents/Resources/app.nw
   cp public/index-dev.html public/index.html
   cp public/*.js mfm.app/Contents/Resources/app.nw
   cp public/index.html mfm.app/Contents/Resources/app.nw
   cp public/package.json mfm.app/Contents/Resources/app.nw
   cp public/*.css mfm.app/Contents/Resources/app.nw
+  cp icons/mfm-icon.icns mfm.app/Contents/Resources/app.icns
 else
   /Applications/nwjs-sdk/nwjc public/bundle.js public/bundle.bin
   rm public/*.map
-  rm mfm.app/Contents/Resources/app.nw/*.*
+  rm -Rf mfm.app/Contents/Resources/app.nw
+  mkdir mfm.app/Contents/Resources/app.nw
   rm public/index.html
   cp public/index-normal.html public/index.html
   cp public/*.bin mfm.app/Contents/Resources/app.nw
   cp public/index.html mfm.app/Contents/Resources/app.nw
   cp public/package.json mfm.app/Contents/Resources/app.nw
   cp public/*.css mfm.app/Contents/Resources/app.nw
+  cp icons/mfm-icon.icns mfm.app/Contents/Resources/app.icns
 end
 ```
 

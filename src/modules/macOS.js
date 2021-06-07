@@ -105,7 +105,9 @@ var macOS = {
   copyEntries: function(from, to, flag, callback) {
     if(typeof flag === 'undefined') flag = false;
     var fromName = this.preserveQuotes(from.fileSystem.appendPath(from.dir, from.name));
+    if(typeof from === 'string') fromName = this.preserveQuotes(from);
     var toName = this.preserveQuotes(to.dir);
+    if(typeof to === 'string') toName = this.preserveQuotes(to);
     if(flag) {
       toName = this.preserveQuotes(to.fileSystem.appendPath(to.dir,to.name));
     }
