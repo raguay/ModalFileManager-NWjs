@@ -1,4 +1,4 @@
-<svelte:window 
+<svelte:window
   on:keydown={(e) => {
     lctrlKey = e.ctrlKey;
     lshiftKey = e.shiftKey;
@@ -187,6 +187,7 @@
   import { dirHistory } from '../stores/dirHistory.js';
   import { directoryListeners } from '../stores/directoryListeners.js';
   import { stateMapColors } from '../stores/stateMapColors.js';
+  import { extraPanel } from '../stores/extraPanel.js';
   import commands from '../modules/commands.js';
   import filesystems from '../modules/filesystems';
   import extensions from '../modules/extensions.js';
@@ -663,6 +664,7 @@
     extensions.addExtCommand('editEntryCommand', 'Edit the given entry.', editEntryCommand);
     extensions.addExtCommand('getRightDir', 'Get the path for the right pane.', getRightDir);
     extensions.addExtCommand('getLeftDir', 'Get the path for the left pane.', getLeftDir);
+    extensions.addExtCommand('addExtraPanelProcessor', 'Add a processor for creating extra panel html.', addExtraPanelProcessor);
   }
 
   function installDefaultCommands() {
@@ -2275,5 +2277,10 @@
   function getLeftDir() {
     return(localLeftDir);
   }
-</script>
 
+  function addExtraPanelProcessor(panelProc) {
+    var lextraPanel = get(extraPanel);
+    lextraPanel.push(panelProc);
+    extraPanel.set(lextraPanel);
+  }
+</script>

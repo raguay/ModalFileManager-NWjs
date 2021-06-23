@@ -3,7 +3,6 @@
   "description": "A file manager written in Svelte, HTML, and CSS running in NW.js.",
   "license": "MIT",
   "version": "1.0.0",
-  "chromium-args": "--allow-file-access-from-files --allow-file-access --user-data-dir",
   "window": {
     "id": "mfm",
     "height": 300,
