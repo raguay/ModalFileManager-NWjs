@@ -90,12 +90,14 @@
        bind:this={leftDOM}>
     {#if (localCurrentCursor.pane === 'right')&&(showExtra)}
       <ExtraPanel
+        side = 'left'
       />
     {:else}
       <DirectoryListing
         path={localLeftDir}
         edit={setEditDirFlagLeft}
         on:dirChange={(e) => { changeDir(e.detail, 'left'); setEditDirFlagLeft = false; }}
+        on:updateDir={(e) => { refreshLeftPane(); }}
       />
       <Pane 
         pane='left'
@@ -114,12 +116,14 @@
   >
     {#if (localCurrentCursor.pane === 'left')&&(showExtra)}
       <ExtraPanel
+        side='right'
       />
     {:else}
       <DirectoryListing
         path={localRightDir}
         edit={setEditDirFlagRight}
         on:dirChange={(e) => { changeDir(e.detail, 'right'); setEditDirFlagRight = false; }}
+        on:updateDir={(e) => { refreshRightPane(); }}
       />
       <Pane 
         pane='right'
@@ -245,7 +249,6 @@
   let osNames = ['macOS', 'linux', 'windows'];
   let stateMaps = [];
   let localStateMapColors = [];
-  let localDirListeners = null;
   let showGitHub = false;
   let numberAcc = '';
   let lshiftKey = false;
@@ -329,13 +332,6 @@
       //
       localConfig = JSON.parse(localFS.readFile(localFS.appendPath(configDir,'config.json')));
     }
-
-    //
-    // Setup the directory listeners.
-    //
-    var unsubscribeDirListeners = directoryListeners.subscribe(value => {
-      localDirListeners = value;
-    })
 
     //
     // Here, we are subscribing to the different stores and setting their 
@@ -479,7 +475,6 @@
       unsubscribeCurrentCursor();
       unsubscribeRightDir();
       unsubscribeLeftDir();
-      unsubscribeDirListeners();
       unsubscriptStateMapColors();
     })
   });
@@ -1858,8 +1853,9 @@
   }
 
   function addDirectoryListener(listener) {
-    localDirListeners.push(listener);
-    directoryListeners.set(localDirListeners);
+    var dl = get(directoryListeners);
+    dl.push(listener);
+    directoryListeners.set(dl);
   }
 
   function toggleCommandPrompt() {

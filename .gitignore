@@ -1,6 +1,4 @@
 # large files ignore
-misc/nwjs*
-misc/libffmpeg.dylib
 mfm.app
 mfm-mac.zip
 mac

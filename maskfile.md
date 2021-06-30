@@ -33,6 +33,8 @@ else
   cp public/*.css mfm.app/Contents/Resources/app.nw
   cp icons/mfm-icon.icns mfm.app/Contents/Resources/app.icns
 end
+cd mfm.app/Contents/Resources/app.nw
+npm install
 ```
 
 ## launch

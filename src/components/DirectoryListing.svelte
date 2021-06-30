@@ -106,6 +106,7 @@
   let dirIndex = 0;
   let localDirListeners = [];
   let watcher = null;
+  let lastDir = '';
 
   $: newPath = shortenPath(path);
   $: setEditFlag(edit);
@@ -156,8 +157,8 @@
       // Add a change handler.
       // 
       watcher.on('all',(event, pth) => {
-        dispatch('dirChange', {
-          path: path.path,
+        dispatch('updateDir', {
+          path: pth,
           cursor: false
         });
       });
@@ -165,9 +166,17 @@
   }
 
   function runDirectoryListeners(pth) {
-    localDirListeners.map(value => {
-      value(pth);
-    });
+    if(typeof pth !== 'undefined') {
+      console.log(lastDir);
+      console.log(pth);
+      if(lastDir !== pth) {
+        lastDir = pth;
+        console.log('Running directory listeners...');
+        localDirListeners.map(value => {
+          value(pth,'');
+        });
+      }
+    }
   }
 
   function setEditFlag(flag) {
@@ -227,12 +236,12 @@
         // 
         // Add directory watching.
         //
-        updateWatcher(pth.path);
+        updateWatcher(result);
 
         // 
         // Tell everyone watching directory changes that a change is occurring.
         // 
-        runDirectoryListeners(pth);
+        runDirectoryListeners(result);
         
         // 
         // Add to the history.

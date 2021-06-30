@@ -1,4 +1,7 @@
-<div id="extrapanel">
+<div 
+  id="extrapanel"
+  bind:this={extraPDOM}
+>
   {#if isExtra}
     {@html extraHTML}
   {/if}
@@ -63,6 +66,9 @@
   import { extraPanel } from '../stores/extraPanel.js';
   import util from '../modules/util.js';
 
+  export let side = '';
+
+  let extraPDOM = null;
   let localCurrentCursor = {
     pane: 'left',
     entry: {}
@@ -125,12 +131,16 @@
     }
     if(!isExtra) {
       isExtra = checkExtraPanel();
+    } else {
+      localExtraPanel.forEach(item => {
+        item.after();
+      });
     }
   });
 
   function checkExtraPanel() {
     localExtraPanel.forEach(item => {
-      isExtra = item.check(localCurrentCursor.entry.dir, localCurrentCursor.entry.name, localCurrentCursor.fileSystem);
+      isExtra = item.check(localCurrentCursor.entry.dir, localCurrentCursor.entry.name, localCurrentCursor.fileSystem, side);
       if(isExtra) {
         extraHTML = item.createHTML();
       }
@@ -152,10 +162,9 @@
 
   function getDimensions(fileName) {
     var com = 'ffprobe -v error -of flat=s=_ -select_streams v:0 -show_entries stream=height,width "' + fileName + '"';
-    localCurrentCursor.entry.fileSystem.runCommandLine(com, (err, stdout, stderr) => {
+    localCurrentCursor.entry.fileSystem.runCommandLine(com, (err, stdout) => {
       if(err) {
         console.log(err);
-        console.log(stderr);
       } else {
         var stdout = stdout.toString('utf8');
         var width = /width=(\d+)/.exec(stdout);

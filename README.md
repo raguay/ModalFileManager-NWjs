@@ -1,3 +1,5 @@
+![ModalFileManager](https://socialify.git.ci/raguay/ModalFileManager/image?description=1&descriptionEditable=A%20web%20technology%20based%20file%20manager%20built%20with%20NW.js%2C%20Svelte%2C%20and%20Node.js.%20It%27s%20keyboard%20command%20layout%20is%20taken%20from%20Vim.&forks=1&issues=1&language=1&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Light)
+
 # Modal File Manager
 
 This project is for creating a file manager using web technologies. It is designed to run as a NW.js application. Node.js is the main language used with Svelte for the frontend UI.
@@ -78,6 +80,7 @@ I've created multiple open source resources (I have around 80 GitHub repositorie
   - Alfred: Launch Afred Browser on the current cursor location
   - Move to Dir: Selected files are moved to the folder under the cursor in the same panel
   - iTerm: open the current cursor directory in iTerm2
+  - User Scripts: Create and run scripts from mfm.
 - Themes currently created and downloadable from GitHub:
   - Dracula Pro
   - Dracula "Buffy"
@@ -201,7 +204,6 @@ The Extension tab allows you to create, edit, and delete extensions from the Mod
 	- Project Manager
 		- Notes - Should be part of Project Manager?
 	- Dropbox File System
-	- Launch Scripts
 	- Regular Expression selection
 	- Zip Selected Entries
 - Drag and drop with external programs (NW.js doesn't support it directly, but I should be able to get it going with Node.js talking directly to the OS). 
@@ -350,6 +352,7 @@ These commands require inputs and supply results. Therefore these commands can`t
 | `getRightDir` | Get the directory path for the right panel. |
 | `getLeftDir` | Get the directory path for the left panel. |
 | `addExtraPanelProcessor` | Add a object for processing extra panel informaiton. |
+| `addExtraPanelAfterProcessor` | Add a script to run after the extra panel is rendered. |
 
 ## Creating Themes
 

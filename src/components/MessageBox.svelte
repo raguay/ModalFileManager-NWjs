@@ -230,13 +230,11 @@
   function returnValue(skip) {
     if(typeof skip === 'undefined') skip = false;
     keyProcess.set(true);
-    console.log(pickerItems);
     if(pickerItems.length > 0) {
       items[0].value = pickerItems[pickerNum].value;
     } else if(pickerExtra) {
       items[0].value = pickerValue;
     }
-    console.log(items);
     dispatch('msgReturn', {
       ans: items
     });
@@ -279,7 +277,9 @@
         skip: false
       });
     } else if(e.key === 'Tab') {
-      pickerValue = pickerItems[pickerNum].value;
+      if(typeof pickerItems[pickerNum].value.name !== 'undefined') pickerValue = pickerItems[pickerNum].value.name;
+      else if(typeof pickerItems[pickerNum].name !== 'undefined') pickerValue = pickerItems[pickerNum].name;
+      else pickerValue = pickerItems[pickerNum].value;
     } else if(((e.which >= 48)&&(e.which <= 90))||(e.which >= 186)||(e.which === 32)) {
       // 
       // It's a normal printable character. Add it and re-evaluate.
