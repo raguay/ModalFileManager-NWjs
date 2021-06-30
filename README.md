@@ -1,7 +1,5 @@
 ![ModalFileManager](https://socialify.git.ci/raguay/ModalFileManager/image?description=1&descriptionEditable=A%20web%20technology%20based%20file%20manager%20built%20with%20NW.js%2C%20Svelte%2C%20and%20Node.js.%20It%27s%20keyboard%20command%20layout%20is%20taken%20from%20Vim.&forks=1&issues=1&language=1&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Light)
 
-# Modal File Manager
-
 This project is for creating a file manager using web technologies. It is designed to run as a NW.js application. Node.js is the main language used with Svelte for the frontend UI.
 
 Currently, it can`t transfer files to other programs with Drag and Drop due to a limitation of the NW.js program that is based on the Chrome browser. I should be able to get past this limitation soon by using lower level commands to the operating system.
@@ -34,6 +32,7 @@ The low level interface is still being mapped out and changes are happening. Thi
 - [Creating Extensions](#creating-extensions)
 - [Adding Video Preview on Extra Panel](#adding-video-preview-on-extra-panel)
 - [Icon](#icon)
+- [Tutorials on Modal File Manager](#tutorials-on-modal-file-manager)
 
 ## Philosophy
 
@@ -426,4 +425,9 @@ With this library in place, the Extra Panel will run mp4 files just fine. I have
 I finally made my first attempt at an icon for Modal File Manager. The files are in the `icons` directory. Any constructive criticizm is welcome.
 
 ![Icon](icons/mfm-icon.svg)
+
+## Tutorials on Modal File Manager
+
+- [My Side Project: Modal File Manager](https://blog.customct.com/my-side-project-modal-file-manager)
+- [Modal File Manager: Update and Extensions](https://blog.customct.com/modal-file-manager-update-and-extensions)
 
