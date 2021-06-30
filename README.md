@@ -351,7 +351,6 @@ These commands require inputs and supply results. Therefore these commands can`t
 | `getRightDir` | Get the directory path for the right panel. |
 | `getLeftDir` | Get the directory path for the left panel. |
 | `addExtraPanelProcessor` | Add a object for processing extra panel informaiton. |
-| `addExtraPanelAfterProcessor` | Add a script to run after the extra panel is rendered. |
 
 ## Creating Themes
 
