@@ -73,11 +73,10 @@ I've created multiple open source resources (I have around 80 GitHub repositorie
 - Extension Creator/Editor with template.
 - Extensions controled content in the Extras Panel.
 - Extensions currently created and downloadable from GitHub:
-  - Favorites: Create a list of favorite directories and quickly jump to them. There is also quick save and jump to directory registers with a new `fav` keyboard mode.
   - [Copy to Clipboard](https://github.com/raguay/CopyToClipboard-ModalFileManagerExtension): copy file name or path to clipboard with command prompt.
   - [Alfred](https://github.com/raguay/Alfred-ModalFileManager): Launch Afred Browser on the current cursor location
   - [Move to Dir](https://github.com/raguay/moveToDir-ModalFileManagerExtension): Selected files are moved to the folder under the cursor in the same panel
-  - [iTerm](): open the current cursor directory in iTerm2
+  - [iTerm](https://github.com/raguay/iTerm-ModalFileManagerExtension): open the current cursor directory in iTerm2
   - [Favorites](https://github.com/raguay/Favorites-ModalFileManagerExtension): An extension to mark favorite directories to be able to go back to easily, back up directories previously entered, six directory registers to quickly hop around using the `fav` mode, and much more.
   - [User Scripts](https://github.com/raguay/runScripts-ModalFileManagerExtension): Create and run scripts from mfm.
   - [Project Manager](https://github.com/raguay/ProjectManager-mfm): A set of functions to work with projects, project templates, run project scripts for npm and mask, and creating/editing of project notes.
