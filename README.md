@@ -30,9 +30,9 @@ The low level interface is still being mapped out and changes are happening. Thi
 - [Extension Commands](#extension-commands)
 - [Creating Themes](#creating-themes)
 - [Creating Extensions](#creating-extensions)
+- [Tutorials on Modal File Manager](#tutorials-on-modal-file-manager)
 - [Adding Video Preview on Extra Panel](#adding-video-preview-on-extra-panel)
 - [Icon](#icon)
-- [Tutorials on Modal File Manager](#tutorials-on-modal-file-manager)
 
 ## Philosophy
 
@@ -56,9 +56,8 @@ I've created multiple open source resources (I have around 80 GitHub repositorie
 - Drag and Drop works for copying or moving the current cursor and all selected files or directories (the current cursor location) within the application itself. If no keys pressed, it will be copied. If shift key is pressed, it will be moved. The drag begins with the current cursor.
 - Command Prompt for executing commands (`:` in any mode or `<ctrl>p` in normal mode).
 - Fully extendable with extensions using the extensions API
-- Fully extendable to alternate file systems
 - Fully theme-able. 
-- A file details side panel can be shown to overlay the panel not currently focused (`toggleExtraPanel` command). It shows video previews and stats with the ffmpeg programs installed.
+- A file details side panel can be shown to overlay the panel not currently focused (`toggleExtraPanel` command). It shows video previews and stats with the ffmpeg programs installed. Extensions can place special content in this panel as well.
 - Themes and extensions are explorable and downloadable from GitHub inside the program.
 - Hot keys are programmable
 - A number before a hot key runs it's associated command that many times (ex: `5j` will move the cursor 5 entries down the list).
@@ -72,18 +71,20 @@ I've created multiple open source resources (I have around 80 GitHub repositorie
 - Change the environment used to execute external programs using the `Show Preferences` Command Prompt command.
 - Theme Creator/Editor
 - Extension Creator/Editor with template.
-- Reloads extensions without relaunching when leaving the Preferences panel.
+- Extensions controled content in the Extras Panel.
 - Extensions currently created and downloadable from GitHub:
   - Favorites: Create a list of favorite directories and quickly jump to them. There is also quick save and jump to directory registers with a new `fav` keyboard mode.
-  - Copy to Clipboard: copy file name or path to clipboard with command prompt
-  - Alfred: Launch Afred Browser on the current cursor location
-  - Move to Dir: Selected files are moved to the folder under the cursor in the same panel
-  - iTerm: open the current cursor directory in iTerm2
-  - User Scripts: Create and run scripts from mfm.
+  - [Copy to Clipboard](https://github.com/raguay/CopyToClipboard-ModalFileManagerExtension): copy file name or path to clipboard with command prompt.
+  - [Alfred](https://github.com/raguay/Alfred-ModalFileManager): Launch Afred Browser on the current cursor location
+  - [Move to Dir](https://github.com/raguay/moveToDir-ModalFileManagerExtension): Selected files are moved to the folder under the cursor in the same panel
+  - [iTerm](): open the current cursor directory in iTerm2
+  - [Favorites](https://github.com/raguay/Favorites-ModalFileManagerExtension): An extension to mark favorite directories to be able to go back to easily, back up directories previously entered, six directory registers to quickly hop around using the `fav` mode, and much more.
+  - [User Scripts](https://github.com/raguay/runScripts-ModalFileManagerExtension): Create and run scripts from mfm.
+  - [Project Manager](https://github.com/raguay/ProjectManager-mfm): A set of functions to work with projects, project templates, run project scripts for npm and mask, and creating/editing of project notes.
 - Themes currently created and downloadable from GitHub:
-  - Dracula Pro
-  - Dracula "Buffy"
-  - Dracula "Van Helsing"
+  - [Dracula Pro](https://github.com/raguay/dracula-ThemeModalFileManager)
+  - [Dracula "Buffy"](https://github.com/raguay/dracula-buffy-ThemeModalFileManager)
+  - [Dracula "Van Helsing"](https://github.com/raguay/Dracula-Van-Helsing-ThemeModalFileManager)
 
 All Dracula based themes are here with permission from the author. Please support his great work at [Dracula Themes](https://draculatheme.com/). The Dracula "Buffy" theme is my preferred theme for everything. I'm having many issues with my eyes having light sensitivity and this theme allows me to keep working longer than other themes.
 
@@ -124,7 +125,7 @@ mask launch -d
 
 which will launch the sdk version of NW.js with full development tools.
 
-If you just want to download a program to use, check the releases. I'm currently releasing beta level macOS binaries in the releases.
+If you just want to download a program to use, check the releases. I'm currently releasing beta level macOS binaries in the releases. A step by step installing using the releases is discussed in my tutorial [Modal File Manager: Update and Extensions](https://blog.customct.com/modal-file-manager-update-and-extensions).
 
 ## Upgrading
 
@@ -148,13 +149,13 @@ All extensions, themes, keyboard layouts, and anything else for configuring the 
 
 In this configuration directory, there are the `themes`, `extensions`, and `keyMaps` directories that contain their respective subfolders and files. Please refer the specific section for each directory for more details.
 
-There is the `history.json` file, `config.json` file, and the `theme.json` files in the configuration directory. 
+There is the `history.json` file, `config.json` file, and the `theme.json` files in the configuration directory. Also, extensions will create and store their configuration files in this directory as well (at least, that is what I advise extension authors).
 
 The `history.json` file contains a list of directories that the Modal File Manager has visited. I use this to quickly pull up possible paths to go to in the file manager. 
 
 The `config.json` file contains the environment variables used to launch command line commands and whether or not to use the `trash-cli` program to delete files and directories.
 
-Modal File Manager doesn't use the actual theme files downloaded from GitHub. Those are stored in the `themes` directory and are just referenced. All actually used theming is in the `theme.json` file. When a user changes themes, that file is changed. Therefore, be careful if you manually change this file and want to keep it. It is best to create a theme in the theme directory and load it in the program.
+Modal File Manager doesn't use the actual theme files downloaded from GitHub. Those are stored in the `themes` directory and are just referenced. All actually used theming is in the `theme.json` file. When a user changes themes, that file is changed. Therefore, be careful if you manually change this file and want to keep it. It is best to create a theme in the theme directory and load it in the program. My tutorial [Modal File Manager: Update and Extensions](https://blog.customct.com/modal-file-manager-update-and-extensions) walks through creating a theme using the Preferences Panel.
 
 All configuration files should be edited from the `Show Preferences` command prompt command.
 
@@ -193,15 +194,13 @@ With the command prompt command of `Show Preferences`, you can now open a new pa
 
 The General tab allows the user to delete, edit, or add environment variables to the running of command line programs. This give the user complete control over the environment variables used in launching commands from Modal File Manager. You can also turn on/off the use of the trashcan for deletions.
 
-The Theme tab allows you to create, update, and delete themes from the Modal File Manager.
+The Theme tab allows you to create, update, and delete themes from the Modal File Manager. My tutorial [Modal File Manager: Update and Extensions](https://blog.customct.com/modal-file-manager-update-and-extensions) walks through creating a theme using the Preferences Panel.
 
 The Extension tab allows you to create, edit, and delete extensions from the Modal File Manager. The creation and editing of an extension will open the main file for the extension in the code editor that has been setup and moves the Modal File Manager to the extension's directory in the pane opposite the current cursor.
 
 ## Things in the Works
 
 - Translating my fman extensions to work with Modal File Manager
-	- Project Manager
-		- Notes - Should be part of Project Manager?
 	- Dropbox File System
 	- Regular Expression selection
 	- Zip Selected Entries
@@ -211,7 +210,6 @@ The Extension tab allows you to create, edit, and delete extensions from the Mod
 - Get Windows working
 - Get Linux tested and working
 - Get audio listening in the Extras Panel.
-- Extensions controled content in the Extras Panel.
 - Documentation!
 - Of course, bug fixing!
 
@@ -411,6 +409,11 @@ It should be a proper JSON structure with these definitions. Change the color va
 
 TODO:  Documentation Coming Soon.
 
+## Tutorials on Modal File Manager
+
+- [My Side Project: Modal File Manager](https://blog.customct.com/my-side-project-modal-file-manager)
+- [Modal File Manager: Update and Extensions](https://blog.customct.com/modal-file-manager-update-and-extensions)
+
 ## Adding Video Preview on Extra Panel
 
 The normal copy of NW.js doesn't come with the codeces for displaying videos. In order for this feature, you will have to download the dynamically loaded library for your system from here:  https://github.com/iteufel/nwjs-ffmpeg-prebuilt/releases.
@@ -425,8 +428,4 @@ I finally made my first attempt at an icon for Modal File Manager. The files are
 
 ![Icon](icons/mfm-icon.svg)
 
-## Tutorials on Modal File Manager
-
-- [My Side Project: Modal File Manager](https://blog.customct.com/my-side-project-modal-file-manager)
-- [Modal File Manager: Update and Extensions](https://blog.customct.com/modal-file-manager-update-and-extensions)
 
