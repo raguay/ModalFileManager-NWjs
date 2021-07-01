@@ -14,6 +14,7 @@ The low level interface is still being mapped out and changes are happening. Thi
 
 - [Philosophy](#philosophy)
 - [Current Feature Set](#current-feature-set)
+- [Some Limitations](#some-limitations)
 - [Installation](#installation)
 - [Upgrading](#upgrading)
 - [Command Line Programs Used](#command-line-programs-used)
@@ -87,9 +88,15 @@ I've created multiple open source resources (I have around 80 GitHub repositorie
 
 All Dracula based themes are here with permission from the author. Please support his great work at [Dracula Themes](https://draculatheme.com/). The Dracula "Buffy" theme is my preferred theme for everything. I'm having many issues with my eyes having light sensitivity and this theme allows me to keep working longer than other themes.
 
+## Some Limitations
+
+Because this is a web technologies application, there are certain things that it just can't do and I'm not sure if they can be done at this level. Therefore, this will not completely remove your dependency on using the Finder application. But, these instances are not everyday items for which we use a file manager. As I see it, these items are not doable, but I would love for someone to prove me wrong:
+
+- Install applications that the macOS Gatekeeper will allow.
+
 ## Installation
 
-These directions currently work for the macOS. I haven't tested for finished the Linux or Windows installation. All external programs should be installed before first running the Modal File Manager. Otherwise, you will have to modify the path used to execute external programs to find them.
+These directions currently work for the macOS. I haven't tested the Linux or Windows installation. All external programs should be installed before first running the Modal File Manager. Otherwise, you will have to modify the path used to execute external programs to find them.
 
 I have a run script made with [Mask](https://github.com/jakedeichert/mask) and [Node.js](https://nodejs.org/en/). You have to put a copy of [NW.js](https://nwjs.io/) in the 'misc' directory as `nwjs.app`. Or, you can change the script. I'm assuming you aren't changing the script in the following. Also, the scripts in the mask file are running in a [fish shell](https://github.com/fish-shell/fish-shell). If you don't have fish shell on your system, you will need to either install it or convert the script to run in zsh or sh.
 
@@ -124,7 +131,7 @@ mask launch -d
 
 which will launch the sdk version of NW.js with full development tools.
 
-If you just want to download a program to use, check the releases. I'm currently releasing beta level macOS binaries in the releases. A step by step installing using the releases is discussed in my tutorial [Modal File Manager: Update and Extensions](https://blog.customct.com/modal-file-manager-update-and-extensions).
+If you just want to download a program to use, check the releases. I'm currently releasing beta level macOS binaries in the releases. A step by step installing using the releases is discussed in my tutorial [Modal File Manager: Update and Extensions](https://blog.customct.com/modal-file-manager-update-and-extensions). This version isn't complete in that when you run a program to view processes, the processes will say `nwjs`, but the icon will be for mfm (Modal File Manager).
 
 ## Upgrading
 
@@ -203,7 +210,7 @@ The Extension tab allows you to create, edit, and delete extensions from the Mod
 	- Dropbox File System
 	- Regular Expression selection
 	- Zip Selected Entries
-- Drag and drop with external programs (NW.js doesn't support it directly, but I should be able to get it going with Node.js talking directly to the OS). 
+- Drag and drop with external programs 
 - Add more file views for the Extra Panel
 - Multiple windows
 - Get Windows working
