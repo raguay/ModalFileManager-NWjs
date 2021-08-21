@@ -1,5 +1,7 @@
 ![ModalFileManager](https://socialify.git.ci/raguay/ModalFileManager/image?description=1&descriptionEditable=A%20web%20technology%20based%20file%20manager%20built%20with%20NW.js%2C%20Svelte%2C%20and%20Node.js.%20It%27s%20keyboard%20command%20layout%20is%20taken%20from%20Vim.&forks=1&issues=1&language=1&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Light)
 
+[![Richard's GitHub stats](https://github-readme-stats.vercel.app/api?username=raguay)](https://github.com/anuraghazra/github-readme-stats)
+
 This project is for creating a file manager using web technologies. It is designed to run as a NW.js application. Node.js is the main language used with Svelte for the frontend UI.
 
 Currently, it can`t transfer files to other programs with Drag and Drop due to a limitation of the NW.js program that is based on the Chrome browser. I should be able to get past this limitation soon by using lower level commands to the operating system.
