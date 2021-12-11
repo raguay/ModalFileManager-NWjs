@@ -191,7 +191,8 @@
 
   function processInput(e) {
     if(commands !== null) filtered = commands.commandList;
-    filtered = filtered.filter(item => item.name.toLowerCase().includes(promptValue.toLowerCase()));
+    var newPrompt = promptValue.toLowerCase().split('').join('.*');
+    filtered = filtered.filter(item => item.name.toLowerCase().match(newPrompt) !== null);
     current = 0;
   }
 

@@ -1,26 +1,3 @@
-<svelte:window
-  on:keydown={(e) => {
-    lctrlKey = e.ctrlKey;
-    lshiftKey = e.shiftKey;
-    lmetaKey = e.metaKey;
-    if((skipKey && (e.key === 'Enter'))||(component !== 'filemanager')) {
-      skipKey = false;
-      keyProcess.set(true);
-      localKeyProcess = true;
-    } else {
-      skipKey = false;
-      if(localKeyProcess) {
-        processKey(e);
-      }
-    }
-  }}
-  on:keyup={(e) => {
-    lctrlKey = e.ctrlKey;
-    lshiftKey = e.shiftKey;
-    lmetaKey = e.metaKey;
-  }}
-/>
-
 <div id='container'
   style="background-color: {$theme.backgroundColor};
          color: {$theme.textColor};
@@ -43,14 +20,14 @@
 
   {#if showCommandPrompt}
     <CommandPrompt 
-      commands={commands}
+
+commands={commands}
       on:closeCommandPrompt={(e) => {
         showCommandPrompt = false;
         if(!showMessageBox) {
-          keyProcess.set(true);
-          localKeyProcess = true;
+          $keyProcess = true;
         }
-        if(e.detail.skip) skipKey = true;
+        if(e.detail.skip) $skipKey = true;
       }}
     />
   {/if}
@@ -63,9 +40,8 @@
       on:msgReturn={msgReturn}
       on:closeMsgBox={(e) => { 
         showMessageBox = false;
-        keyProcess.set(true);
-        localKeyProcess = true;
-        if(e.detail.skip) skipKey = true;
+        $keyProcess = true;
+        if(e.detail.skip) $skipKey = true;
       }}
     />
   {/if}
@@ -79,9 +55,8 @@
       on:changeEntries={qsChangeEntries}
       on:closeQuickSearch={(e) => { 
         showQuickSearch = false;
-        keyProcess.set(true);
-        localKeyProcess = true;
-        if(e.detail.skip) skipKey = true;
+        $keyProcess = true;
+        if(e.detail.skip) $skipKey = true;
       }}
     />
   {/if}
@@ -198,9 +173,13 @@
   import macOS from '../modules/macOS.js';
   import linux from '../modules/linux.js';
   import windows from '../modules/windows.js';
+  import { altKey } from '../stores/altKey.js';
+  import { ctrlKey } from '../stores/ctrlKey.js';
+  import { metaKey } from '../stores/metaKey.js';
+  import { skipKey } from '../stores/skipKey.js';
+  import { shiftKey } from '../stores/shiftKey.js';
+  import { processKey } from "../stores/processKey.js";
 
-  export let component;
-  
 	const dispatch = createEventDispatcher();
   const os = require('os');
 
@@ -216,7 +195,6 @@
   let setEditDirFlagRight = false;
   let showExtra = false;
   let showCommandPrompt = false;
-  let skipKey = false;
   let leftEntries = {};
   let rightEntries = {};
   let localCurrentCursor = {
@@ -240,7 +218,6 @@
   let rightDOM = null;
   let leftDOM = null;
   let containerDOM = null;
-  let localKeyProcess = true;
   let mdown = false;
   let lastError = null;
   let userEditor = '.myeditorchoice';
@@ -251,9 +228,6 @@
   let localStateMapColors = [];
   let showGitHub = false;
   let numberAcc = '';
-  let lshiftKey = false;
-  let lctrlKey = false;
-  let lmetaKey = false;
   let lastCommand = '';
   let flagFilter = 1;
 
@@ -261,17 +235,18 @@
     //
     // Initialize all the stores with minimal settings.
     //
-    keyProcess.set(true);
-    inputState.set('normal');
-    theme.set({});
-    currentCursor.set({});
-    currentRightFile.set({});
-    currentLeftFile.set({});
-    rightDir.set({});
-    leftDir.set({});
-    directoryListeners.set([]);
-    stateMapColors.set([]);
-    config.set({});
+    $keyProcess = true;
+    $inputState = 'normal';
+    $theme = {};
+    $currentCursor = {};
+    $currentRightFile = {};
+    $currentLeftFile = {};
+    $rightDir = {};
+    $leftDir = {};
+    $directoryListeners = [];
+    $stateMapColors = [];
+    $config = {};
+    $processKey = processKeyFunction;
 
     //
     // reset all the extensions and commands.
@@ -363,28 +338,28 @@
     //
     // Set the stores to their proper value.
     //
-    leftDir.set(localLeftDir);
-    rightDir.set(localRightDir);
+    $leftDir = localLeftDir;
+    $rightDir = localRightDir;
  
     var unsubscribeCurrentCursor = currentCursor.subscribe(value => {
       localCurrentCursor = value;
     });
-    currentCursor.set({
+    $currentCursor = {
       pane: 'left',
       entry: leftEntries[0]
-    });
+    };
     var unsubscribeCurrentLeftFile = currentLeftFile.subscribe(value => {
       localCurrentLeftFile = value;
     });
-    currentLeftFile.set({
+    $currentLeftFile = {
       entry: leftEntries[0]
-    });
+    };
     var unsubscribeCurrentRightFile = currentRightFile.subscribe(value => {
       localCurrentRightFile = value;
     });
-    currentRightFile.set({
+    $currentRightFile = {
       entry: rightEntries[0]
-    });
+    };
     var unsubscribeTheme = theme.subscribe(value => {
       // 
       // Make sure a proper theme is being set.
@@ -406,7 +381,7 @@
         localStateMapColors['normal'] = localTheme.normalbackgroundColor;
         localStateMapColors['insert'] = localTheme.insertbackgroundColor;
         localStateMapColors['visual'] = localTheme.visualbackgroundColor;
-        stateMapColors.set(localStateMapColors);
+        $stateMapColors = localStateMapColors;
       }
     });
     var unsubscriptStateMapColors = stateMapColors.subscribe(value => {
@@ -415,10 +390,7 @@
     var unsubscribeInputState = inputState.subscribe(value => {
       localState = value;
     });
-    inputState.set(localState);
-    var unsubscribeKeyProcess = keyProcess.subscribe(value => {
-      localKeyProcess = value;
-    });
+    $inputState = localState;
 
     //
     // Setup the user editor data file.
@@ -445,14 +417,14 @@
     // 
     // Set the configuration store.
     //
-    config.set({
+    $config = {
       configDir: configDir,
       localFS: localFS,
       configuration: localConfig,
       commands: commands,
       extensions: extensions,
       userEditor: userEditor
-    });
+    };
     localFS.setConfig(localConfig);
     extensions.setConfig(localConfig);
 
@@ -461,7 +433,7 @@
     //
     var dhist = get(dirHistory);
     dhist.loadHistory();
-    dirHistory.set(dhist);
+    $dirHistory = dhist;
 
     //
     // return a command to unsubscribe from everything.
@@ -706,7 +678,7 @@
     commands.addCommand('Reload Extensions', 'reloadExtensions', 'Reload the extensions, keyboard maps, and theme.', reloadExtensions);
   }
   
-  function processKey(e) {
+  function processKeyFunction(e) {
     //
     // Stop the system for propgating the keystroke.
     //
@@ -715,7 +687,7 @@
     // 
     // Send to the processor.
     //
-    keyProcessor(e.key, lctrlKey, lshiftKey, lmetaKey);
+    keyProcessor(e.key, $ctrlKey, $shiftKey, $metaKey);
   }
 
   function stringKeyProcessor(str) {
@@ -732,7 +704,7 @@
     stringKeyProcessor(lastCommand);
   }
 
-  function keyProcessor(key, ctrlKey, shiftKey, metaKey) {
+  function keyProcessor(key, cKey, sKey, mKey) {
 
     if((key >= 0)&&(key <=9)) {
       // 
@@ -744,7 +716,7 @@
       // Get the command for the current state in the stateMaps.
       //
       
-      const command = getCommand(stateMaps[localState], key, ctrlKey, shiftKey, metaKey);
+      const command = getCommand(stateMaps[localState], key, cKey, sKey, mKey);
       
       // 
       // Figure the number of times to run the command.
@@ -777,12 +749,12 @@
     stateMapColors.set(localStateMapColors);
  }
 
- function getCommand(map, key, ctrlKey, shiftKey, metaKey) {
+ function getCommand(map, key, cKey, sKey, mKey) {
      var result = {
       command: () => {},
       name: 'empty'
     };
-    var rmap = map.find(item => ((item.key == key) && (item.meta == metaKey) && (item.ctrl == ctrlKey) && (item.shift == shiftKey)));
+    var rmap = map.find(item => ((item.key == key) && (item.meta == mKey) && (item.ctrl == cKey) && (item.shift == sKey)));
     if(typeof rmap !== 'undefined') {
       result = rmap;
     }
@@ -1236,8 +1208,7 @@
         } 
         if(key >= (arr.length-1)) {
           showMessageBox = false;
-          keyProcess.set(true);
-          localKeyProcess = true;
+          $keyProcess = true;
 
           //
           // Refresh the side deleted from.
@@ -1302,8 +1273,7 @@
       item.fileSystem.copyEntries(item, otherPane, false, (err, stdout)=>{
         if(key >= (arr.length-1)) {
           showMessageBox = false;
-          keyProcess.set(true);
-          localKeyProcess = true;
+          $keyProcess = true;
 
           //
           // Refresh the side copied to.
@@ -1452,8 +1422,7 @@
       item.fileSystem.moveEntries(item, otherPane, (err, stdout)=>{
         if(key >= (arr.length-1)) {
           showMessageBox = false;
-          keyProcess.set(true);
-          localKeyProcess = true;
+          $keyProcess = true;
 
           //
           // Refresh both sides.
@@ -1886,11 +1855,9 @@
   function toggleGitHub() {
     showGitHub = !showGitHub;
     if(showGitHub) {
-      keyProcess.set(false);
-      localKeyProcess = false;
+      $keyProcess = false;
     } else {
-      keyProcess.set(true);
-      localKeyProcess = true;
+      $keyProcess = true;
     }
   }
 
