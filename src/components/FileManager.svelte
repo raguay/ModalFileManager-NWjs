@@ -71,14 +71,14 @@ commands={commands}
       <DirectoryListing
         path={localLeftDir}
         edit={setEditDirFlagLeft}
-        on:dirChange={(e) => { changeDir(e.detail, 'left'); setEditDirFlagLeft = false; }}
+        on:dirChange={(e) => { changeDir(e.detail, 'left', ''); setEditDirFlagLeft = false; }}
         on:updateDir={(e) => { refreshLeftPane(); }}
       />
       <Pane 
         pane='left'
         entries={leftEntries}
         utilities={localLeftDir.fileSystem}
-        on:changeDir={(e) => { changeDir(e.detail.dir, e.detail.pane); }}
+        on:changeDir={(e) => { changeDir(e.detail.dir, e.detail.pane, ''); }}
         on:openFile={(e) => { openFile(e.detail.entry); }}
       />
     {/if}
@@ -97,14 +97,14 @@ commands={commands}
       <DirectoryListing
         path={localRightDir}
         edit={setEditDirFlagRight}
-        on:dirChange={(e) => { changeDir(e.detail, 'right'); setEditDirFlagRight = false; }}
+        on:dirChange={(e) => { changeDir(e.detail, 'right',''); setEditDirFlagRight = false; }}
         on:updateDir={(e) => { refreshRightPane(); }}
       />
       <Pane 
         pane='right'
         entries={rightEntries}
         utilities={localRightDir.fileSystem}
-        on:changeDir={(e) => {changeDir(e.detail.dir, e.detail.pane); }}
+        on:changeDir={(e) => {changeDir(e.detail.dir, e.detail.pane,''); }}
         on:openFile={(e) => { openFile(e.detail.entry); }}
       />
     {/if}
@@ -966,12 +966,12 @@ commands={commands}
       changeDir({
         path: nEntry,
         cursor: true
-      },'left');
+      },'left','');
     } else {
       changeDir({
         path: nEntry,
         cursor: true
-      },'right');
+      },'right', '');
     }
   }
 
@@ -1013,20 +1013,37 @@ commands={commands}
   function reloadPane() {
     changeDir({
       path: localCurrentCursor.entry.dir,
-      cursor: true
-    }, localCurrentCursor.pane);
+      cursor: true,
+    }, 
+    localCurrentCursor.pane,
+    localCurrentCursor.entry.name
+    );
   }
 
-  function changeDir(dirOb, npane) {
+  function changeDir(dirOb, npane, name) {
     var ndir = dirOb.path;
     if(typeof npane === 'undefined') npane = localCurrentCursor.pane;
     if(typeof dirOb.cursor === 'undefined') dirOb.cursor = true;
+    if(typeof name === 'undefined') name = '';
     if(npane == 'left') {
       leftDir.set({path: ndir, fileSystemType: localLeftDir.fileSystemType, fileSystem: localLeftDir.fileSystem});
       leftEntries = localLeftDir.fileSystem.getDirList(ndir);
       if(leftEntries.length !== 0) {
-        currentLeftFile.set({ entry: leftEntries[0]});
-        if(dirOb.cursor) currentCursor.set({ entry: leftEntries[0], pane: npane});
+        var entry = leftEntries.filter(item => item.name === name);
+        if(entry.length !== 0) {
+          console.log(entry[0]);
+          currentLeftFile.set({
+            entry: entry[0],
+            pane: npane
+          });
+          currentCursor.set({
+            entry: entry[0],
+            pane: npane
+          });
+        } else {
+          currentLeftFile.set({ entry: leftEntries[0], pane: npane});
+          currentCursor.set({ entry: leftEntries[0], pane: npane});
+        }
       } else {
         currentLeftFile.set({ entry: {
           name: '',
@@ -1053,8 +1070,20 @@ commands={commands}
       rightDir.set({path: ndir, fileSystemType: localRightDir.fileSystemType, fileSystem: localRightDir.fileSystem});
       rightEntries = localRightDir.fileSystem.getDirList(ndir);
       if(rightEntries.length !== 0) {
-        currentRightFile.set({ entry: rightEntries[0]});
-        if(dirOb.cursor) currentCursor.set({ entry: rightEntries[0], pane: npane});
+        var entry = rightEntries.filter(item => item.name === name);
+        if(entry.length !== 0) {
+          currentRightFile.set({
+            entry: entry[0],
+            pane: npane
+          });
+          currentCursor.set({
+            entry: entry[0],
+            pane: npane
+          });
+        } else {
+          currentRightFile.set({ entry: rightEntries[0], pane: npane});
+          currentCursor.set({ entry: rightEntries[0], pane: npane});
+        }
       } else {
         currentRightFile.set({ entry: {
           name: '',
@@ -1121,8 +1150,8 @@ commands={commands}
       var newDir = localCurrentCursor.entry.fileSystem.appendPath(localCurrentCursor.entry.dir, localCurrentCursor.entry.name);
       changeDir({
         path: newDir,
-        cursor: true 
-      }, localCurrentCursor.pane);
+        cursor: true
+      }, localCurrentCursor.pane, '');
     }
   }
 
@@ -1449,19 +1478,23 @@ commands={commands}
     // Refresh right pane.
     //
     rightEntries = localRightDir.fileSystem.getDirList(localRightDir.path);
-    var current = rightEntries[0];
+    var current = currentRightFile.entry;
     if(rightEntries.length == 0) {
       current = {
         name: '',
-        dir: currentRightFile.entry.dir,
-        fileSystemType: currentRightFile.entry.fileSystemType,
-        fileSystem: currentRightFile.entry.fileSystem,
+        dir: localRightDir.path,
+        fileSystemType: localRightDir.fileSystemType,
+        fileSystem: localRightDir.fileSystem,
         selected: false,
         datetime: '',
         type: 0,
         size: 0,
         stats: null
       };
+    } else {
+      if((typeof current === 'undefined')||(current === null)||(rightEntries.filter(item => item.name === current.name).length === 0)) {
+        current = rightEntries[0];
+      }
     }
     if(localCurrentCursor.pane == 'right') {
       currentCursor.set({
@@ -1479,20 +1512,25 @@ commands={commands}
     // Refresh left pane.
     //
     leftEntries = localLeftDir.fileSystem.getDirList(localLeftDir.path);
-    var current = leftEntries[0];
+    var current = currentLeftFile.entry;
     if(leftEntries.length === 0) {
       current = {
         name: '',
-        dir: currentRightFile.entry.dir,
-        fileSystemType: currentLeftFile.entry.fileSystemType,
-        fileSystem: currentLeftFile.entry.fileSystem,
+        dir: localLeftDir.dir,
+        fileSystemType: localLeftDir.fileSystemType,
+        fileSystem: localLeftDir.fileSystem,
         selected: false,
         datetime: '',
         type: 0,
         size: 0,
         stats: null
       };
+    } else {
+      if((typeof current === 'undefined')||(current === null)||(leftEntries.filter(item => item.name === current.name).length === 0)) {
+        current = leftEntries[0];
+      }
     }
+
     if(localCurrentCursor.pane == 'left') {
       currentCursor.set({
         entry: current,
