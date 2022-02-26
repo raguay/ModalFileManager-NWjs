@@ -2,7 +2,9 @@
 
 [![Richard's GitHub stats](https://github-readme-stats.vercel.app/api?username=raguay)](https://github.com/anuraghazra/github-readme-stats)
 
-This project is for creating a file manager using web technologies. It is designed to run as a NW.js application. Node.js is the main language used with Svelte for the frontend UI.
+This project is for creating a file manager using web technologies. It is designed to run as a NW.js application. Node.js is the main language used with Svelte for the frontend UI. 
+
+I have started on a newer version based on Wails 2 instead of NW.js. You can find it at [ModalFileManager](https://github.com/raguay/ModalFileManager).
 
 Currently, it can`t transfer files to other programs with Drag and Drop due to a limitation of the NW.js program that is based on the Chrome browser. I should be able to get past this limitation soon by using lower level commands to the operating system.
 
